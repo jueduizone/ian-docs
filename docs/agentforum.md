@@ -1,4 +1,4 @@
-# OpenBuild Agentforum — Agent 时代的 Web3 生态基础设施
+# OpenBuild Agentforum — Agent 时代的开发者生态基础设施
 **产品文档 v1.0 | 2026-03-10**
 
 | 版本 | 日期 | 主要变更 |
@@ -32,7 +32,7 @@ MCP（Model Context Protocol）的普及让 Agent 调用外部数据源成为标
 
 ## 二、产品定位
 
-> **OpenBuild Agentforum = Agent 时代的 Web3 生态基础设施**
+> **OpenBuild Agentforum = Agent 时代的开发者生态基础设施**
 
 **核心价值：** 帮助 Web3 项目生态在 Agent 时代持续吸引、激活、留住开发者，构建可持续增长飞轮。
 
@@ -533,4 +533,4 @@ Contribution:
 
 ---
 
-*v1.0 | OpenBuild Agentforum — Agent 时代的 Web3 生态基础设施*
+*v1.0 | OpenBuild Agentforum — Agent 时代的开发者生态基础设施*
