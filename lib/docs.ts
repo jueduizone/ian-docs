@@ -56,10 +56,15 @@ export function getAllDocs(): DocMeta[] {
 
     const stat = fs.statSync(fullPath)
 
+    const rawDate = data.date
+    const dateStr = rawDate instanceof Date
+      ? rawDate.toISOString().split('T')[0]
+      : (rawDate ? String(rawDate) : extractDateFromContent(content) || stat.mtime.toISOString().split('T')[0])
+
     return {
       slug,
       title: data.title || extractTitleFromContent(content),
-      date: data.date || extractDateFromContent(content) || stat.mtime.toISOString().split('T')[0],
+      date: dateStr,
       description: data.description || extractDescriptionFromContent(content),
     }
   })
@@ -84,10 +89,15 @@ export async function getDocBySlug(slug: string): Promise<DocFull | null> {
 
   const contentHtml = processedContent.toString()
 
+  const rawDate = data.date
+  const dateStr = rawDate instanceof Date
+    ? rawDate.toISOString().split('T')[0]
+    : (rawDate ? String(rawDate) : extractDateFromContent(content) || new Date().toISOString().split('T')[0])
+
   return {
     slug,
     title: data.title || extractTitleFromContent(content),
-    date: data.date || extractDateFromContent(content) || new Date().toISOString().split('T')[0],
+    date: dateStr,
     description: data.description || extractDescriptionFromContent(content),
     contentHtml,
   }

@@ -1,19 +1,33 @@
-# AgentHub — 完整产品设计文档
-**v0.2 | 2026-03-09**
+# OpenBuild Agentforum — 完整产品设计文档
+**v0.3 | 2026-03-10**
+
+| 版本 | 日期 | 主要变更 |
+|------|------|---------|
+| v0.1 | 2026-03-09 | 初稿 |
+| v0.2 | 2026-03-09 | 完整功能详细设计 |
+| v0.3 | 2026-03-10 | 核心定位升级：从"数据基础设施"到"生态基础设施"，核心命题聚焦项目生态开发者增长；产品名统一为 Agentforum |
 
 ---
 
 ## 一、产品概述
 
 ### 定位
-Web3 生态开发者的 AI co-pilot 基础设施。
 
-开发者通过自己的 AI Agent 接入平台，获取生态资讯、发现任务机会、积累可信贡献记录。平台不托管 Agent，而是作为 Agent 的数据源和任务层。
+> **Agent 时代的 Web3 生态基础设施**
+
+Agentforum 解决的核心问题：**在 Agent 时代，Web3 项目生态如何持续吸引、激活、留住开发者，实现可持续的开发者增长飞轮。**
+
+- **面向项目方：** 一键拥有"Agent 时代的开发者增长引擎"——生态信息、任务机会、开发者口碑全部进入开发者 Agent 的信息流，持续输送高质量贡献者
+- **面向开发者：** 你的 Agent 成为最懂 Web3 生态的助手——帮你发现机会、匹配任务、积累可信的贡献记录，形成复利增长的生态身份
+
+平台不托管 Agent，而是作为 Agent 的数据源、任务层和 Reputation 层，构建开发者与项目生态之间的持续连接。
+
+MCP Server（数据 Pipeline）是**入口钩子**——让开发者第一次接入的理由；留住他们的是 Reputation 积累和生态关系网络。
 
 ### 核心用户
-- **开发者/贡献者**：Web3 生态的构建者，希望用 Agent 减少信息噪音、高效参与生态
-- **项目方**：需要向开发者分发任务（Bounty/Grant/Hackathon），希望找到能力匹配的贡献者
-- **生态基金**：希望量化生态开发者活跃度和质量
+- **开发者/贡献者**：Web3 生态的构建者，希望用 Agent 减少信息噪音、高效参与生态、积累可信身份
+- **项目方/生态**：需要持续吸引优质开发者参与（Bounty/Grant/Hackathon），希望在 Agent 时代保持开发者增长势能
+- **生态基金**：希望量化生态开发者活跃度和质量，辅助投资和生态建设决策
 
 ---
 
@@ -21,15 +35,15 @@ Web3 生态开发者的 AI co-pilot 基础设施。
 
 ### 2.1 接入方式
 
-平台提供两种接入方式，覆盖不同技术水平的开发者：
+平台提供三种接入方式，覆盖不同技术水平的开发者：
 
 #### 方式 A：MCP Server（推荐，面向有技术能力的开发者）
 ```json
 // 加入 Claude Desktop / Cursor / Windsurf 的 mcp 配置
 {
   "mcpServers": {
-    "agenthub": {
-      "url": "https://mcp.agenthub.ai/sse",
+    "agentforum": {
+      "url": "https://mcp.agentforum.ai/sse",
       "headers": {
         "Authorization": "Bearer <your_agent_token>"
       }
@@ -41,7 +55,7 @@ Web3 生态开发者的 AI co-pilot 基础设施。
 
 #### 方式 B：REST API（面向自建 Bot/Agent 的开发者）
 ```
-Base URL: https://api.agenthub.ai/v1
+Base URL: https://api.agentforum.ai/v1
 Auth: Bearer Token (在平台生成)
 ```
 适合自建 Telegram Bot、Discord Bot 或自定义 Agent 框架的开发者。
@@ -90,7 +104,7 @@ Auth: Bearer Token (在平台生成)
 
 ```
 Token 格式示例：
-ah_live_v1_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+af_live_v1_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Token 权限范围：
 - read:feeds        读取生态资讯
@@ -140,7 +154,7 @@ find_bounties
 
 get_bounty_detail
   参数: bounty_id
-  返回: 完整任务描述、要求、评审标准、历史申请者数量
+  返回: 完整任务描述、要求、评审标准、历史申请者数量、项目方评分
 
 apply_bounty
   参数: bounty_id, message(申请说明)
@@ -150,6 +164,10 @@ apply_bounty
 get_grants
   参数: ecosystem, stage(idea/mvp/growth), amount_range
   返回: Grant 机会列表
+
+get_project_reputation
+  参数: project_name 或 project_id
+  返回: 项目方的社区评分、历史评价摘要、完成任务数
 ```
 
 #### Profile 类 Tools
@@ -174,16 +192,20 @@ update_preferences
 ### 3.1 数据层分工
 
 ```
-┌─────────────────────────────────────────────────────┐
-│                    AgentHub 数据层                    │
-├──────────────┬──────────────────┬───────────────────┤
-│  信息数据     │   任务数据        │   身份/能力数据    │
-│              │                  │                   │
-│  Web3Hub     │  OpenBuild        │  Web3Insight      │
-│  - RSS 聚合  │  - Bounty         │  - GitHub 分析    │
-│  - AI 处理   │  - Hackathon      │  - 链上数据       │
-│  - 分类标签  │  - Grant          │  - 贡献记录       │
-└──────────────┴──────────────────┴───────────────────┘
+┌──────────────────────────────────────────────────────┐
+│              Agentforum 生态基础设施层                  │
+├──────────────┬───────────────────┬───────────────────┤
+│  信息数据     │   任务数据          │   身份/能力数据    │
+│              │                   │                   │
+│  Web3Hub     │  OpenBuild         │  Web3Insight      │
+│  - RSS 聚合  │  - Bounty          │  - GitHub 分析    │
+│  - AI 处理   │  - Hackathon       │  - 链上数据       │
+│  - 分类标签  │  - Grant           │  - 贡献记录       │
+└──────────────┴───────────────────┴───────────────────┘
+         ↓                ↓                  ↓
+         └────────────────┴──────────────────┘
+                          ↓
+              开发者增长飞轮（吸引→激活→留存）
 ```
 
 ### 3.2 核心数据模型
@@ -237,8 +259,18 @@ skills_required: string[]
 difficulty: 1-5
 status: open | in_progress | completed
 deadline
-apply_count
+apply_count, view_count, agent_query_count   # 社区关注度指标
 created_at
+```
+
+#### ProjectReputation（项目方口碑）
+```
+project_id, project_name
+avg_rating: float (1-5)
+total_reviews: number
+reviews: [{developer_id, rating, comment, bounty_id, created_at}]
+completed_bounties: number
+repeat_hire_rate: float  # 重复雇用同一开发者的比率
 ```
 
 #### Contribution（贡献记录）
@@ -247,7 +279,7 @@ id, developer_id, bounty_id
 status: applied | accepted | submitted | approved | rejected
 submitted_at, approved_at
 reward_paid: boolean
-回写到 Web3Insight: boolean
+synced_to_web3insight: boolean
 ```
 
 ---
@@ -257,7 +289,7 @@ reward_paid: boolean
 ### 4.1 正常申请流程
 ```
 Agent 调用 find_bounties
-    → 平台基于 profile 返回匹配列表
+    → 平台基于 profile 返回匹配列表（含项目方评分）
     → Agent 展示给开发者
     → 开发者告诉 Agent "申请第2个"
     → Agent 调用 apply_bounty（带 message）
@@ -281,18 +313,21 @@ Agent 调用 find_bounties
 ```
 项目方审核通过
     → OpenBuild 释放 Bounty 奖励
-    → AgentHub 记录贡献
+    → Agentforum 记录贡献
     → 同步到 Web3Insight profile
     → 开发者 reputation_score 更新
-    → 下次任务匹配精准度提升
+    → 开发者对项目方进行评价（1-5星 + 文字）
+    → 项目方口碑数据更新
+    → 下次任务匹配精准度提升（增长飞轮正向循环）
 ```
 
 ---
 
 ## 五、Reputation 系统设计
 
-### 5.1 分数构成
+### 5.1 开发者 Reputation
 
+**分数构成：**
 ```
 reputation_score = 
     github_score (30%)      # GitHub 贡献质量
@@ -301,12 +336,23 @@ reputation_score =
   + community_score (15%)   # OpenBuild 社区参与
 ```
 
-### 5.2 Bounty Score 计算
+**Bounty Score 计算：**
 - 完成数量（基础分）
 - 项目方评分（1-5星，权重最高）
 - 完成速度（在截止日前提交加分）
 - 任务难度系数
 - 重复合作加分（项目方二次选择同一开发者）
+
+### 5.2 项目方 Reputation（社区信号）
+
+帮助开发者判断"这个项目靠不靠谱"，把口碑数字化：
+
+- **关注度指标**：每个 Bounty 显示社区关注度（浏览次数、收藏数、Agent 查询次数）
+- **项目方评分**：开发者完成任务后评分（星级 + 文字），公开可见
+- **历史记录**：项目方累计发布任务数、完成率、平均响应时长
+- **个性化订阅**：开发者可配置自己的 Agent 只关注特定项目方/生态
+
+**冷启动处理：** 初期项目方无评价数据时，显示"新项目方"标记 + OpenBuild 已验证背书，逐步积累口碑数据。
 
 ### 5.3 Profile 公开与授权
 ```
@@ -323,7 +369,7 @@ reputation_score =
 
 ### 6.1 任务发布（在 OpenBuild 完成）
 现有流程不变，新增：
-- "同步到 AgentHub" 勾选项（默认开启）
+- "同步到 Agentforum" 勾选项（默认开启）
 - 技能标签结构化填写（用于 Agent 匹配）
 - "Agent-Friendly" 标记（表示欢迎 AI 辅助申请）
 
@@ -334,9 +380,15 @@ reputation_score =
 - 邀请特定开发者参与任务（Push Bounty）
 
 ### 6.3 申请者管理
-- 查看每个申请者的 AgentHub profile
+- 查看每个申请者的 Agentforum profile
 - 对比多个申请者的技能分布
 - 一键联系（通过 OpenBuild 消息系统）
+
+### 6.4 生态增长看板（项目方专属）
+- 本生态开发者数量趋势（周/月）
+- Bounty 完成率和开发者留存率
+- 高质量贡献者列表（可 Push 邀请）
+- 与其他生态的开发者重叠度分析（发现潜在受众）
 
 ---
 
@@ -377,7 +429,7 @@ Level 3（参考）:  聚合信息、转载内容
     → AI 打分（相关性、质量、时效性）
     → 分类标签（生态、类型）
     → 摘要生成（100字内）
-    → 入库（分数>=阈值才进入 AgentHub）
+    → 入库（分数>=阈值才进入 Agentforum）
 ```
 
 ### 8.3 Anti-Spam
@@ -413,7 +465,7 @@ Level 3（参考）:  聚合信息、转载内容
 
 ### Phase 1：数据 API 层（4周）
 - Web3Hub 数据库新增 Agent-friendly API 接口
-- OpenBuild Bounty 数据同步到 AgentHub 数据层
+- OpenBuild Bounty 数据同步到 Agentforum 数据层
 - 开发者注册 + Token 生成系统
 - 基础 REST API（信息查询 + Bounty 查询）
 
@@ -422,16 +474,18 @@ Level 3（参考）:  聚合信息、转载内容
 - 接入 World ID / Gitcoin Passport 验证
 - 任务申请流程（含人工确认）
 - Telegram Bot 通知
+- 项目方口碑系统上线（社区信号）
 
 ### Phase 3：Reputation 层打通（6周）
 - Web3Insight Profile API 内部对接
 - 贡献记录自动回写
 - 开发者 Profile 页面
 - 项目方开发者发现功能
+- 生态增长看板（项目方专属）
 
 ### Phase 4：优化与商业化（持续）
 - 语义搜索优化
-- 推荐算法迭代
+- 推荐算法迭代（开发者增长飞轮量化）
 - API 收费体系上线
 - 更多生态数据源接入
 
@@ -439,7 +493,7 @@ Level 3（参考）:  聚合信息、转载内容
 
 ## 十一、待决策问题
 
-1. **产品名称**：独立品牌（AgentHub / DevAgent.xyz）还是 OpenBuild 子品牌（OpenBuild Agent）？
+1. **产品名称**：独立品牌（Agentforum.ai）还是 OpenBuild 子品牌（OpenBuild Agentforum）？
    - 独立品牌：有更大想象空间，不绑定 OpenBuild
    - 子品牌：冷启动更快，复用 OpenBuild 信任背书
 
@@ -449,8 +503,10 @@ Level 3（参考）:  聚合信息、转载内容
 
 4. **Web3Insight 对接优先级**：Phase 1 能否就同步基础 profile 数据，不等到 Phase 3？
 
-5. **项目方准入**：AgentHub 上的任务是只来自 OpenBuild 已认证项目方，还是开放给任意项目方发布？
+5. **项目方准入**：Agentforum 上的任务是只来自 OpenBuild 已认证项目方，还是开放给任意项目方发布？
+
+6. **生态增长看板**：作为项目方付费功能还是免费提供以吸引生态合作？
 
 ---
 
-*方案版本 v0.2 | 待 Ian 审阅后推进技术架构评估*
+*方案版本 v0.3 | OpenBuild Agentforum — Agent 时代的 Web3 生态基础设施*
