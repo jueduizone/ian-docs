@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #0d1117;
+  color: #e6edf3;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Prose styles for markdown content */
+.prose {
+  color: #c9d1d9;
+  line-height: 1.75;
+}
+
+.prose h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #f0f6fc;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #30363d;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f0f6fc;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #21262d;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e6edf3;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e6edf3;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+}
+
+.prose strong {
+  color: #f0f6fc;
+  font-weight: 600;
+}
+
+.prose a {
+  color: #58a6ff;
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: #79c0ff;
+}
+
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose li {
+  margin-bottom: 0.25rem;
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+.prose blockquote {
+  border-left: 4px solid #388bfd;
+  padding: 0.5rem 1rem;
+  margin: 1.5rem 0;
+  background: #161b22;
+  border-radius: 0 6px 6px 0;
+}
+
+.prose blockquote p {
+  color: #8b949e;
+  font-style: italic;
+  margin: 0;
+}
+
+.prose code:not(pre code) {
+  background: #161b22;
+  color: #79c0ff;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  border: 1px solid #30363d;
+}
+
+.prose pre {
+  background: #161b22 !important;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.875rem;
+  background: transparent;
+  padding: 0;
+  border: none;
+  color: #e6edf3;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.prose thead {
+  background: #161b22;
+}
+
+.prose th {
+  text-align: left;
+  padding: 0.6rem 1rem;
+  color: #e6edf3;
+  font-weight: 600;
+  border: 1px solid #30363d;
+}
+
+.prose td {
+  padding: 0.6rem 1rem;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+}
+
+.prose tr:nth-child(even) td {
+  background: #161b22;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid #30363d;
+  margin: 2rem 0;
+}
+
+/* Code highlight - github dark */
+.hljs {
+  background: transparent !important;
+  color: #e6edf3;
+}
+
+.hljs-keyword { color: #ff7b72; }
+.hljs-string { color: #a5d6ff; }
+.hljs-comment { color: #8b949e; font-style: italic; }
+.hljs-number { color: #79c0ff; }
+.hljs-function { color: #d2a8ff; }
+.hljs-title { color: #d2a8ff; }
+.hljs-params { color: #c9d1d9; }
+.hljs-built_in { color: #ffa657; }
+.hljs-type { color: #79c0ff; }
+.hljs-literal { color: #79c0ff; }
+.hljs-variable { color: #e6edf3; }
+.hljs-attr { color: #79c0ff; }
+.hljs-tag { color: #7ee787; }
+.hljs-meta { color: #8b949e; }
+.hljs-symbol { color: #a5d6ff; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0d1117; }
+::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #484f58; }
