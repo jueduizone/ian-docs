@@ -1,704 +1,831 @@
-# OpenBuild Agentforum — Agent 时代的开发者生态基础设施
-**产品文档 v1.1 | 2026-03-10**
+# AgentRel — Agent 时代的 Web3 生态知识基础设施
+**产品文档 v2.0 | 2026-03-15**
 
 | 版本 | 日期 | 主要变更 |
 |------|------|---------|
 | v0.1–v0.6 | 2026-03-09 | 初稿迭代，MCP 定位、产品命名、功能设计 |
-| v0.7 | 2026-03-10 | 核心定位升级：生态基础设施，开发者增长飞轮 |
-| v1.0 | 2026-03-10 | 合并产品方案与详细设计文档 |
-| v1.1 | 2026-03-10 | Reputation 拆分为 Agent Reputation + Developer Reputation；去除语义搜索（非现有能力）；补充查缺补漏；新增斯坦福小镇式 UI 概念 |
+| v0.7–v1.1 | 2026-03-10 | 核心定位：生态基础设施，开发者增长飞轮；双重 Reputation 体系 |
+| v2.0 | 2026-03-15 | **重大升级**：产品改名 AgentRel；新增 toB 服务模式；确立"知识包"核心定位；配置驱动架构设计；明确 Monad/Solana 为 Phase 1 目标 |
+| v2.1 | 2026-03-15 | 新增 toD（开发者端）完整设计：两类用户分层、免费策略、Reputation 留存机制、分发渠道、核心指标；ToD UX 用户旅程详细设计 |
+| v2.2 | 2026-03-15 | 输出格式扩展：MCP / Skill / llms.txt / REST API 四种格式并行；技术架构文档独立（agentforum-tech-arch.md）；用户群扩展至 Claude Code / OpenClaw 用户 |
 
 ---
 
 ## 一、背景与机会
 
-### 核心问题：Agent 时代，项目生态如何实现开发者增长？
+### 核心判断：DevRel → AgentRel 时代正在发生
 
-Web3 项目生态面临结构性挑战：
-1. **吸引难**：开发者获取成本高，信息分散在 Twitter、Discord、各项目官网，优质开发者注意力碎片化
-2. **留存难**：开发者来了、做了任务，但没有积累感，项目方和开发者之间没有持续关系
-3. **增长难**：生态开发者规模无法形成飞轮——没有可信的能力评估，没有社区口碑，没有 Agent 时代的增长杠杆
+开发者与工具、生态之间的中间层正在被 AI Agent 取代。过去是：**开发者查文档 → 看教程 → 试 API**。现在是：**开发者 prompt → Agent 查文档/调 API/写代码**。
 
-### Agent 时代的范式转变
+这意味着：**生态能不能被 Agent "理解"，决定了你在这波开发者里的存在感。**
 
-开发者不再直接刷信息、手动找任务——他们通过**自己的 AI Agent** 完成这一切。谁成为开发者 Agent 的首选数据源，谁就掌握了下一代开发者流量入口。
+传统 DevRel 的触达路径：`DevRel → 开发者`
 
-这不只是工具问题，是**生态争夺战**：哪个平台能帮项目方在 Agent 时代持续吸引、激活、留住开发者，哪个平台就成为不可替代的生态基础设施。
+Agent 时代的新路径：`DevRel → Agent → 开发者`
+
+所以 DevRel 的工作重心正在发生迁移——不再只是写博客、做 Workshop，而是**让你的生态知识进入开发者 Agent 的上下文**。谁能做到这一点，谁就掌握下一代开发者流量入口。
+
+### 现状：Web3 MCP 生态严重不均衡
+
+**已有官方 MCP 的（少数）：**
+- Chainlink：开发者 MCP，访问 CCIP/Data Feeds 文档 + 代码示例
+- Chainstack：RPC 调用 + 文档查询
+- Tatum：130+ 链区块/交易/余额查询
+- Thirdweb：链上执行 + 文档查询
+
+**无官方 MCP 的（绝大多数）：**
+- Uniswap、Aave、MakerDAO 等 DeFi 协议：无官方 MCP
+- Ethereum、Solana、Base 等主链：协议层动态无 MCP
+- Dune Analytics、Nansen 等数据平台：第三方零散实现
+
+**真正的空白地带：**
+- 跨链、跨协议的动态信息聚合（治理/安全/Bounty/生态更新）
+- 开发文档 + 基础知识 + 实时动态的完整知识包
+- Agent 可消费的、有实时性保证的 Web3 知识基础设施
 
 ### 时机
 
-MCP（Model Context Protocol）的普及让 Agent 调用外部数据源成为标准操作。现在没有任何平台真正解决"项目生态 × 开发者增长 × Agent 时代"这个命题——这是先发窗口。
+MCP 协议普及让 Agent 调用外部数据源成为标准操作（Cursor/Claude Desktop/Windsurf 等主流工具原生支持）。`llms.txt` 标准出现，文档 AI 可读性成为新的基础设施需求。没有任何平台真正解决"Web3 生态 × Agent 可消费知识"这个命题——这是先发窗口。
 
 ---
 
 ## 二、产品定位
 
-> **OpenBuild Agentforum = Agent 时代的开发者生态基础设施**
+> **AgentRel = Agent 时代 Web3 生态的知识基础设施**
 
-**核心价值：** 帮助 Web3 项目生态在 Agent 时代持续吸引、激活、留住开发者，构建可持续增长飞轮。
+### 核心价值主张
 
-**面向项目方：** 一键拥有"Agent 时代的开发者增长引擎"——你的生态信息、任务机会、开发者口碑，全部进入开发者 Agent 的信息流，持续输送高质量贡献者。
+**面向项目方（ToB 核心）：**
+你的生态文档、技术知识、最新动态，全部结构化并以 MCP endpoint 形式对外暴露——让全球使用 Cursor/Claude/自建 Agent 的开发者，在写代码时随时能调用你的生态知识。这是 Agent 时代的 DevRel 基础设施。
 
-**面向开发者：** 你的 Agent 成为最懂 Web3 生态的助手——帮你发现机会、匹配任务、积累可信的贡献记录，在每个生态都有拿得出手的身份。
+**面向开发者（ToC 飞轮）：**
+你的 Agent 成为最懂 Web3 生态的助手——接一个 MCP endpoint，获取主流 Web3 生态的文档/动态/Bounty，不需要自建任何爬虫和多源适配。
 
-MCP Server（数据 Pipeline）是**入口钩子**——让开发者有理由第一次接入，而留住他们的是 Reputation 积累和生态关系网络。
+### 产品是什么
 
-不是 Agent 平台（不托管用户的 Agent），而是让开发者的 Agent 能够：
-- 实时获取生态信息（无需自建爬虫和多源适配）
-- 发现并精准匹配合适任务
-- 积累可信的贡献记录和双重 Reputation
+AgentRel 为每个 Web3 生态提供一套完整的 **"Agent 可消费知识包"**，三层结构：
 
-**一句话**：Agent 时代，让项目生态与开发者持续共同成长。
+```
+┌─────────────────────────────────────┐
+│  Layer 3：生态动态（实时）             │
+│  升级公告、治理提案、安全告警、Bounty  │
+├─────────────────────────────────────┤
+│  Layer 2：基础知识（持续更新）         │
+│  概念解释、架构设计、最佳实践          │
+├─────────────────────────────────────┤
+│  Layer 1：开发文档（保鲜同步）         │
+│  官方文档、API Reference、示例代码    │
+└─────────────────────────────────────┘
+```
 
-### 核心用户
-- **开发者/贡献者**：Web3 生态的构建者，希望用 Agent 减少信息噪音、高效参与生态、积累可信身份
-- **项目方/生态**：需要持续吸引优质开发者参与（Bounty/Grant/Hackathon），希望在 Agent 时代保持开发者增长势能
-- **生态基金**：希望量化生态开发者活跃度和质量，辅助投资和生态建设决策
+三层缺一不可。只有文档，Agent 不知道协议有没有重大变更；只有动态，Agent 没有基础知识做判断。完整的知识包才能让 Agent 真正"理解"一个生态。
+
+### 产品不是什么
+
+- 不是 Agent 平台（不托管用户的 Agent）
+- 不是文档搜索工具（不只是静态索引）
+- 不是任务市场（任务是数据，不是平台核心）
+- 不是 RPC 网关（基础设施层已有 Tatum/Chainstack，不竞争）
 
 ---
 
-## 三、核心资产（已有）
+## 三、商业模式（ToB 为主）
 
-| 资产 | 角色 | 现状 |
+### 目标客户
+
+| 客户类型 | 痛点 | 支付意愿 |
+|---------|------|--------|
+| L1/L2 基金会 | 开发者增长压力，但没能力自建 AgentRel 基础设施 | 高，有 DevRel 预算和 grant 资金 |
+| DeFi 协议方 | 文档乱、更新慢，开发者集成体验差 | 中高，直接影响 TVL 和集成数量 |
+| 开发工具公司 | 希望进入开发者 Agent 的工具链 | 中，视增长效果付费 |
+
+### 服务层级
+
+**基础版（SaaS，标准化）**
+- 客户提供：官方文档 URL、GitHub repo、官方社媒账号
+- AgentRel 产出：托管的 MCP endpoint + 自动同步更新 + 基础 Dashboard
+- 定价：按生态/月订阅（类似 GitBook 托管文档的逻辑）
+
+**进阶版（定制知识包）**
+- 三层完整知识包：文档 + 基础知识库 + 实时动态
+- 推送进主流 Agent 平台注册表（Cursor Directory、Claude MCP list）
+- 对客户的价值：让 10 万个用 Cursor 的开发者的 Agent 里默认有他们的生态知识
+
+**旗舰版（AgentRel 整体策略）**
+- 知识包 + 分发渠道 + 效果数据看板
+- 类似 OpenBuild 帮生态做开发者增长，但目标受众从人变成了 Agent
+- 联合运营，按效果收费
+
+### OpenBuild 优势
+
+OpenBuild 现有生态客户关系是核心资产。把现有客户从"帮你做 Hackathon/课程"升级成"帮你做 AgentRel"——客单价更高，且这件事他们自己做不了（没有技术积累）。
+
+### 最快验证路径
+
+拿一个现有 OpenBuild 合作生态，先**免费**帮他们做完整的 MCP endpoint，跑通后：
+- 数据拿去做销售（"接入后 X 个开发者 Agent 在使用"）
+- 成为标准服务套餐的案例
+
+---
+
+## 四、Phase 1 目标生态
+
+### Monad（先谈商务）
+
+**理由：** 主网刚启动，生态开发者大量涌入，文档仍在建设期。这正是最需要 AgentRel 的阶段。Monad 基金会有 grant 预算、有增长压力，先接触 DevRel 团队谈合作 MOU，可以获得内部文档资源和联合推广。
+
+**知识包内容：**
+```
+核心概念
+├── 并行 EVM 原理（与标准 EVM 的差异）
+├── 异步执行模型对合约的影响
+├── 状态冲突检测机制
+└── 与 Ethereum 的兼容性边界
+
+开发实践
+├── 开发环境搭建（Hardhat/Foundry on Monad）
+├── 并行安全的合约写法 pattern
+├── 常见踩坑（reentrancy 在并行执行下的新问题）
+└── Testnet/Mainnet RPC endpoint
+
+生态动态
+├── 官方 blog + 技术更新（daily sync）
+├── 生态项目进展
+├── Grant 申请动态
+└── 核心开发者讨论（Twitter/Discord）
+```
+
+### Solana（先建产品）
+
+**理由：** 开发者基数大，`web3.js v1 → v2` 有大量 breaking change 导致旧教程大量过期，官方 docs + Anchor docs + Solana Cookbook 各自为政，混乱程度是 Web3 开发工具里最高的。Agent 辅助价值最大，也最容易验证产品效果。
+
+**知识包内容：**
+```
+核心概念
+├── Accounts model 详解（vs EVM storage）
+├── PDA（Program Derived Address）
+├── CPI（Cross-Program Invocation）
+└── Rent / Lamports 机制
+
+开发工具
+├── Anchor framework（最新版本，跟踪 breaking changes）
+├── web3.js v2 迁移指南（重点标注 v1 vs v2 差异）
+├── Solana CLI 常用命令
+└── Metaplex（NFT 标准）
+
+实时动态
+├── 网络状态（近期是否有拥堵/outage）
+├── 协议升级动态
+├── 生态热点项目
+└── Bounty / grant 信息
+```
+
+### Phase 1 完整 MCP 覆盖清单
+
+**开发工具层（最高频）：**
+- Hardhat / Foundry
+- OpenZeppelin（合约标准库）
+- Ethers.js / Viem
+- Wagmi / RainbowKit
+
+**主链生态包：**
+- Ethereum（EIP 动态 + 客户端升级 + 生态治理）
+- Solana（见上）
+- Monad（见上）
+- Base（OP Stack 文档 + Coinbase 生态）
+- Arbitrum（Stylus/Nitro 技术文档）
+
+**DeFi 协议层：**
+- Uniswap v4（hooks 开发文档，变化最大）
+- Aave（借贷协议集成）
+- Chainlink（预言机接入，补充官方 MCP 覆盖不完整的部分）
+- LayerZero（跨链消息开发）
+- EigenLayer（AVS 开发文档，热点且文档乱）
+
+**安全 + Bounty（差异化最强，无人在做）：**
+- Immunefi Bounty 实时列表
+- 主流协议审计报告库
+- 链上安全事件追踪
+
+---
+
+## 五、核心架构：配置驱动，不写定制代码
+
+### 设计原则
+
+扩展第 10 个生态的成本要和扩展第 2 个一样低。**每个生态 = 一份配置文件，不允许硬编码任何生态特定逻辑。**
+
+### 数据源配置格式
+
+```yaml
+# monad.yaml
+id: monad
+name: Monad
+category: l1-evm
+
+sources:
+  docs:
+    - url: https://docs.monad.xyz
+      type: gitbook        # gitbook/docusaurus/mkdocs/github-pages/custom
+      sync: daily
+      priority: high
+  github:
+    - repo: monad-labs/monad-docs
+      track: commits       # 追踪文档变更
+      branch: main
+  blog:
+    - url: https://monad.xyz/blog
+      type: rss
+      sync: hourly
+  twitter:
+    - handle: monad_xyz
+      filter: technical    # 过滤营销内容，只保留技术动态
+  discord:
+    - channel: dev-announcements
+      type: announcement_only
+
+schema:
+  tags: [evm, parallel-execution, l1]
+  language: solidity
+  related: [ethereum, arbitrum]
+
+quality:
+  trust_level: official    # official/community/third-party
+  review_required: true    # 初次导入需人工 review
+```
+
+### Pipeline 架构
+
+```
+Config（YAML）
+    ↓
+采集层（按 type 路由到对应 Adapter）
+    ↓
+清洗层（通用 Pipeline：去重 / 内容提取 / 格式归一化）
+    ↓
+处理层（AI：分类 / 摘要 / 质量评分 / 向量化）
+    ↓
+知识库（统一 Schema，带质量元数据）
+    ↓
+MCP endpoint（自动生成，统一接口）
+```
+
+### Adapter 层
+
+文档类型就那几种，写 5-6 个 Adapter 覆盖 90% 情况：
+
+| Adapter | 覆盖场景 |
+|---------|--------|
+| `gitbook` | GitBook 托管文档（大多数 Web3 项目） |
+| `docusaurus` | Docusaurus（React 生态、部分 Web3 项目） |
+| `mkdocs` | MkDocs（Python 生态，部分区块链项目） |
+| `github-pages` | GitHub Pages 静态文档 |
+| `rss/atom` | 博客、更新日志 |
+| `twitter-api` | 官方 Twitter 技术内容过滤 |
+| `discord-webhook` | Discord 公告频道（需项目方授权） |
+
+新生态的文档大概率命中已有 Adapter，直接复用，不写新代码。
+
+### 内容质量元数据
+
+每条内容都带质量评分，Agent 自己判断可信度：
+
+```json
+{
+  "content": "...",
+  "metadata": {
+    "source": "official_docs",
+    "trust_level": "official",
+    "freshness_score": 0.95,
+    "published_at": "2026-03-15T10:00:00Z",
+    "last_verified_at": "2026-03-15T18:00:00Z",
+    "completeness_score": 0.87,
+    "ecosystem": "monad",
+    "layer": "docs"
+  }
+}
+```
+
+### 变更追踪（控制成本的关键）
+
+不做全量爬取，只处理 diff：
+
+- 文档：追踪 GitHub commit hash，只重新处理变更的页面
+- 博客：RSS/Atom 增量拉取
+- 动态：按更新频率设置轮询间隔（技术公告 hourly，静态文档 daily）
+
+### 初期接入成本
+
+| 步骤 | 时间 | 人工 |
 |------|------|------|
-| **Web3Hub** | 生态信息数据管道 | 已跑通，每天采集 + AI 处理 |
-| **OpenBuild** | 任务发布方 + 开发者社区 | 真实用户、项目方关系 |
-| **Web3Insight.ai** | 开发者能力认证 + Reputation | 已有 Monad/Mantle/CAMP 背书 |
-
-三者打通形成完整飞轮，竞争对手无法短期复制。
-
----
-
-## 四、产品架构
-
-```
-┌─────────────────────────────────────────────────┐
-│              开发者的 Agent                        │
-│   (Claude / Cursor / 自建 Bot)                    │
-└──────────────┬──────────────────────────────────┘
-               │ MCP / REST API / Webhook
-┌──────────────▼──────────────────────────────────┐
-│           OpenBuild Agentforum 平台               │
-│                                                   │
-│  ┌──────────┐  ┌──────────┐  ┌────────────────┐  │
-│  │ 信息中心  │  │ 任务市场  │  │  Reputation 层 │  │
-│  │ Feed API │  │ Bounty   │  │  Agent Rep.    │  │
-│  │ 资讯聚合  │  │ Grant    │  │  Developer Rep.│  │
-│  │          │  │ Hackathon│  │  (Web3Insight) │  │
-│  └────┬─────┘  └────┬─────┘  └───────┬────────┘  │
-└───────┼─────────────┼────────────────┼───────────┘
-        │             │                │
-   ┌────▼─────┐  ┌────▼──────┐  ┌─────▼──────┐
-   │ Web3Hub  │  │ OpenBuild │  │Web3Insight │
-   │ 数据管道  │  │ 任务数据   │  │ 开发者数据  │
-   └──────────┘  └───────────┘  └────────────┘
-         ↓              ↓               ↓
-         └──────────────┴───────────────┘
-                        ↓
-           开发者增长飞轮（吸引→激活→留存）
-```
+| 写数据源 YAML 配置 | 30 分钟 | 是 |
+| 初次导入 + 质量 review | 1-2 小时 | 是 |
+| 后续自动同步 | 0 | 否（自动） |
+| 数据源结构变更报警处理 | 按需 | 是（偶发） |
 
 ---
 
-## 五、Agent 接入设计
+## 六、数据来源
 
-### 5.1 接入方式
+### Web3Hub（已有，作为 AgentRel 的动态数据层）
 
-#### 方式 A：MCP Server（推荐，面向有技术能力的开发者）
+Web3Hub 的采集 + AI 处理 pipeline 直接复用为 AgentRel 的动态信息数据源之一：
+- 每天采集 10+ 数据源
+- AI 评分（developer_relevance、quality）
+- 去重、分类、摘要生成
+
+Web3Hub → AgentRel 的接入：增加一个 API 接口，按 ecosystem 标签查询高质量内容。
+
+### 待建：文档爬虫 + Diff 追踪
+
+专门处理静态/半静态文档的变更追踪，独立于 Web3Hub 的新闻采集器。
+
+### 规划中：社区知识沉淀
+
+Discord / Forum / GitHub Issues 的知识挖掘——最难、成本最高，但也是最有价值的差异化数据源。Phase 2-3 再做。
+
+---
+
+## 七、多格式输出设计（MCP 只是其中之一）
+
+### 核心设计原则
+
+AgentRel 是**知识源**，不是"MCP 提供商"。知识统一存储，输出格式按不同 Agent 平台需求适配——MCP 被诟病太重，不能是唯一路径。
+
+```
+统一知识库
+    ↓
+输出适配层
+    ├── MCP endpoint    → Claude Desktop / Cursor / Windsurf
+    ├── Skill 包        → OpenClaw / Claude Code / 自建 Agent
+    ├── llms.txt        → 任何 LLM（最轻量）
+    └── REST API        → 自建 Bot / LangChain / RAG pipeline
+```
+
+### 各格式适用场景
+
+| 格式 | 适用平台 | 特点 |
+|------|--------|------|
+| **MCP Server** | Claude Desktop、Cursor、Windsurf | 重度集成，实时调用，需跑服务进程 |
+| **Skill 包** | OpenClaw、Claude Code、各类 Agent 框架 | 轻量，纯文件，fork 即用，GitHub 天然传播 |
+| **llms.txt** | 任何 LLM | 零成本消费，配合 system prompt，项目方标准配置 |
+| **REST API** | 自建 Telegram Bot、LangChain、自定义 Agent | 完全灵活，开发者自己控制调用逻辑 |
+
+### 为什么 Skill 很重要
+
+- **零部署成本**：不需要跑服务进程，纯文本 + 脚本
+- **离线可用**：静态知识文件可离线使用
+- **GitHub 传播**：每个生态的 Skill 包独立仓库，star/fork/PR 是天然分发渠道
+- **OpenClaw / Claude Code 用户**：这批用户不会配 MCP，但会用 `clawhub install agentrel/solana`
+
+### Skill 包结构
+
+```
+agentrel-skills/solana/
+├── SKILL.md                # 技能说明（OpenClaw AgentSkills 规范）
+├── knowledge/
+│   ├── core-concepts.md    # 核心概念（自动从知识库生成，每周更新）
+│   ├── dev-setup.md
+│   ├── common-patterns.md
+│   └── gotchas.md
+├── scripts/
+│   ├── get-updates.sh      # 调 AgentRel API 获取最新动态
+│   ├── get-bounties.sh
+│   └── check-security.sh
+└── references/
+    ├── api-quick-ref.md
+    └── error-codes.md
+```
+
+### llms.txt 作为即时 toB 价值
+
+帮项目方自动生成并托管 `llms.txt` + `llms-full.txt`，托管于 `agentrel.ai/<ecosystem>/llms.txt` 或客户自己域名。动态信息每小时自动刷新。这是 toB 服务里**最快交付的即时价值**，项目方不需要做任何开发。
+
+详细接口设计见《AgentRel 技术架构文档》。
+
+---
+
+## 八、开发者端（ToC 飞轮）
+
+### 接入方式
+
 ```json
 {
   "mcpServers": {
-    "agentforum": {
-      "url": "https://mcp.agentforum.ai/sse",
+    "agentrel": {
+      "url": "https://mcp.agentrel.ai/sse",
       "headers": {
-        "Authorization": "Bearer <your_agent_token>"
+        "Authorization": "Bearer <api_key>"
       }
     }
   }
 }
 ```
-加入 Claude Desktop / Cursor / Windsurf 配置后，Agent 可直接调用平台所有 Tool，5分钟内完成接入。
 
-#### 方式 B：REST API（面向自建 Bot/Agent 的开发者）
-```
-Base URL: https://api.agentforum.ai/v1
-Auth: Bearer Token (在平台生成)
-```
-适合自建 Telegram Bot、Discord Bot 或自定义 Agent 框架的开发者。
+### Tool 列表
 
-#### 方式 C：Webhook 推送（被动接收，无需主动轮询）
-开发者注册 Webhook URL，平台根据 profile 主动推送匹配的任务和资讯。
-
----
-
-### 5.2 注册与认证流程
+#### 知识查询类
 
 ```
-开发者注册账号
-    → 绑定身份（GitHub + 钱包）
-    → 真人验证（第三方）
-    → 生成 Agent Token
-    → 配置 Agent 接入
-    → Web3Insight 生成初始 Developer Profile
-    → 平台初始化 Agent Profile（空白，随使用积累）
-```
+get_ecosystem_docs
+  参数: ecosystem, query(可选), section(可选), since
+  返回: [{content, source_url, trust_level, freshness, section}]
 
-**Step 1：账号注册**
-- 支持：GitHub OAuth / 钱包签名登录（MetaMask/WalletConnect）
-- 不做邮箱注册（Web3 用户习惯，方便链上数据关联）
+get_ecosystem_updates
+  参数: ecosystem, type(upgrade/governance/security/bounty), since, limit
+  返回: [{title, summary, type, source, published_at, importance}]
 
-**Step 2：身份绑定**
-- 必选：GitHub 账号（Developer Reputation 数据源）+ Web3 钱包（链上记录 + 收款）
-- 可选：Twitter/X（社交身份验证）
+get_security_alerts
+  参数: ecosystem(可选), severity(critical/high/medium)
+  返回: 安全事件列表，含影响范围和建议措施
 
-**Step 3：真人验证（Anti-Sybil）**
-- 接入：World ID（优先）/ Gitcoin Passport / BrightID
-- 完成验证后账号获得"Human Verified"标记
-- 未验证账号可浏览信息，但无法接 Bounty 任务
-- 设计理由：保证每个接任务的 Agent 背后是真人
+get_bounties
+  参数: ecosystem, skills, amount_min, deadline_before
+  返回: Bounty 列表（来自 Immunefi + OpenBuild）
 
-**Step 4：生成 Agent Token**
-- Token 与账号 1:1 绑定，可随时撤销重新生成
-- 权限精细控制：
-```
-af_live_v1_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-权限范围：
-- read:feeds        读取生态资讯
-- read:bounties     读取任务列表
-- apply:bounties    申请任务（需 Human Verified）
-- read:profile      读取自己的 profile
-- write:webhook     配置 Webhook 推送
-```
-
-**Step 5：Profile 初始化**
-- Developer Profile：Web3Insight 自动扫描 GitHub 贡献、链上活动、OpenBuild 历史，生成初始技能 profile
-- Agent Profile：初始为空，随实际使用行为自动积累（调用记录、任务结果、使用的模型等）
-
----
-
-### 5.3 MCP Tools 设计
-
-#### 信息类
-```
-web3_news
-  参数: ecosystem(可选), type(news/event/update), since, limit
-  返回: [{title, summary, source, url, ecosystem, published_at}]
-  示例: "给我看看最近24小时 Monad 生态的重要更新"
-
-get_hackathons
-  参数: status(upcoming/active/ended), ecosystem
-  返回: [{name, prize, deadline, organizer, apply_url, skills_needed}]
-
-ecosystem_overview
+get_ecosystem_overview
   参数: ecosystem
-  返回: 某个生态的整体动态摘要（基于近期 Feed 聚合，非实时语义搜索）
-```
+  返回: 该生态的整体状态摘要
 
-> ⚠️ **注意**：语义搜索能力（自然语言查询）为 Roadmap 功能，当前版本不支持，需 Web3Hub 侧完成向量化索引后再开放。
-
-#### 任务类
-```
-find_bounties
-  参数: skills(可选), ecosystem(可选), amount_min, amount_max, difficulty
-  返回: 匹配的 Bounty 列表（基于当前用户 profile 自动过滤，含项目方评分）
-  示例: "找适合我的 Solidity 相关 Bounty，500u 以上"
-
-get_bounty_detail
-  参数: bounty_id
-  返回: 完整任务描述、要求、评审标准、历史申请者数量、项目方评分
-
-apply_bounty
-  参数: bounty_id, message(申请说明)
-  注意: 最终提交需开发者在平台二次确认，不允许纯自动提交
-
-get_grants
-  参数: ecosystem, stage(idea/mvp/growth), amount_range
-  返回: Grant 机会列表
-
-get_project_reputation
-  参数: project_name 或 project_id
-  返回: 项目方的社区评分、历史评价摘要、完成任务数
-```
-
-#### Profile 类
-```
-get_my_agent_profile
-  返回: Agent 调用统计、任务成功率、惯用模型、擅长任务类型、Agent Reputation 分数
-
-get_my_developer_profile
-  返回: 技能标签、贡献历史、Developer Reputation 分数、擅长生态（来自 Web3Insight）
-
-get_developer_profile
-  参数: github_handle 或 wallet_address
-  返回: 公开的开发者 profile（需对方授权公开）
-
-update_preferences
-  参数: ecosystems, skills, availability(每周可用小时数)
+compare_ecosystems
+  参数: ecosystems[], aspect(dev_activity/docs_quality/bounty_count)
+  返回: 跨生态对比数据
 ```
 
 ---
 
-## 六、核心功能模块
+双重 Reputation：**Agent Reputation**（Agent 行为轨迹）+ **Developer Reputation**（开发者能力画像）
 
-### 模块 1：生态信息 Feed（P0）
+详见 v1.1 文档第三章，此处不重复。
 
-**数据来源：** Web3Hub 现有数据管道直接复用，补充 OpenBuild Bounty/Hackathon 数据
+### 任务市场
 
-**信息质量分级：**
-- Level 1（高可信）：官方公告、项目方直接发布
-- Level 2（可信）：知名媒体、KOL 原创内容
-- Level 3（参考）：聚合信息、转载内容
-
-**AI 处理流程（Web3Hub 现有能力）：**
-```
-原始内容
-    → 去重（URL + 内容 hash 双重检测）
-    → AI 打分（相关性、质量、时效性）
-    → 分类标签（生态、类型）
-    → 摘要生成（100字内）
-    → 入库（分数 >= 阈值才进入 Agentforum）
-```
-
-**对人的呈现：** Agent 返回给开发者的摘要，平台本身不需要复杂 UI；Feed 详情页做轻量展示即可。
+Bounty/Grant/Hackathon 的结构化数据层，Agent 可查询和匹配。详见 v1.1 文档第二章。
 
 ---
 
-### 模块 2：任务市场（P0）
+## 九、竞争壁垒
 
-**任务发布流程：**
-```
-项目方在 OpenBuild 后台发布任务
-    → 勾选"同步到 Agentforum"（默认开启）
-    → 任务结构化存储（技能标签/金额/截止时间/难度/生态）
-    → Agent 可查询、筛选、订阅
-    → 开发者通过 Agent 了解详情并决策
-    → Agent 辅助准备申请材料
-    → 提交申请（需人工确认，非全自动）
-```
+| 维度 | 竞品现状 | AgentRel 优势 |
+|------|--------|------------|
+| 覆盖广度 | 各生态自己的 MCP 只覆盖自己 | 跨生态统一入口 |
+| 动态信息 | 无任何 MCP 做实时生态动态 | Web3Hub 现有 pipeline |
+| 安全/Bounty | 无 MCP 覆盖 | 差异化数据源 |
+| 客户关系 | 竞品无生态客户资源 | OpenBuild 现有合作生态 |
+| 数据飞轮 | 无 | Web3Hub + OpenBuild + Web3Insight 三源 |
 
-**申请确认流程：**
-```
-Agent 调用 apply_bounty
-    → 平台创建申请，状态: pending_confirm
-    → 向开发者发送确认通知（Telegram/Email）
-    → 开发者点击确认 → 状态: applied → 通知项目方
-    → 超时 24h 未确认自动取消
-```
-
-**社区信号：**
-- 关注度指标：浏览次数、收藏数、Agent 查询次数（可见，增加任务可信度）
-- 项目方评价：完成任务后开发者评分（1-5星 + 文字），公开可见
-- 个性化订阅：开发者配置 Agent 只关注特定项目方/生态，减少噪音
+**核心护城河：** 配置覆盖的生态越多，数据越完整，对新生态客户的说服力越强，形成正向飞轮。先发优势是真实的。
 
 ---
 
-### 模块 3：双重 Reputation 系统（P1）
+## 十、技术实现路径
 
-Agent 时代的核心创新：**Agent 和人各有独立的 Reputation，相互补充，共同构成"可信参与者"画像。**
+### Phase 1（6-8 周）：验证可行性
 
-#### 3.1 Agent Reputation
+**目标：** 跑通 Monad + Solana 知识包，有可演示的 MCP endpoint
 
-记录 Agent 本身的行为轨迹，回答"这个 Agent 靠不靠谱"：
+- 实现配置驱动的采集 pipeline（支持 gitbook / rss / twitter adapter）
+- Web3Hub 数据接入（按 ecosystem 标签 API 化）
+- MCP Server MVP（SSE 协议，支持核心 Tool 查询）
+- 接入 Monad 和 Solana 完整知识包
+- 人工 review 初始知识库质量
 
-| 维度 | 内容 | 数据来源 |
-|------|------|---------|
-| 任务完成质量 | 完成率、项目方评分、返工率 | 平台任务记录 |
-| 行为稳定性 | 是否频繁乱申请、申请确认率 | 平台操作日志 |
-| 惯用模型 | 使用的 AI 模型（Claude/GPT/...） | MCP 调用元数据 |
-| 擅长任务类型 | Solidity审计/前端/文档/... | 任务标签统计 |
-| 活跃度 | 调用频率、最近活跃时间 | API 调用日志 |
+**交付物：**
+- `mcp.agentrel.ai` 可用的 MCP endpoint
+- Monad + Solana 知识包上线
+- 能跑的 Cursor/Claude Desktop 接入 demo
 
-**Agent Reputation Score** 随任务积累自动更新，初始为空，无法造假。
+### Phase 2（3 个月）：ToB 商业化
 
-**用途：**
-- 项目方可筛选"只接受高 Agent Reputation 的 Agent 申请"
-- 平台可给高 Agent Rep 的用户解锁"自动申请"模式（免二次确认）
-- 未来：Agent 之间可互相发现、协作
+**目标：** 第一个付费生态客户
 
-#### 3.2 Developer Reputation
+- 扩展主链生态包（Ethereum/Base/Arbitrum/BNB）
+- 开发工具层知识包（Hardhat/OZ/Viem/Wagmi）
+- 安全 + Bounty 层（Immunefi 接入）
+- 项目方 Dashboard（知识包状态 + Agent 查询统计）
+- 面向 Monad 基金会的合作提案
 
-记录背后开发者的能力画像，回答"这个人靠不靠谱"：
+### Phase 3（6 个月）：规模化
 
-**数据来源：** Web3Insight.ai（主要）+ Agentforum 任务记录（补充）
+**目标：** 5+ 付费生态，开发者 MAU 1 万+
 
-| 维度 | 内容 | 数据来源 |
-|------|------|---------|
-| 技术能力 | 语言/框架/链专业度（1-5级） | GitHub 分析 |
-| 贡献历史 | 开源项目贡献、PR 质量 | GitHub |
-| 链上活跃度 | 协议交互、链上操作记录 | 链上数据 |
-| 平台任务记录 | Bounty/Grant 完成历史 | Agentforum |
-| 社区参与 | OpenBuild 活跃度 | OpenBuild |
-
-**Developer Reputation Score** 构成：
-```
-= github_score (30%)    # GitHub 贡献质量
-+ onchain_score (20%)   # 链上活跃度
-+ bounty_score (35%)    # 平台任务完成质量
-+ community_score (15%) # OpenBuild 社区参与
-```
-
-#### 3.3 两个 Reputation 的关系
-
-```
-开发者首次接入
-    → Developer Reputation 已有初始值（Web3Insight 扫描）
-    → Agent Reputation = 0（白板，需要通过实际任务积累）
-
-完成一次任务后
-    → Agent Reputation +（此次任务质量、模型使用情况）
-    → Developer Reputation +（贡献回写 Web3Insight）
-
-长期使用后
-    → 两个 Rep 共同形成"可信参与者"身份
-    → 项目方可同时参考：人的能力 + Agent 的执行力
-```
-
-#### 3.4 Profile 公开范围
-
-```
-默认公开: 技能标签、两个 Rep 总分、完成任务数量
-需授权才公开: 具体任务记录、GitHub 详细数据、Agent 使用的模型
-完全私有: wallet 余额、申请失败记录、Agent 调用原始内容
-```
-
-开发者可一键生成"能力证明链接"，分享给任意项目方。
+- DeFi 协议层全覆盖
+- Developer Reputation 与 Web3Insight 打通
+- 社区知识沉淀（Discord/Forum）
+- API 按量计费
+- 生态活动可视化大屏（斯坦福小镇风格，需有数据支撑）
 
 ---
 
-### 模块 4：MCP Server（P0）
+## 十一、待决策问题
 
-开发者 Agent 的统一接入点，无需自建任何数据管道即可消费结构化 Web3 信息。
-
-```json
-{
-  "mcpServers": {
-    "agentforum": {
-      "url": "https://mcp.agentforum.ai",
-      "apiKey": "your_key"
-    }
-  }
-}
-```
-
-**MCP Server 实现要点（供开发参考）：**
-- 协议：SSE（Server-Sent Events），兼容主流 MCP 客户端
-- 认证：Bearer Token，与平台账号绑定
-- 每次 Tool 调用自动记录到 Agent Profile（调用类型、时间、是否成功）
-- 错误处理：API 限流返回 429 + retry-after，不静默失败
-- 版本管理：Tool 接口变更需保持向后兼容，破坏性变更需版本前缀
+1. **域名**：`agentrel.ai` 是否可注册？如果不行备选方案是什么？
+2. **独立品牌 vs OpenBuild 子品牌**：AgentRel 独立出去还是作为 OpenBuild 产品线？
+3. **第一个 toB 客户**：从哪个现有 OpenBuild 合作生态开始免费试点？
+4. **Monad 合作谈判时机**：Phase 1 MVP 完成前还是完成后去谈？
+5. **Web3Insight 对接优先级**：Phase 1 能同步基础 profile，不等 Phase 3？
+6. **开发者端免费策略**：ToC 端永久免费还是有调用量限制？
+7. **Web2 扩展时机**：先把 Web3 做深，Web2 机会等自然出现还是主动规划？
+8. **Telegram Bot 优先级**：B 类用户的核心接入点，Phase 1 是否先做？
+9. **公共 Key 限额**：每天 200 次是否合适，防止滥用的机制？
 
 ---
 
-## 七、项目方端设计
+## 十二、ToD（面向开发者端）设计
 
-### 任务发布
-现有 OpenBuild 流程不变，新增字段：
-- "同步到 Agentforum" 开关（默认开启）
-- 技能标签（结构化，必填，用于 Agent 匹配）
-- 生态标签（必填）
-- "Agent-Friendly" 标记（表示欢迎 AI 辅助参与）
-- 最低 Agent Reputation 要求（可选，用于筛选申请者）
+### ToD 的战略定位
 
-### 开发者发现
-- 按技能/生态/Rep 分数筛选开发者
-- 查看公开的双重 Reputation profile
-- Push Bounty：主动邀请特定开发者
+ToD 不是商业模式的核心，但是**信任背书和增长飞轮的基础**。项目方买单的逻辑是"X 万开发者的 Agent 在用你的数据"——这个数字要靠 toD 端积累。
 
-### 申请者管理
-- 同时展示申请者的 Agent Reputation + Developer Reputation
-- 对比多个申请者的技能分布
-- 一键联系（OpenBuild 消息系统）
-
-### 生态增长看板（项目方专属）
-- 本生态开发者数量趋势（周/月）
-- Bounty 完成率、开发者留存率
-- 高质量贡献者列表（可 Push 邀请）
-- Agent 查询热度（有多少 Agent 在关注本生态）
-- 与其他生态的开发者重叠度分析
+**ToD 设计的唯一目标：最低门槛让开发者用起来，留住，产生数据。**
 
 ---
 
-## 八、用户旅程
+### 两类开发者，两条路径
 
-### 开发者侧
+**A 类：用 Agent 写 Web3 代码的开发者（技术驱动）**
+- 核心需求：Cursor/Claude 能理解 Solana PDA、Uniswap v4 hooks、Monad 并行 EVM
+- 接入动机：主动寻找开发工具，愿意配置 MCP
+- 触达渠道：Cursor Directory、Claude MCP list、Twitter 技术教程
+
+**B 类：找 Bounty/Grant 的 Web3 开发者（任务驱动）**
+- 核心需求：Agent 帮我筛选适合我的任务机会
+- 接入动机：提高接任务效率，积累 Reputation
+- 触达渠道：OpenBuild 站内导流、Telegram Bot
+
+两类用户 onboarding 路径分开设计，不强迫走同一个流程。
+
+---
+
+### 免费策略
+
+ToD 端必须有足够慷慨的免费档，否则无法积累足够的用户数据给 toB 客户看。
+
 ```
-1. 注册，绑定 GitHub + 钱包
-   → Developer Profile 自动生成（Web3Insight 扫描）
-   → Agent Profile 初始化为空
+公共档（无需注册）：
+- 查询公开生态文档/动态：每天 200 次
+- Bounty 浏览：无限
+- 使用公共 API Key，无个性化
 
-2. 在 Claude Desktop / Cursor 配置 MCP（5分钟）
+注册档（绑 GitHub 或钱包）：
+- 文档/动态查询：无限
+- 个性化推送（基于技能 profile 匹配 Bounty）
+- Bounty 申请资格
+- Developer + Agent Reputation 积累开始计入
+- 永久免费
 
-3. 每天问 Agent："今天 Monad 生态有什么值得关注的？"
-   → Agent 调用 web3_news，返回摘要
-
-4. Agent 推送："发现 3 个匹配你技能的 Bounty，要看看吗？"
-   → find_bounties 基于 Developer Profile 筛选，附项目方评分
-
-5. 完成 Bounty
-   → Developer Reputation 更新（回写 Web3Insight）
-   → Agent Reputation 更新（本次任务行为记录）
-   → 对项目方留下评价
-   → 下次匹配更精准（飞轮）
+付费档（$9/月，未来）：
+- 优先推送高价值 Bounty
+- Reputation 详细分析报告
+- 私有知识库接入（把自己的项目文档加入 Agent 上下文）
 ```
 
-### 项目方侧
+公共档的存在理由：Cursor Directory 上的开发者不需要注册就能体验，零摩擦，第一步不要拦人。
+
+---
+
+### Reputation 是留存的核心钩子
+
+开发者在 AgentRel 积累的 Reputation 是迁移成本：
+- Agent 调用记录越多 → Agent Reputation 越高
+- 完成任务越多 → Developer Reputation 越高
+- Reputation 高的开发者能被项目方主动发现、邀请
+
+**Day 1 就要开始无感收集数据**，即使初期不展示给用户，数据要先存起来。
+
+---
+
+### 分发渠道
+
 ```
-1. 在 OpenBuild 发布任务，勾选同步 Agentforum
-2. 任务进入 Agent 数据层，被开发者 Agent 发现
-3. 查看申请者双重 Reputation，综合评估
-4. 任务完成后积累口碑评分，提升未来任务曝光
+主动渠道：
+1. Cursor Directory / Claude MCP list   → A 类技术型开发者
+2. OpenBuild 站内推送                   → B 类任务型开发者
+3. Solana/Monad Discord #dev-tools      → 生态开发者
+4. Twitter 技术教程（中英文）            → 广泛触达
+
+内容钩子（自动生成，开发者主动传播）：
+- 每周 "Web3 生态 Agent 报告"（AgentRel 数据生成）
+- "你的 Agent 不知道的 10 个 Uniswap v4 变化"（教程 + 产品植入）
+- "用 AgentRel + Claude 30 秒搞懂 Solana PDA"（上手 demo）
 ```
 
 ---
 
-## 九、UI 概念：生态可视化大屏（斯坦福小镇风格）
+### 核心指标（只盯三个）
 
-> **概念方向，非 MVP 范围，供后续版本讨论**
-
-斯坦福小镇（Generative Agents）的核心体验：**实时看到 Agent 在世界里的行为轨迹**。借鉴这个思路，Agentforum 可以做一个"生态活动可视化大屏"：
-
-### 核心体验
-把整个开发者生态想象成一座城市：
-- **每个开发者/Agent 是一个角色**，有头像、Rep 等级
-- **任务是建筑物**，发布、进行中、已完成状态可见
-- **活动是动画**：某个 Agent 正在查询 Monad 生态的 Bounty、某个开发者刚完成了一个任务、某个项目方刚发布了新 Grant
-
-### 可展示的实时信息
-- 当前有多少 Agent 活跃在哪个生态（热力图）
-- 最近被查询最多的任务/生态（气泡图）
-- 新完成的 Bounty 和获得奖励的开发者（动态流）
-- 各生态开发者活跃度对比
-
-### 实现思路
-- 前端：Three.js / D3.js 做可视化；或者像素风格 2D 地图（低成本）
-- 数据：从平台实时事件流（任务查询、申请、完成）提取聚合数据，WebSocket 推送
-- 隐私：只展示聚合数据，不暴露个人行为细节（除非用户主动公开）
-
-### 价值
-- **对项目方**：直观看到自己生态的 Agent 活跃度，感受到增长
-- **对开发者**：看到整个生态的任务热度，发现机会
-- **对外传播**：这个页面本身就是一个内容——可截图、可分享，是天然的 PR 素材
-
-> ⚠️ 实现成本不低，建议在平台有一定用户量后再做，冷启动期做了没有数据等于空壳。
-
----
-
-## 十、通知系统
-
-**触发场景：**
-- 匹配到新 Bounty（基于 Developer Profile 推送）
-- 申请状态变更（项目方接受/拒绝）
-- 任务截止提醒（72h / 24h）
-- 关注生态有重大更新
-- Reputation 分数明显变化
-
-**渠道：** Telegram Bot（首选）/ Email（备选）/ Webhook（Agent 自定义处理）
-
-**频率控制：**
-- 每天最多推送 N 条（用户可设）
-- 按类型过滤（只要任务通知，不要资讯）
-- 静默时间设置
-
----
-
-## 十一、数据架构
-
-### 核心数据模型
-
-```
-Developer
-  id, github_handle, wallet_address
-  human_verified: boolean
-  verification_method: world_id | gitcoin_passport | brightid
-  agent_token: string
-  preferences: { ecosystems[], skills[], availability_hours }
-  created_at, last_active_at
-
-AgentToken
-  token_id, developer_id
-  permissions: string[]
-  is_active: boolean
-  created_at, last_used_at
-
-AgentProfile（新）
-  developer_id
-  total_calls: number
-  task_apply_count: number
-  task_success_count: number
-  task_success_rate: float
-  preferred_models: string[]      # 从调用元数据统计
-  task_type_distribution: {}      # 擅长任务类型分布
-  agent_reputation_score: number
-  last_active_at: timestamp
-
-DeveloperProfile（来自 Web3Insight）
-  developer_id
-  skills: [{name, level:1-5, verified}]
-  ecosystems: [{name, contribution_score}]
-  github_stats: {stars, commits, repos, languages}
-  onchain_stats: {protocols_used, chains_active, tx_count}
-  developer_reputation_score: number
-  last_synced_at
-
-Feed（来自 Web3Hub）
-  id, title, summary, source_url, source_name
-  ecosystem: string[]
-  type: news | event | update | tutorial
-  ai_score: number
-  published_at, fetched_at
-
-Bounty（来自 OpenBuild）
-  id, title, description
-  project_name, ecosystem
-  reward_amount, reward_currency
-  skills_required: string[]
-  difficulty: 1-5
-  status: open | in_progress | completed
-  deadline
-  view_count, agent_query_count, bookmark_count
-  min_agent_reputation: number    # 项目方设置的门槛（可选）
-  created_at
-
-ProjectReputation
-  project_id, project_name
-  avg_rating: float (1-5)
-  total_reviews: number
-  reviews: [{developer_id, rating, comment, bounty_id, created_at}]
-  completed_bounties: number
-  repeat_hire_rate: float
-
-Contribution
-  id, developer_id, bounty_id
-  status: applied | accepted | submitted | approved | rejected
-  submitted_at, approved_at
-  reward_paid: boolean
-  synced_to_web3insight: boolean
-  agent_model_used: string        # 记录完成任务时用了哪个模型
-```
-
----
-
-## 十二、隐私与数据权属
-
-- **开发者拥有自己的数据**：可随时导出所有记录（JSON格式）
-- **平台不存储 Agent 对话内容**：只存聚合调用日志（调用类型、时间戳、成功/失败）
-- **授权最小化**：Token 权限按需申请
-
-| 数据类型 | 平台使用方式 | 开发者可控 |
-|---------|------------|----------|
-| GitHub 数据 | 生成 Developer Profile | 可撤销授权 |
-| 链上数据 | 链上活跃度评估 | 可关闭展示 |
-| 任务记录 | 两个 Reputation 计算 | 可设置公开范围 |
-| Agent 调用日志 | Agent Profile 统计 | 不存原始内容 |
-| 使用的 AI 模型 | Agent Profile 展示 | 可设置为私有 |
-
-账号注销后平台删除所有个人数据，Reputation 分数匿名化保留用于生态统计。
-
----
-
-## 十三、冷启动策略
-
-### 第一阶段（0→1，1个月）
-**目标：** 验证"开发者愿意用 Agent 接 Bounty"假设
-
-- OpenBuild 发布 10-20 个真实 Bounty，要求通过 Agentforum API 接任务
-- 提供简单的 MCP 配置文档（重点降低接入门槛）
-- 记录：有多少人配置了 MCP、问了哪些问题、转化率如何
-- **不需要新产品**，用现有 Web3Hub API + OpenBuild 数据跑验证
-
-### 第二阶段（1→10，3个月）
-**目标：** MCP Server + 任务市场 MVP 上线
-
-- 接入 3-5 个生态的 Bounty 数据（从 OpenBuild 合作生态开始）
-- 上线 MCP Server，公开接入文档
-- 在 Web3 开发者社区做 MCP 接入教程（内容营销）
-- 上线社区信号 + 项目方口碑功能
-- Agent Profile 开始积累数据
-
-### 第三阶段（10→100，6个月）
-**目标：** 双重 Reputation 打通，形成飞轮
-
-- Web3Insight Developer Profile 与 Agentforum 任务记录双向同步
-- Agent Reputation 正式上线，项目方可设置申请门槛
-- 项目方可用平台做开发者背调
-- 开放 API 收费
-
----
-
-## 十四、技术实现路径
-
-### Phase 1：数据 API 层（4周）
-- Web3Hub 新增 Agent-friendly REST API（信息查询 + Bounty 查询）
-- OpenBuild Bounty 数据同步管道
-- 开发者注册 + Token 生成系统
-- Agent Profile 数据表建立（开始静默收集调用数据）
-
-### Phase 2：MCP Server + 任务申请（4周）
-- 实现 MCP Server（SSE 协议）
-- 接入 World ID / Gitcoin Passport 验证
-- 任务申请流程（含人工确认 + Telegram 通知）
-- 项目方口碑系统上线
-
-### Phase 3：双重 Reputation 打通（6周）
-- Web3Insight Developer Profile API 内部对接
-- Agent Profile 正式计算 Agent Reputation Score
-- 贡献记录自动回写 Web3Insight
-- 开发者 Profile 页面（同时展示两个 Rep）
-- 项目方生态增长看板
-
-### Phase 4：优化与商业化（持续）
-- 推荐算法迭代（结合双重 Rep 提升匹配质量）
-- 语义搜索（需 Web3Hub 完成向量化索引后接入）
-- API 收费体系上线
-- 更多生态数据源接入
-- 生态可视化大屏（斯坦福小镇风格，视用户量决定）
-
----
-
-## 十五、商业模式
-
-| 收入来源 | 模式 | 时间点 |
-|---------|------|--------|
-| 项目方任务上架 | 按任务金额抽佣（5-10%）| Phase 2 |
-| API 调用 | 按量计费（Agent 消费数据）| Phase 2 |
-| 生态合作 | 公链/协议付费采购开发者流量 | Phase 3 |
-| 开发者能力认证 | Web3Insight 高级 profile 订阅 | Phase 3 |
-| 生态增长看板 | 项目方数据订阅（待定）| Phase 3 |
-
-**早期不收费**，先做用户规模和数据积累。
-
----
-
-## 十六、竞争分析
-
-| 竞品 | 优势 | 缺陷 |
+| 指标 | 定义 | 用途 |
 |------|------|------|
-| Gitcoin | 品牌强、用户多 | 无 Agent 接入、无 Reputation 体系 |
-| Dorahacks | Hackathon 专注 | 无 Reputation、无生态信息层 |
-| Questbook | Grant 专注 | 垂直、无 Agent 接入 |
-| **OpenBuild Agentforum** | Agent-native + 双重 Reputation + 生态信号四合一 | 新品牌、需冷启动 |
-
-**护城河：**
-1. **三层数据飞轮**：Web3Hub + OpenBuild + Web3Insight 三源打通，竞争对手无法复制
-2. **Agent Reputation 先发**：率先积累 Agent 行为数据，形成独特数据资产
-3. **社区口碑数据**：项目方评价随时间积累，越早积累越难被追赶
-4. **使用习惯壁垒**：率先成为开发者 Agent 的 Web3 数据源
+| **MCP 接入数** | 配置了 AgentRel MCP 的开发者数量 | 卖给项目方的核心数字 |
+| **月活调用量** | 知识包被 Agent 调用次数/月 | 证明使用深度 |
+| **Bounty 完成率** | 通过平台申请并完成的任务比例 | 产品质量验证 |
 
 ---
 
-## 十七、待决策问题
+### ToD ↔ ToB 飞轮
 
-1. **产品名称**：独立品牌（Agentforum.ai）还是 OpenBuild 子品牌？
-2. **Agent Token**：是否支持一个开发者创建多个 Token（对应不同 Agent）？
-3. **自动申请模式**：高 Agent Reputation 用户开启后，免人工确认步骤，风险如何控制？
-4. **Web3Insight 对接优先级**：Phase 1 能否同步基础 profile，不等 Phase 3？
-5. **项目方准入**：只来自 OpenBuild 已认证项目方，还是开放任意项目方发布？
-6. **冷启动 Bounty 预算**：OpenBuild 能投入多少真实 Bounty 做测试？
-7. **Billions Network 接入**：是否替代 World ID，何时排期？
-8. **生态增长看板定价**：付费还是免费？
-9. **Agent Profile 中模型记录**：需要 MCP 客户端配合传递元数据，技术上如何实现？
+```
+ToD 用起来 → 积累调用数据
+    ↓
+调用数据 → 证明给项目方：你的生态被 X 个 Agent 关注
+    ↓
+项目方付费 → 知识包覆盖更多生态
+    ↓
+更多生态 → 对开发者更有价值 → 更多开发者接入
+    ↓
+飞轮形成
+```
+
+**冷启动破局点：** Monad + Solana 知识包上线后，在两个生态的 Discord/Twitter 密集做教程，把前 100 个活跃用户拉进来。有了调用数据，再去找第一个付费客户才有底气。
 
 ---
 
-*v1.1 | OpenBuild Agentforum — Agent 时代的开发者生态基础设施*
+### ToD UX 设计
+
+#### UX 原则
+
+1. **Agent 是主角，不是人** — UI 服务于"让 Agent 配置和使用"，而不是让人在网页上操作
+2. **5 分钟内跑起来** — 从看到产品到 Agent 能调用 AgentRel，不超过 5 分钟
+3. **不强迫注册** — 公共 API 先用，有了价值感再注册
+4. **Reputation 可见** — 用户随时能看到自己积累了什么，留存感
+
+---
+
+#### UX Flow A：技术型开发者（Cursor/Claude 用户）
+
+```
+发现阶段
+└── Cursor Directory 搜索 "web3" 找到 AgentRel
+    或 Twitter 看到教程文章
+    或 朋友推荐
+
+第 1 步：零门槛试用（无需注册）
+└── 复制公共配置（30 秒）：
+    {
+      "mcpServers": {
+        "agentrel": {
+          "url": "https://mcp.agentrel.ai/sse",
+          "headers": { "Authorization": "Bearer public_demo_key" }
+        }
+      }
+    }
+└── 在 Cursor 里问："Solana 里 PDA 是什么？"
+└── Agent 调用 get_ecosystem_docs，返回结构化解释 + 来源链接
+└── 有价值感 ✅
+
+第 2 步：注册（有了价值感才引导）
+└── 首次调用 5 次后，Tool 返回软提示：
+    "注册免费账号解锁个性化推送和无限调用"
+└── GitHub OAuth 一键注册（不填表单）
+└── 注册完成，自动扫描 GitHub → 生成初始 Developer Profile
+└── 生成个人 API Key，替换公共 Key
+
+第 3 步：个性化激活
+└── 首次登录引导页（30 秒完成）：
+    "选择你关注的生态" → [Ethereum / Solana / Monad / Base / ...]
+    "你主要写什么" → [Solidity / Rust / TypeScript / ...]
+└── 完成后 Agent 推送立刻变得精准
+
+第 4 步：深度留存
+└── 每周推送："本周 Solana 生态 3 个重要更新，你的 Agent 已同步"
+└── 首个匹配 Bounty 推送："发现 1 个匹配你技能的任务，$500 USDC"
+└── Reputation Dashboard 可见：
+    Agent Reputation: ██░░░ 正在积累（已有 23 次调用）
+    Developer Reputation: ███░░ 基于 GitHub 生成（78 分）
+```
+
+**关键时间节点：**
+- T+0：看到产品
+- T+1min：第一次调用跑起来
+- T+5min：拿到有价值的回答
+- T+10min：注册，扫描 GitHub，profile 生成
+- T+1day：收到第一条个性化推送
+
+---
+
+#### UX Flow B：任务型开发者（Bounty/Grant 猎手）
+
+```
+发现阶段
+└── OpenBuild 首页 Banner："用 Agent 找任务，更快更精准"
+    或 Telegram 群里看到分享
+
+第 1 步：OpenBuild 一键开启（无需重新注册）
+└── 已登录 OpenBuild 的用户点击开启 AgentRel
+└── 自动同步 OpenBuild 身份
+└── 自动生成 API Token
+└── 引导配置 Telegram Bot
+
+第 2 步：Telegram Bot 激活
+└── "/start"
+└── Bot："你的 AgentRel 已就绪。问我 Web3 问题，或让我帮你找 Bounty。"
+└── "帮我找适合 Rust 开发者的 Bounty"
+└── Bot 返回匹配列表：[项目名 / 金额 / 截止日 / 技能匹配度]
+
+第 3 步：任务申请
+└── "申请第 2 个"
+└── Bot："确认申请 Sui 生态 Bounty，$800 USDC，截止 3/30？[确认] [取消]"
+└── 确认 → 申请提交 → 通知项目方
+└── 项目方接受 → Bot："🎉 你的申请被接受了！"
+
+第 4 步：Reputation 积累可见
+└── 完成任务后 Bot："你的 Developer Reputation 更新了，+15 分"
+└── "/profile" 查看当前状态
+└── "/bounties" 查看历史记录
+```
+
+---
+
+#### 关键页面设计
+
+**首页（主要面向潜在用户）**
+
+```
+[Hero]
+"让你的 Agent 理解 Web3"
+接一个 MCP，获取 20+ 主流生态的文档/动态/Bounty
+
+[快速上手]
+# 30 秒接入 Cursor
+{配置代码，一键复制}
+已有 X,XXX 个开发者的 Agent 在使用
+
+[生态展示]
+[Monad] [Solana] [Ethereum] [Base] [Uniswap] [Chainlink] ... 等 20+
+
+[数据信任背书]
+📊 本月 Agent 调用次数：XXX,XXX
+🔥 最近更新：Monad（2 小时前）/ Solana（45 分钟前）
+```
+
+**Dashboard（已注册用户）**
+
+```
+左侧导航：我的 Agent / Reputation / Bounty / 关注生态
+
+主区域：
+┌─────────────────────────────────────┐
+│ 今天，你关注的生态动态               │
+│ • Solana: web3.js v2.1.0 发布       │
+│ • Monad: 新 grant 轮开放             │
+│ • Uniswap: v4 审计报告发布           │
+└─────────────────────────────────────┘
+
+┌───────────────┬─────────────────────┐
+│ 推荐 Bounty   │ Reputation 状态     │
+│ 3 个匹配      │ Agent Rep: 42       │
+│ 最高 $2000    │ Dev Rep: 78         │
+│ [查看全部]    │ [查看详情]          │
+└───────────────┴─────────────────────┘
+```
+
+**生态知识包页面（对外可见，toB 展示用）**
+
+```
+[Solana 知识包]
+
+覆盖状态：
+✅ 官方文档（2 小时前同步）
+✅ Anchor 文档（6 小时前同步）
+✅ web3.js v2 迁移指南
+✅ 实时动态（最新 45 分钟前）
+🔜 Discord 社区知识（即将上线）
+
+Agent 调用统计：本月 XX,XXX 次
+接入方式：[复制 MCP 配置]
+```
+
+---
+
+#### 防坑清单
+
+**绝对不能做：**
+- ❌ 注册才能试用（第一步就拦人）
+- ❌ 配置超过 3 步（开发者失去耐心）
+- ❌ 第一次调用返回空结果（冷启动期知识库要先填充好再公开）
+- ❌ 推送太频繁（每天超过 3 条会关掉通知）
+- ❌ Reputation 只涨不解释（用户不知道怎么提升会失去动力）
+
+**必须做对：**
+- ✅ 公共 Key 零门槛，5 分钟内有价值感
+- ✅ GitHub OAuth 一键注册，不填表单
+- ✅ 注册后 24 小时内收到第一条个性化推送
+- ✅ Reputation 变化有解释（"+5 分，因为完成了 Bounty #123"）
+- ✅ MCP 调用出错有清晰 error message
+
+---
+
+## 附：名称变更说明（AgentForum → AgentRel）
+
+**AgentForum** 暗示"社区/论坛"，与产品实际定位（知识基础设施）不匹配。
+
+**AgentRel** 更精准：
+- 直接占位新品类——如同 "DevRel" 定义了一个行业，"AgentRel" 宣告了 Agent 时代的新范式
+- 含义双关："Agent Relations"（生态与 Agent 的关系层）+ "Relevant to Agents"（对 Agent 有价值的）
+- 与 OpenBuild 的 DevRel 定位一脉相承，延续性强
+- 比 AgentForum 更有品类占位的野心
+
+---
+
+*v2.1 | AgentRel — Agent 时代的 Web3 生态知识基础设施*
+*基于 AgentForum v1.1（2026-03-10）迭代升级*
