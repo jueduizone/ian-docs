@@ -488,6 +488,150 @@ async function syncOpenBuildTasks() {
 }
 ```
 
+### 7.3 Grant Proposal Skill 生成流水线
+
+Grant Proposal Skill 是 AgentRel 最有差异化的内容之一，生成逻辑与技术文档 Skill 完全不同——输入是"成功案例"而非"技术文档"。
+
+#### 数据采集
+
+**来源一：公开成功 Proposal**
+- Gitcoin Grants 公开档案（Gitcoin Explorer API，历史 round 数据）
+- 各链基金会"已资助项目"公告页（定时爬取）
+- OpenBuild 合作链方提供的内部材料（独家信源）
+
+**来源二：拒绝反馈**
+- 部分基金会在公开论坛（Forum/Discord）发布拒绝理由
+- 社区贡献：申请者主动分享被拒经历（结构化 Issue 模板）
+
+**来源三：评审标准文档**
+- 各基金会官网的 Grant 申请指南、评审维度说明
+
+#### 生成流程
+
+```typescript
+async function generateGrantSkill(foundation: string) {
+  // Step 1: 采集成功 Proposal 原文（20-50 份）
+  const proposals = await grantCrawler.fetch({
+    foundation,
+    status: 'approved',
+    limit: 50,
+  })
+
+  // Step 2: 采集拒绝案例和评审反馈
+  const rejections = await grantCrawler.fetchRejections(foundation)
+  const criteria = await grantCrawler.fetchCriteria(foundation)
+
+  // Step 3: AI 提炼模式
+  const analysis = await ai.analyze({
+    prompt: `
+      分析以下 ${foundation} Grant 成功和失败案例，提炼：
+
+      1. 隐性偏好：评审实际看重什么（不是文档写的，是成功案例体现的）
+         - 技术创新 vs 用户增长，哪个权重更高？
+         - 团队背景 vs 产品进度，哪个更重要？
+         - 资助规模偏好（小而精 vs 大而全）
+
+      2. 成功 Proposal 结构模式
+         - 开头如何描述问题（痛点陈述框架）
+         - 里程碑如何拆分（数量、粒度、时间跨度）
+         - 预算如何分配（人力/开发/运营的典型比例）
+         - 如何描述成功指标（定量 KPI 的写法）
+
+      3. 常见被拒原因（按频率排序）
+
+      4. 与其他基金会的差异（${foundation} 独特的评审偏好）
+
+      输出格式：结构化 SKILL.md，包含示例片段（匿名化处理）
+    `,
+    data: { proposals, rejections, criteria },
+  })
+
+  // Step 4: 生成 SKILL.md
+  await db.skills.upsert({
+    id: `grant/${foundation.toLowerCase().replace(/\s+/g, '-')}`,
+    type: 'grant-guide',
+    time_sensitivity: 'evergreen',   // Grant 偏好变化慢，常青型
+    source: 'community',
+    content: analysis.markdown,
+    metadata: {
+      foundation,
+      proposals_analyzed: proposals.length,
+      last_updated: new Date(),
+    }
+  })
+}
+```
+
+#### SKILL.md 结构（Grant 专属模板）
+
+```markdown
+---
+id: grant/solana-foundation
+name: Solana Foundation Grant 申请指南
+type: grant-guide
+time_sensitivity: evergreen
+ecosystem: solana
+source: community
+---
+
+## 基金会概况
+[资助规模、历史 Round 数量、典型资助金额范围]
+
+## 隐性偏好（成功案例归纳）
+[评审实际看重什么，与官方文档的差异]
+
+## 成功 Proposal 结构模式
+
+### 问题陈述
+[成功案例的开头写法框架 + 匿名示例]
+
+### 里程碑拆分
+[典型里程碑数量 3-5 个，每个包含：deliverable + 时间 + 验证方式]
+
+### 预算规划
+[典型分配比例，评审对高人力成本的接受度]
+
+### 成功指标
+[定量 KPI 的写法，什么样的指标被认为可信]
+
+## 常见被拒原因
+1. [最常见原因]
+2. ...
+
+## 与其他基金会的差异
+[Solana vs Ethereum ESP vs Optimism RPGF 的评审偏好对比]
+
+## 参考资源
+[官方申请页、历史已资助项目列表、社区讨论]
+
+## Feedback
+...
+```
+
+#### 飞轮机制
+
+```
+开发者用 Skill 写 Proposal
+    ↓ 申请结果出来
+    ↓ 成功：可选择将 Proposal 匿名贡献给 AgentRel
+    ↓ 失败：可提交基金会反馈内容（结构化 Issue）
+    ↓
+AgentRel 用新案例更新 Skill
+    ↓ 成功率提升 → 更多人用 → 更多案例回流
+    ↓
+Skill 越来越准（类似 eval 飞轮，但衡量的是申请成功率）
+```
+
+#### 优先级排序（首批）
+
+| 基金会 | 优先级 | 原因 |
+|--------|--------|------|
+| Solana Foundation | P0 | 资助量大，OpenBuild 有合作关系 |
+| Optimism RPGF | P0 | 规则独特（追溯性），AI 最容易写错 |
+| Ethereum ESP | P1 | 权威，案例多，易采集 |
+| Arbitrum DAO | P1 | DAO 治理型，写法与基金会型差异大 |
+| Near Foundation | P2 | 中文开发者多 |
+
 ---
 
 ## 八、MVP 技术优先级
@@ -515,4 +659,4 @@ async function syncOpenBuildTasks() {
 
 ---
 
-*技术架构文档 v1.0 | AgentRel | 2026-03-18*
+*技术架构文档 v1.1 | AgentRel | 2026-03-18*
