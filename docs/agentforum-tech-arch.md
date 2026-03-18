@@ -1,546 +1,518 @@
-# AgentRel 技术架构文档
-**v1.0 | 2026-03-15**
+# AgentRel — 技术架构文档
+**v1.0 | 2026-03-18**
 
 ---
 
-## 一、核心架构原则
-
-1. **知识源与输出格式解耦** — 知识统一存储，按需适配不同 Agent 平台的消费格式
-2. **配置驱动扩展** — 每个生态 = 一份 YAML，不写定制代码
-3. **变更追踪优先全量爬取** — 只处理 diff，控制计算成本
-4. **多格式输出** — MCP 只是一种输出形式，不是唯一形式
-
----
-
-## 二、整体架构图
+## 一、整体架构
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        数据采集层                                │
-│                                                                  │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌────────────────┐  │
-│  │ 文档爬虫  │  │  RSS/   │  │ Twitter  │  │  Discord/      │  │
-│  │ Adapter  │  │  Blog    │  │  API     │  │  Forum         │  │
-│  │(GitBook/ │  │ 增量拉取  │  │ 技术内容  │  │ （Phase 2+）  │  │
-│  │Docusaurus│  │          │  │  过滤    │  │                │  │
-│  │/MkDocs)  │  │          │  │          │  │                │  │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └───────┬────────┘  │
-│       └─────────────┴─────────────┴────────────────┘           │
-│                            ↓                                    │
-│              生态配置 YAML（数据源路由规则）                      │
-└────────────────────────────┬────────────────────────────────────┘
-                             ↓
-┌────────────────────────────────────────────────────────────────┐
-│                        处理 Pipeline                            │
-│                                                                 │
-│  原始内容                                                        │
-│      → 去重（URL hash + 内容 hash）                             │
-│      → 内容提取（正文 / 代码块 / 标题结构）                      │
-│      → AI 处理：                                                │
-│          ├── 质量评分（relevance / accuracy / freshness）        │
-│          ├── 分类打标（ecosystem / layer / type / skill_tags）   │
-│          ├── 摘要生成（100 字内，Agent 友好格式）                 │
-│          └── 向量化（embedding，用于相似度检索）                  │
-│      → 质量元数据附加：                                          │
-│          {trust_level, freshness_score, completeness_score,     │
-│           source_type, last_verified_at}                        │
-└────────────────────────────┬───────────────────────────────────┘
-                             ↓
-┌────────────────────────────────────────────────────────────────┐
-│                        统一知识库                               │
-│                     (PostgreSQL + pgvector)                     │
-│                                                                 │
-│  核心表：                                                        │
-│  knowledge_items（内容主表）                                     │
-│  ecosystems（生态元数据）                                        │
-│  sources（数据源配置 + 同步状态）                                │
-│  embeddings（向量索引）                                          │
-│  change_log（变更记录）                                          │
-└────────────────────────────┬───────────────────────────────────┘
-                             ↓
-┌────────────────────────────────────────────────────────────────┐
-│                        输出适配层                               │
-│                                                                 │
-│  ┌──────────────┐  ┌──────────┐  ┌──────────┐  ┌───────────┐  │
-│  │ MCP Server   │  │ Skill    │  │ llms.txt │  │ REST API  │  │
-│  │ (SSE/stdio)  │  │ Package  │  │ 自动生成  │  │ (RAG/     │  │
-│  │              │  │(SKILL.md │  │ & 托管    │  │  自建Bot) │  │
-│  │ Claude/Cursor│  │+scripts) │  │          │  │           │  │
-│  │ Windsurf等   │  │ OpenClaw │  │ 任何 LLM │  │ 开发者    │  │
-│  │              │  │ Claude   │  │          │  │ 自定义    │  │
-│  │              │  │ Code等   │  │          │  │           │  │
-│  └──────────────┘  └──────────┘  └──────────┘  └───────────┘  │
-└────────────────────────────────────────────────────────────────┘
-                             ↓
-┌────────────────────────────────────────────────────────────────┐
-│                     消费层（开发者 Agent）                       │
-│                                                                 │
-│  Claude Desktop  Cursor  OpenClaw  Claude Code  自建 Agent      │
-└────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                      消费端（开发者 Agent）                     │
+│                                                               │
+│  Claude Code    Cursor    Codex    Copilot    自建 Bot         │
+└──────────┬──────────┬─────────────────────────────────────────┘
+           │          │
+     Skills 接入    MCP 接入
+     (SKILL.md)   (SSE/HTTP)
+           │          │
+┌──────────▼──────────▼──────────────────────────────────────┐
+│                    AgentRel 服务层                             │
+│                                                               │
+│  ┌──────────────────┐  ┌─────────────────┐                   │
+│  │   Skills 服务     │  │   MCP Server    │                   │
+│  │                  │  │                 │                   │
+│  │  /skills/{id}    │  │  web3_news      │                   │
+│  │  /bundles/{id}   │  │  find_bounties  │                   │
+│  │  /search         │  │  get_grants     │                   │
+│  │  /feedback       │  │  search_eco     │                   │
+│  └────────┬─────────┘  └────────┬────────┘                   │
+│           │                     │                             │
+│  ┌────────▼─────────────────────▼───────────────────────┐    │
+│  │                    数据层                              │    │
+│  │                                                       │    │
+│  │  Skills DB      Content DB      Tasks DB              │    │
+│  │  (SKILL.md +    (Web3Hub feeds  (Bounty/Grant/        │    │
+│  │   元数据)        + 安全事件)      Hackathon)           │    │
+│  └────────────────────────────────────────────────────── ┘    │
+└────────────────────────────────────────────────────────────┘
+           │                     │                 │
+┌──────────▼──────┐  ┌───────────▼─────┐  ┌────────▼──────────┐
+│   内容生产层      │  │   Web3Hub       │  │   OpenBuild       │
+│                  │  │   数据管道       │  │   任务数据         │
+│  AI 生成工具      │  │   PM2 Worker    │  │   Web3Insight     │
+│  社区贡献系统     │  │   Scheduler     │  │   Reputation      │
+│  变更检测        │  │   Feeds DB      │  │                   │
+└──────────────────┘  └─────────────────┘  └───────────────────┘
 ```
 
 ---
 
-## 三、数据采集层详解
+## 二、Skills 服务
 
-### 3.1 生态配置 YAML
+### 2.1 SKILL.md 文件规范
 
-```yaml
-# 示例：solana.yaml
-id: solana
-name: Solana
-category: l1
-
-sources:
-  docs:
-    - url: https://solana.com/docs
-      type: docusaurus
-      sync: daily
-      priority: high
-    - url: https://www.anchor-lang.com/docs
-      type: docusaurus
-      sync: daily
-      track_changes: true   # 追踪 diff，只处理变更页面
-  github:
-    - repo: solana-labs/solana
-      track: releases        # 只追踪 release notes
-    - repo: coral-xyz/anchor
-      track: releases
-  blog:
-    - url: https://solana.com/news
-      type: rss
-      sync: hourly
-  twitter:
-    - handle: solana
-      filter: technical
-    - handle: aeyakovenko
-      filter: all            # 核心开发者，全量保留
-  web3hub:
-    ecosystem_tag: solana    # 直接复用 Web3Hub 的采集结果
-
-schema:
-  tags: [rust, sealevel, accounts-model, spl]
-  related: [base, pyth, jito]
-
-quality:
-  trust_level: official
-  review_required: true      # 初次导入需人工 review
-  min_relevance_score: 0.7
-```
-
-### 3.2 Adapter 实现
-
-| Adapter | 处理逻辑 | 特殊处理 |
-|---------|--------|--------|
-| `gitbook` | 遍历 sitemap → 按页爬取 | 追踪 last-modified header |
-| `docusaurus` | 解析 docusaurus.config.js + sidebar → 递归爬取 | 代码块特殊保留 |
-| `mkdocs` | 解析 mkdocs.yml → 递归爬取 | 同上 |
-| `github-pages` | 通过 GitHub API 获取目录结构 | 用 git commit hash 做 diff |
-| `rss/atom` | 标准 RSS 解析，增量拉取 | etag / last-modified 缓存 |
-| `twitter-api` | twitterapi.io / RapidAPI | 关键词 + 账号过滤，去营销内容 |
-
-### 3.3 变更追踪机制
-
-```
-文档类：
-  存储每页 content_hash
-  → 每次同步对比 hash
-  → 只处理变更页面（大幅降低 AI 处理成本）
-
-博客/动态类：
-  RSS etag + last-modified
-  → 增量拉取，不重复处理
-
-GitHub：
-  追踪 commit hash / release tag
-  → 只在有新 release 时触发处理
-
-异常监控：
-  检测 404、结构变更（页面数量骤降 >30%）
-  → 触发报警，通知人工处理
-```
-
+```markdown
+---
+id: solana/web3js-v2
+name: Solana web3.js v2 Migration
+version: 1.2.0
+ecosystem: solana
+type: technical-doc         # technical-doc | ecosystem-news | event | grant-guide | security
+time_sensitivity: evergreen  # evergreen | time-limited
+expires_at: null             # ISO 8601，time-limited 时填写
+source: community            # official | community | ai-generated
+confidence: high             # high | medium | low
+maintainer: "@username"
+last_updated: 2026-03-18
+feedback_endpoint: https://api.agentrel.xyz/feedback
 ---
 
-## 四、处理 Pipeline 详解
+## Overview
+[内容...]
 
-### 4.1 AI 处理步骤
+## 关键变更
+[...]
 
-```
-Step 1: 内容提取
-  - 去除导航/页脚/广告 HTML
-  - 提取主体文字 + 代码块（代码块保持原格式）
-  - 识别文档层级（H1/H2/H3）→ 切片时保留层级上下文
+## 常见错误
+[AI 容易犯的错误 → 正确做法对照]
 
-Step 2: 智能切片
-  - 按语义边界切片（不硬切在句子中间）
-  - 每片 500-1500 tokens，适合 Agent 消费
-  - 跨片保留标题上下文（每片前附带面包屑路径）
+## 代码示例
+[...]
 
-Step 3: AI 评分（GLM-5 或 Kimi，低成本模型）
-  - relevance_score: 与生态开发相关度（0-1）
-  - quality_score: 内容质量、准确性（0-1）
-  - freshness_score: 基于发布时间衰减
-  - completeness_score: 内容完整度
+## 参考链接
+[...]
 
-Step 4: 分类打标
-  - ecosystem: [solana, ethereum, ...]
-  - layer: docs | blog | community | security
-  - content_type: concept | tutorial | api-reference | changelog | alert
-  - skill_tags: [rust, anchor, pda, spl-token, ...]
-  - difficulty: beginner | intermediate | advanced
-
-Step 5: 摘要生成
-  - 100 字以内，保留关键技术信息
-  - Agent 友好格式（避免废话，直接说结论）
-
-Step 6: 向量化
-  - 使用 Jina Embedding（现有基础设施）
-  - 存入 pgvector
+## Feedback
+If this skill contains incorrect or outdated information, call:
+agentrel_feedback(skill="solana/web3js-v2", issue="<description>",
+  code_snippet="<optional>", error_message="<optional>", fix="<optional>")
 ```
 
-### 4.2 质量元数据 Schema
+### 2.2 Skills API
 
-```json
-{
-  "id": "sol_anchor_pda_001",
-  "content": "...",
-  "summary": "...",
-  "embedding": [...],
-  "metadata": {
-    "ecosystem": "solana",
-    "source_url": "https://www.anchor-lang.com/docs/pdas",
-    "source_type": "official_docs",
-    "trust_level": "official",
-    "layer": "docs",
-    "content_type": "concept",
-    "skill_tags": ["pda", "anchor", "rust"],
-    "difficulty": "intermediate",
-    "relevance_score": 0.95,
-    "quality_score": 0.88,
-    "freshness_score": 0.92,
-    "completeness_score": 0.87,
-    "published_at": "2025-11-15T00:00:00Z",
-    "last_synced_at": "2026-03-15T18:00:00Z",
-    "content_hash": "sha256:abc123...",
-    "breadcrumb": "Anchor Docs > Core Concepts > PDAs"
+```
+GET  /api/skills
+     ?ecosystem=solana&type=technical-doc&status=active
+     ?q=web3js+migration（语义搜索）
+     返回：Skills 列表 + 元数据
+
+GET  /api/skills/{id}
+     返回：SKILL.md 内容 + 元数据
+
+GET  /api/skills/{id}/raw
+     返回：纯 SKILL.md 文本（供 agent curl 直接使用）
+
+GET  /api/bundles/{bundle_id}
+     返回：Bundle 包含的 Skills 列表
+
+POST /api/feedback
+     body: { skill, agent, issue, code_snippet?, error_message?, fix? }
+     动作：在 GitHub 自动开 Issue，打 auto-reported 标签
+
+GET  /api/skills/{id}/health
+     返回：Skill 健康度报告（最近 eval 结果、上报问题数）
+```
+
+### 2.3 变更检测 Worker
+
+复用 Web3Hub 的 PM2 + Scheduler 基础设施：
+
+```javascript
+// skills-change-detector.js (PM2 进程)
+// 每天运行一次，检测已收录 Skills 的源仓库变更
+
+async function detectChanges(skill) {
+  // 1. 拉取源仓库最新 commit/release
+  const latestCommit = await github.getLatestCommit(skill.sourceRepo)
+  const lastChecked = skill.lastCheckedCommit
+
+  if (latestCommit === lastChecked) return  // 无变更
+
+  // 2. 获取 diff
+  const diff = await github.getDiff(skill.sourceRepo, lastChecked, latestCommit)
+
+  // 3. AI 分析变更类型
+  const analysis = await ai.analyze(diff, {
+    prompt: "识别 breaking change、API 废弃、新增功能，评估对 SKILL.md 的影响"
+  })
+
+  // 4. 如果有重要变更，自动开 Issue
+  if (analysis.severity === 'high') {
+    await github.createIssue({
+      title: `[${skill.id}] Breaking change detected: ${analysis.summary}`,
+      body: analysis.detail,
+      labels: ['auto-detected', 'needs-update']
+    })
+  }
+
+  // 5. 如果 severity 为 low，自动生成更新草稿并附在 Issue 上
+  if (analysis.severity === 'low') {
+    const draft = await ai.generateSkillUpdate(skill, diff)
+    await github.createIssue({ ... draft ... })
   }
 }
 ```
 
 ---
 
-## 五、输出适配层详解
+## 三、AI 辅助生成工具
 
-### 5.1 MCP Server（重度集成）
-
-**适用场景：** Claude Desktop、Cursor、Windsurf 等支持 MCP 协议的工具
+### 3.1 CLI 工具
 
 ```
-协议：SSE（Server-Sent Events）
-认证：Bearer Token
-端点：https://mcp.agentrel.ai/sse
+npx agentrel <command>
+
+命令：
+  generate  --source <url>      从 URL 生成 SKILL.md 草稿
+            --skill <id>        生成特定 Skill 的草稿（用于初始化）
+            --output <path>     输出路径，默认 stdout
+
+  update    --skill <id>        检查并更新已有 Skill
+            --check-updates     只检查，不生成（显示有无变更）
+            --auto-pr           自动提交 PR（需要 GitHub token）
+
+  diff      --skill <id>        显示待更新内容（对比线上版本）
+
+  eval      --skill <id>        跑 eval 问题集，输出健康度报告
+            --questions <path>  自定义问题集
+
+  validate  --file <path>       验证 SKILL.md 格式是否符合规范
 ```
 
-**Tool 列表：**
+### 3.2 生成流水线实现
 
-```
-get_ecosystem_docs(ecosystem, query?, section?, since?)
-  → 返回文档内容，带质量元数据和来源链接
+```typescript
+async function generateSkill(source: string): Promise<SkillDraft> {
+  // Step 1: 抓取内容
+  const content = await crawler.fetch(source)
+  const gitHistory = await github.getRecentHistory(source, days=90)
 
-get_ecosystem_updates(ecosystem, type?, since?, limit?)
-  → 实时动态：升级/治理/安全/Bounty
+  // Step 2: 幻觉热点分析
+  const hallucinations = await detectHallucinations({
+    docs: content,
+    prompt: `
+      你是一个专家开发者。根据这份文档，列出 AI 编程助手（不熟悉最新版本）
+      最容易犯的错误。对每个错误给出：
+      1. AI 可能会怎么回答（错误版本）
+      2. 正确答案是什么
+      3. 置信度（high/medium/low）
+    `
+  })
 
-get_security_alerts(ecosystem?, severity?)
-  → 安全事件，含影响范围和建议措施
+  // Step 3: 生成 SKILL.md
+  const draft = await ai.generate({
+    template: SKILL_TEMPLATE,
+    content,
+    hallucinations,
+    breakingChanges: gitHistory.breakingChanges,
+  })
 
-get_bounties(ecosystem?, skills?, amount_min?, deadline_before?)
-  → Bounty 列表
+  // Step 4: 置信度评分
+  const scored = await scoreConfidence(draft)
 
-compare_ecosystems(ecosystems[], aspect?)
-  → 跨生态对比数据
-
-get_ecosystem_overview(ecosystem)
-  → 生态整体状态摘要
-```
-
-**实现要点：**
-- 每次 Tool 调用记录到 Agent Profile（调用类型、时间、成功/失败）
-- 限流：公共 Key 200 次/天，注册 Key 无限，按 429 + retry-after 标准返回
-- 错误信息清晰，不让开发者猜（"ecosystem 'monad' not found, available: [solana, ethereum, base, ...]"）
-
-### 5.2 Skill 包（轻量集成）
-
-**适用场景：** OpenClaw、Claude Code、任何支持 SKILL.md 规范的 Agent 框架
-
-**为什么 Skill 比 MCP 更轻：**
-- 无需跑服务进程
-- 纯文件，fork 即用
-- 可离线使用（静态知识）
-- 在 GitHub 天然可传播
-
-**每个生态的 Skill 包结构：**
-
-```
-agentrel-skills/
-└── solana/
-    ├── SKILL.md              # 技能说明 + 使用方式
-    ├── knowledge/
-    │   ├── core-concepts.md  # 核心概念（静态，自动从知识库生成）
-    │   ├── dev-setup.md      # 开发环境
-    │   ├── common-patterns.md # 常见模式
-    │   └── gotchas.md        # 常见坑
-    ├── scripts/
-    │   ├── get-updates.sh    # 获取最新动态（调 AgentRel API）
-    │   ├── get-bounties.sh   # 查询 Bounty
-    │   └── check-security.sh # 检查安全告警
-    └── references/
-        ├── api-quick-ref.md  # API 速查表
-        └── error-codes.md    # 错误码说明
+  return {
+    content: scored.markdown,
+    metadata: {
+      confidence: scored.overallConfidence,
+      needsReview: scored.lowConfidenceSections,
+      breakingChanges: gitHistory.breakingChanges.length,
+    }
+  }
+}
 ```
 
-**SKILL.md 格式（兼容 OpenClaw AgentSkills 规范）：**
+### 3.3 Web Editor 技术方案
 
-```markdown
-# Solana Developer Knowledge
+- **框架**：Next.js（复用 HackAgent 技术栈）
+- **编辑器**：CodeMirror（Markdown 编辑）
+- **预览**：react-markdown + remark-gfm（已在 HackAgent 验证）
+- **Diff 视图**：diff2html
 
-## 描述
-Solana 生态开发知识包。包含核心概念、开发工具、最佳实践和实时动态。
-
-## 使用方式
-- 查询 Solana 技术概念：直接问，知识库已内置
-- 获取最新生态动态：运行 scripts/get-updates.sh
-- 查找 Bounty：运行 scripts/get-bounties.sh
-
-## 覆盖内容
-- Accounts model、PDA、CPI、Rent 机制
-- Anchor framework（最新版本）
-- web3.js v2 迁移指南
-- 实时：协议升级、安全告警、Grant 动态
-
-## 数据同步
-静态知识：每周自动更新（AgentRel 推送新版本到 GitHub）
-实时动态：通过 scripts/ 按需拉取
+关键页面：
 ```
-
-**发布方式：**
-- GitHub 仓库：`agentrel/skills`，每个生态一个目录
-- OpenClaw ClawHub：发布到技能注册表，`clawhub install agentrel/solana`
-- 自动更新：知识库有重大变更时，CI 自动提 PR 更新静态知识文件
-
-### 5.3 llms.txt（最轻量）
-
-**适用场景：** 任何 LLM，配合 system prompt 使用；也是项目方网站的标准 SEO 配置
-
-**格式：**
-
-```markdown
-# Solana Developer Resources
-
-> Solana is a high-performance blockchain supporting builders around the world.
-
-## Core Documentation
-- [Getting Started](https://solana.com/docs/intro/quick-start): Setup and first program
-- [Accounts Model](https://solana.com/docs/core/accounts): Solana's data model
-- [Programs](https://solana.com/docs/core/programs): Writing on-chain programs
-- [Anchor Framework](https://www.anchor-lang.com/docs): Recommended framework
-
-## Recent Updates (auto-updated by AgentRel)
-- [2026-03-14] web3.js v2.1.0 released — breaking change in Transaction signing API
-- [2026-03-10] Firedancer v0.1 mainnet deployment begins
-- [2026-03-08] New Bounty: $5000 for Anchor v0.31 migration guide
-
-## API Reference
-- [JSON RPC API](https://solana.com/docs/rpc): Full RPC method reference
-- [web3.js v2 Docs](https://solana-labs.github.io/solana-web3.js/): JavaScript SDK
-
-## Security
-- [Security Advisories](https://agentrel.ai/solana/security): Latest alerts
-```
-
-**AgentRel 帮项目方做的：**
-- 自动生成 `llms.txt` + `llms-full.txt`（详细版）
-- 托管在 `agentrel.ai/<ecosystem>/llms.txt`，也可托管在客户自己域名
-- 自动保持更新（动态信息每小时刷新）
-- 这是 toB 服务里最容易交付的即时价值
-
-### 5.4 REST API（自建 Agent / RAG Pipeline）
-
-**适用场景：** 自建 Agent、LangChain、LlamaIndex、Telegram Bot
-
-```
-GET  /v1/ecosystems                    # 列出所有生态
-GET  /v1/ecosystems/{id}/docs          # 查询文档
-GET  /v1/ecosystems/{id}/updates       # 获取动态
-GET  /v1/ecosystems/{id}/bounties      # 查询 Bounty
-GET  /v1/search?q={query}&ecosystem={} # 跨生态语义搜索（Phase 2）
-POST /v1/webhooks                      # 注册变更推送
-
-Auth: Bearer Token
-Rate limit: 公共 Key 200/day，注册 Key 无限
+/editor/new              新建 Skill（输入源 URL，AI 生成草稿）
+/editor/{skill_id}       编辑已有 Skill
+/editor/{skill_id}/diff  查看待更新内容（与线上版本对比）
+/review/{pr_id}          L3 维护者 Review 界面（逐段 Approve/Reject）
 ```
 
 ---
 
-## 六、数据库 Schema
+## 四、Agent 反馈系统
+
+### 4.1 Feedback API
+
+```typescript
+// POST /api/feedback
+interface FeedbackPayload {
+  skill: string           // e.g. "solana/web3js-v2"
+  agent: string           // e.g. "claude-code", "cursor", "custom"
+  issue: string           // 问题描述
+  code_snippet?: string   // 出错代码
+  error_message?: string  // 错误信息
+  fix?: string            // Agent 找到的正确写法
+  session_id?: string     // 用于聚合同一问题的多次上报（可选）
+}
+
+// 处理逻辑
+async function handleFeedback(payload: FeedbackPayload) {
+  // 1. 存入 feedback DB
+  const feedback = await db.feedback.create(payload)
+
+  // 2. 检查是否有相似 Issue（embedding 相似度检测）
+  const similar = await findSimilarFeedback(payload.issue)
+
+  if (similar && similar.confidence > 0.85) {
+    // 聚合到已有 Issue，增加 upvote
+    await github.commentOnIssue(similar.githubIssueId, {
+      body: `Another report: ${payload.issue}`,
+      metadata: payload
+    })
+    await db.feedback.incrementConfidence(similar.id)
+  } else {
+    // 新开 Issue
+    const issue = await github.createIssue({
+      repo: 'agentrel/skills',
+      title: `[${payload.skill}] ${payload.issue.slice(0, 80)}`,
+      body: formatFeedbackIssue(payload),
+      labels: ['auto-reported', `skill:${payload.skill}`]
+    })
+    await db.feedback.update({ githubIssueId: issue.id })
+  }
+
+  // 3. 如果同一 Skill 在 24h 内收到 3+ 条不同反馈，触发高优先级提醒
+  const recentCount = await db.feedback.countRecent(payload.skill, hours=24)
+  if (recentCount >= 3) {
+    await notifyMaintainer(payload.skill, 'high-priority-update-needed')
+  }
+}
+```
+
+### 4.2 Eval Pipeline
+
+```typescript
+// 每周自动跑，检测 Skill 健康度
+async function runSkillEval(skillId: string) {
+  const skill = await db.skills.get(skillId)
+  const questions = await db.evalQuestions.getByEcosystem(skill.ecosystem)
+
+  const results = []
+  for (const q of questions) {
+    // 有 Skill vs 无 Skill，对比回答质量
+    const withSkill = await llm.answer(q.question, { context: skill.content })
+    const withoutSkill = await llm.answer(q.question, { context: null })
+
+    const score = await evaluateAnswer(withSkill, q.correctAnswer)
+    const baseScore = await evaluateAnswer(withoutSkill, q.correctAnswer)
+
+    results.push({ question: q.id, withSkill: score, withoutSkill: baseScore })
+  }
+
+  const healthReport = {
+    skillId,
+    avgImprovement: average(results.map(r => r.withSkill - r.withoutSkill)),
+    passingRate: results.filter(r => r.withSkill >= 0.8).length / results.length,
+    failingQuestions: results.filter(r => r.withSkill < 0.6),
+    generatedAt: new Date()
+  }
+
+  await db.skillHealth.upsert(healthReport)
+
+  // 健康度下降超过 10% → 触发更新提醒
+  const prev = await db.skillHealth.getPrevious(skillId)
+  if (prev && healthReport.passingRate < prev.passingRate - 0.1) {
+    await notifyMaintainer(skillId, 'health-degraded', healthReport)
+  }
+
+  return healthReport
+}
+```
+
+---
+
+## 五、数据模型
+
+### Skills DB
 
 ```sql
--- 生态元数据
-CREATE TABLE ecosystems (
-  id            TEXT PRIMARY KEY,    -- 'solana', 'monad'
+-- Skill 元数据
+CREATE TABLE skills (
+  id            TEXT PRIMARY KEY,     -- e.g. "solana/web3js-v2"
   name          TEXT NOT NULL,
-  category      TEXT,                -- 'l1', 'l2', 'defi', 'tool'
-  tags          TEXT[],
-  related       TEXT[],
-  config_yaml   TEXT,                -- 完整 YAML 配置
-  is_active     BOOLEAN DEFAULT true,
-  created_at    TIMESTAMPTZ DEFAULT NOW()
+  ecosystem     TEXT NOT NULL,
+  type          TEXT NOT NULL,        -- technical-doc | ecosystem-news | event | grant-guide | security
+  time_sensitivity TEXT DEFAULT 'evergreen',
+  expires_at    TIMESTAMPTZ,
+  source        TEXT NOT NULL,        -- official | community | ai-generated
+  confidence    TEXT DEFAULT 'medium',
+  version       TEXT NOT NULL,
+  source_repo   TEXT,                 -- 变更检测用
+  last_checked_commit TEXT,
+  maintainer    TEXT,
+  content       TEXT NOT NULL,        -- SKILL.md 全文
+  content_hash  TEXT,                 -- 用于变更检测
+  install_count INTEGER DEFAULT 0,
+  created_at    TIMESTAMPTZ DEFAULT NOW(),
+  updated_at    TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 数据源状态
-CREATE TABLE sources (
-  id              SERIAL PRIMARY KEY,
-  ecosystem_id    TEXT REFERENCES ecosystems(id),
-  source_url      TEXT NOT NULL,
-  source_type     TEXT,              -- 'gitbook', 'rss', 'twitter'
-  trust_level     TEXT,              -- 'official', 'community'
-  last_synced_at  TIMESTAMPTZ,
-  last_hash       TEXT,              -- 上次同步的内容 hash
-  sync_interval   INTERVAL,
-  error_count     INT DEFAULT 0,
-  last_error      TEXT
+-- Bundle
+CREATE TABLE bundles (
+  id          TEXT PRIMARY KEY,
+  name        TEXT NOT NULL,
+  description TEXT,
+  scenario    TEXT,                   -- "eth-hackathon" | "solana-dev" | ...
+  skills      TEXT[] NOT NULL,        -- skill id 数组
+  expires_at  TIMESTAMPTZ,            -- Bundle 级别的过期（时效型）
+  created_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 知识内容主表
-CREATE TABLE knowledge_items (
-  id                TEXT PRIMARY KEY,
-  ecosystem_id      TEXT REFERENCES ecosystems(id),
-  source_id         INT REFERENCES sources(id),
-  content           TEXT NOT NULL,
-  summary           TEXT,
-  content_hash      TEXT,
-  source_url        TEXT,
-  source_type       TEXT,
-  trust_level       TEXT,
-  layer             TEXT,            -- 'docs', 'blog', 'community', 'security'
-  content_type      TEXT,            -- 'concept', 'tutorial', 'changelog', 'alert'
-  skill_tags        TEXT[],
-  difficulty        TEXT,
-  breadcrumb        TEXT,
-  relevance_score   FLOAT,
-  quality_score     FLOAT,
-  freshness_score   FLOAT,
-  completeness_score FLOAT,
-  published_at      TIMESTAMPTZ,
-  last_synced_at    TIMESTAMPTZ DEFAULT NOW(),
-  created_at        TIMESTAMPTZ DEFAULT NOW()
+-- 用户反馈
+CREATE TABLE skill_feedback (
+  id              UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  skill_id        TEXT NOT NULL REFERENCES skills(id),
+  agent           TEXT,
+  issue           TEXT NOT NULL,
+  code_snippet    TEXT,
+  error_message   TEXT,
+  fix             TEXT,
+  issue_embedding VECTOR(1536),       -- 用于相似度聚合
+  github_issue_id INTEGER,
+  confidence      INTEGER DEFAULT 1,  -- 多次上报累加
+  status          TEXT DEFAULT 'open', -- open | investigating | resolved
+  created_at      TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 向量索引
-CREATE TABLE embeddings (
-  item_id    TEXT REFERENCES knowledge_items(id),
-  embedding  vector(1536),           -- Jina embedding 维度
-  model      TEXT DEFAULT 'jina-v3'
-);
-CREATE INDEX ON embeddings USING ivfflat (embedding vector_cosine_ops);
-
--- 变更记录（审计 + diff 追踪）
-CREATE TABLE change_log (
-  id           SERIAL PRIMARY KEY,
-  source_id    INT REFERENCES sources(id),
-  item_id      TEXT,
-  change_type  TEXT,                 -- 'created', 'updated', 'deleted'
-  old_hash     TEXT,
-  new_hash     TEXT,
-  changed_at   TIMESTAMPTZ DEFAULT NOW()
-);
-
--- 开发者账号
-CREATE TABLE developers (
-  id                TEXT PRIMARY KEY,
-  github_handle     TEXT UNIQUE,
-  wallet_address    TEXT,
-  api_token         TEXT UNIQUE,
-  plan              TEXT DEFAULT 'free',  -- 'free', 'paid'
-  preferences       JSONB,
-  created_at        TIMESTAMPTZ DEFAULT NOW(),
-  last_active_at    TIMESTAMPTZ
-);
-
--- Agent 调用记录（Reputation 数据源）
-CREATE TABLE agent_calls (
-  id           SERIAL PRIMARY KEY,
-  developer_id TEXT REFERENCES developers(id),
-  tool_name    TEXT,
-  ecosystem    TEXT,
-  success      BOOLEAN,
-  latency_ms   INT,
-  called_at    TIMESTAMPTZ DEFAULT NOW()
+-- Skill 健康度
+CREATE TABLE skill_health (
+  id              UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  skill_id        TEXT NOT NULL REFERENCES skills(id),
+  avg_improvement FLOAT,
+  passing_rate    FLOAT,
+  failing_count   INTEGER,
+  generated_at    TIMESTAMPTZ NOT NULL,
+  created_at      TIMESTAMPTZ DEFAULT NOW()
 );
 ```
 
 ---
 
-## 七、技术选型
+## 六、部署架构
 
-| 层 | 选型 | 理由 |
-|----|------|------|
-| 数据库 | PostgreSQL + pgvector | 现有 Supabase，向量检索原生支持 |
-| 队列 | BullMQ + Redis | 现有 Web3Hub 基础设施 |
-| AI 处理 | GLM-5（评分/标签）+ Kimi（摘要） | 低成本，现有 key |
-| Embedding | Jina v3 | 现有 key，效果好 |
-| MCP Server | Node.js（现有技术栈） | 快速实现 |
-| Skill 生成 | 模板 + AI 生成静态 md | 低成本批量生成 |
-| 采集调度 | PM2 + cron（现有模式） | 与 Web3Hub 一致 |
-| 部署 | Vercel（API） + PM2（worker） | 现有模式 |
+### 服务组成
 
----
+| 服务 | 技术 | 部署方式 |
+|------|------|---------|
+| Skills API | Next.js API Routes | Vercel（与 HackAgent 相同技术选型，独立项目）|
+| Web Editor | Next.js | Vercel |
+| MCP Server | Node.js + SSE | Vercel Functions / Railway |
+| AI 生成工具（CLI）| Node.js + npm 包 | npm publish |
+| 变更检测 Worker | Node.js | PM2（复用 Web3Hub 基础设施）|
+| Eval Pipeline | Node.js | PM2 定时任务 |
+| Skills DB | Supabase | 独立 Project（不复用 Web3Hub）|
 
-## 八、与现有系统的关系
+### 环境变量
 
-```
-Web3Hub（现有）
-    ├── 采集器（collector）  →  AgentRel 复用，增加文档类 Adapter
-    ├── AI Worker           →  AgentRel 复用，增加 Skill 生成任务
-    ├── 数据库（Supabase）   →  AgentRel 新建表，共用同一个实例
-    └── Scheduler           →  AgentRel 的同步任务加入现有调度
+```bash
+# AI
+COMMONSTACK_API_KEY=ak-xxxx
+COMMONSTACK_API_URL=https://api.commonstack.ai/v1
 
-AgentRel（新建）
-    ├── 知识库（knowledge_items + embeddings）
-    ├── MCP Server（新服务，port xxxx）
-    ├── REST API（Vercel Functions）
-    ├── Skill 生成 Worker（PM2）
-    └── llms.txt 生成 & 托管（Vercel）
-```
+# GitHub（PR 自动提交 + Issue 创建）
+GITHUB_TOKEN=github_pat_xxx
+GITHUB_REPO=agentrel/skills
 
-Web3Hub 的动态数据经 API 直接注入 AgentRel 知识库，无需重复采集。
+# Supabase
+SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_SERVICE_KEY=xxx
 
----
-
-## 九、Phase 1 实现优先级
-
-```
-Week 1-2：
-  ✅ 数据库 Schema 建立
-  ✅ gitbook / docusaurus / rss adapter 实现
-  ✅ Solana + Monad 数据源 YAML 配置
-  ✅ 初次全量导入 + 人工 quality review
-
-Week 3-4：
-  ✅ AI 处理 pipeline（评分 + 标签 + 摘要）
-  ✅ Web3Hub 动态数据接入
-  ✅ MCP Server MVP（核心 5 个 Tool）
-  ✅ 公共 Key + 基础限流
-
-Week 5-6：
-  ✅ Skill 包生成（Solana + Monad）
-  ✅ llms.txt 生成 & 托管
-  ✅ REST API（基础 4 个端点）
-  ✅ 开发者注册 + API Token 生成
-  ✅ 首页 + Dashboard 基础版
-  ✅ Cursor Directory 上架
+# Web3Hub（复用数据）
+WEB3HUB_SUPABASE_URL=https://nofczyucgszztvzaluln.supabase.co
+WEB3HUB_SUPABASE_SERVICE_KEY=xxx
 ```
 
 ---
 
-*v1.0 | AgentRel 技术架构 | 2026-03-15*
+## 七、与现有系统的集成
+
+### 7.1 Web3Hub 数据复用
+
+Web3Hub 已有 `feeds` 表，字段 `ecosystem`、`category`、`tags`、`summary_zh`、`summary_en` 可直接用于生成"生态动态 Skill"：
+
+```typescript
+// 每周从 Web3Hub 自动生成"生态动态 Skill"
+async function generateEcosystemNewSkill(ecosystem: string) {
+  const feeds = await web3hub.db
+    .from('feeds')
+    .select('title, summary_zh, summary_en, source_name, published_at, original_url')
+    .eq('ecosystem', ecosystem)
+    .gte('published_at', subDays(new Date(), 7))
+    .order('hot_score', { ascending: false })
+    .limit(20)
+
+  const skill = await ai.generate({
+    template: ECOSYSTEM_NEWS_TEMPLATE,
+    feeds,
+    ecosystem,
+  })
+
+  await db.skills.upsert({
+    id: `${ecosystem}/weekly-news`,
+    type: 'ecosystem-news',
+    time_sensitivity: 'time-limited',
+    expires_at: addDays(new Date(), 7),
+    content: skill,
+  })
+}
+```
+
+### 7.2 OpenBuild Bounty/Grant 同步
+
+```typescript
+// 每天同步 OpenBuild 的活跃 Bounty 和 Grant 到 AgentRel
+async function syncOpenBuildTasks() {
+  const tasks = await openbuild.api.getTasks({ status: 'active' })
+  for (const task of tasks) {
+    await db.tasks.upsert({
+      id: task.id,
+      title: task.title,
+      type: task.type,           // bounty | grant | hackathon
+      ecosystem: task.ecosystem,
+      reward: task.reward,
+      deadline: task.deadline,
+      skills_required: task.skills,
+      apply_url: task.url,
+      source: 'openbuild',
+    })
+  }
+}
+```
+
+---
+
+## 八、MVP 技术优先级
+
+**Week 1-2（最小可验证）**
+- [ ] Skills 仓库（GitHub repo：agentrel/skills）
+- [ ] 手工写入 3-5 条 SKILL.md，发布到 skills.sh
+- [ ] 简单的 Skills 列表页（静态即可）
+
+**Week 3-4（工具化）**
+- [ ] CLI `generate` 命令（AI 辅助生成草稿）
+- [ ] `POST /api/feedback` endpoint（接收 Agent 反馈 → 自动开 GitHub Issue）
+- [ ] GitHub Issue 模板 + 贡献指南
+
+**Month 2**
+- [ ] Web Editor（左右对照 Review 界面）
+- [ ] Skills DB（Supabase）
+- [ ] 变更检测 Worker（Web3Hub PM2 复用）
+- [ ] Bundle 支持
+
+**Month 3**
+- [ ] MCP Server（复用 Agentforum 设计）
+- [ ] Eval Pipeline
+- [ ] Web3Hub 数据自动导出"生态动态 Skill"
+
+---
+
+*技术架构文档 v1.0 | AgentRel | 2026-03-18*
