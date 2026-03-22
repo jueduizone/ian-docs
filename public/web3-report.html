@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web3 开源开发者洞察 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .header { background: linear-gradient(135deg, #1a56db 0%, #0e3a8a 100%); color: #fff; padding: 60px 0 48px; }
+  .header h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 12px; }
+  .header .sub { font-size: 1.05rem; opacity: 0.85; margin-bottom: 8px; }
+  .header .meta { font-size: 0.88rem; opacity: 0.65; }
+  .badge { display: inline-block; background: rgba(255,255,255,0.15); border-radius: 20px; padding: 4px 14px; font-size: 0.8rem; margin-top: 16px; }
+
+  /* Sections */
+  .section { padding: 56px 0; border-bottom: 1px solid #e2e8f0; }
+  .section:last-child { border-bottom: none; }
+  .section-title { font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+  .section-title span { color: #1a56db; }
+  .section-desc { color: #64748b; margin-bottom: 32px; font-size: 0.95rem; }
+
+  /* Charts */
+  .chart-wrap { background: #fff; border-radius: 12px; padding: 28px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 24px; }
+  .chart-title { font-size: 1rem; font-weight: 600; margin-bottom: 20px; color: #334155; }
+  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 700px) { .chart-grid { grid-template-columns: 1fr; } }
+
+  /* Key phases */
+  .phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px; }
+  @media (max-width: 700px) { .phases { grid-template-columns: 1fr 1fr; } }
+  .phase { background: #f1f5f9; border-left: 4px solid #1a56db; border-radius: 8px; padding: 14px 16px; }
+  .phase.red { border-color: #ef4444; }
+  .phase.green { border-color: #22c55e; }
+  .phase.orange { border-color: #f59e0b; }
+  .phase-label { font-size: 0.78rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .phase-value { font-size: 1.1rem; font-weight: 700; color: #1e293b; }
+  .phase-desc { font-size: 0.82rem; color: #64748b; margin-top: 2px; }
+
+  /* Table */
+  .table-wrap { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th { background: #1e293b; color: #fff; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 0.82rem; }
+  td { padding: 11px 16px; border-bottom: 1px solid #f1f5f9; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  tr:hover td { background: #eff6ff; }
+  .yoy-pos { color: #16a34a; font-weight: 700; }
+  .yoy-neg { color: #dc2626; font-weight: 700; }
+  .bar-mini { display: inline-block; height: 6px; border-radius: 3px; background: #1a56db; margin-right: 6px; vertical-align: middle; }
+
+  /* Insight cards */
+  .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 700px) { .insight-grid { grid-template-columns: 1fr; } }
+  .insight-card { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 4px solid #1a56db; }
+  .insight-card:nth-child(2) { border-color: #8b5cf6; }
+  .insight-card:nth-child(3) { border-color: #f59e0b; }
+  .insight-card:nth-child(4) { border-color: #22c55e; }
+  .insight-num { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .insight-title { font-size: 1.05rem; font-weight: 700; color: #1e293b; margin-bottom: 10px; }
+  .insight-body { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+  .tag { display: inline-block; background: #eff6ff; color: #1a56db; font-size: 0.78rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin: 2px; }
+  .tag.purple { background: #f5f3ff; color: #7c3aed; }
+  .tag.amber { background: #fffbeb; color: #d97706; }
+  .tag.green { background: #f0fdf4; color: #16a34a; }
+
+  /* Footer */
+  footer { background: #1e293b; color: #94a3b8; padding: 36px 0; font-size: 0.85rem; }
+  footer .row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer a { color: #60a5fa; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="container">
+    <div class="meta">研究报告 · 2026年3月</div>
+    <h1>Web3 开源开发者洞察</h1>
+    <div class="sub">全球区块链生态开发者活跃度深度分析</div>
+    <div class="badge">基于 Electric Capital 开放数据集 · 数据截至 2026-03-13 · 由 OpenBuild 分析整理</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Section 1: 全球趋势 -->
+  <div class="section">
+    <div class="section-title"><span>01.</span> 全球 Web3 开发者规模趋势</div>
+    <div class="section-desc">2022-2026 年全球区块链生态月活开发者数量变化</div>
+
+    <div class="chart-wrap">
+      <div class="chart-title">全球月活开发者（月活 / 全职，2022-2026）</div>
+      <canvas id="trendChart" height="90"></canvas>
+    </div>
+
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-label">2022 牛市末期</div>
+        <div class="phase-value">~3.5 万</div>
+        <div class="phase-desc">月活峰值，熊市开始后快速回落</div>
+      </div>
+      <div class="phase red">
+        <div class="phase-label">2023 全年熊市</div>
+        <div class="phase-value">YoY -15%</div>
+        <div class="phase-desc">全年负增长，开发者持续流出</div>
+      </div>
+      <div class="phase green">
+        <div class="phase-label">2025年5月 历史峰值</div>
+        <div class="phase-value">4.4 万</div>
+        <div class="phase-desc">超越 2022 高点，创历史新高</div>
+      </div>
+      <div class="phase orange">
+        <div class="phase-label">2026年初 回调</div>
+        <div class="phase-value">YoY -15%</div>
+        <div class="phase-desc">季节性 + 市场降温双重压力</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: 生态排名 -->
+  <div class="section">
+    <div class="section-title"><span>02.</span> 主要生态排名（2026-03）</div>
+    <div class="section-desc">按月活开发者数排序，包含 YoY 增长率、开发者类型分布</div>
+
+    <div class="chart-wrap" style="margin-bottom:28px;">
+      <div class="chart-title">Top 15 生态月活开发者</div>
+      <canvas id="ecosystemChart" height="120"></canvas>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>生态</th>
+            <th>月活开发者</th>
+            <th>YoY</th>
+            <th>全职占比</th>
+            <th>新人占比(0-1年)</th>
+            <th>独占占比</th>
+          </tr>
+        </thead>
+        <tbody id="ecoTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section 3: 洞察 -->
+  <div class="section">
+    <div class="section-title"><span>03.</span> 关键洞察</div>
+    <div class="section-desc">从数据中提炼的四个核心发现</div>
+
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="insight-num">洞察 01</div>
+        <div class="insight-title">逆势增长的生态</div>
+        <div class="insight-body">
+          在整体市场回调中，仍录得正增长的生态：
+          <br><br>
+          <span class="tag green">ICP +83%</span>
+          <span class="tag green">Stellar +40%</span>
+          <span class="tag green">Lightning +36%</span>
+          <span class="tag green">Base +25%</span>
+          <br><br>
+          这些是真实开发者增量，而非随牛市退潮的泡沫效应。
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-num">洞察 02</div>
+        <div class="insight-title">EVM L2 没有独立开发者</div>
+        <div class="insight-body">
+          Base / Arbitrum / Optimism 的跨链开发者比例均超过 <strong>85%</strong>，独占率仅 13-20%。
+          <br><br>
+          这些开发者本质是"顺带支持 L2"的以太坊开发者，<strong>EVM 通用 Skill 覆盖即可</strong>，无需为每条 L2 单独构建。
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-num">洞察 03</div>
+        <div class="insight-title">高独占 = AI Skill 护城河最深</div>
+        <div class="insight-body">
+          独占开发者比例最高的生态：
+          <br><br>
+          <span class="tag amber">ICP 91%</span>
+          <span class="tag amber">Cardano 84%</span>
+          <span class="tag amber">Bitcoin 56%</span>
+          <span class="tag amber">Stellar 57%</span>
+          <br><br>
+          这类开发者高度专注，不跨链迁移，对专属 AI Context 的需求最强烈，也最愿意付费。
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-num">洞察 04</div>
+        <div class="insight-title">新开发者 = AI Skill 核心用户</div>
+        <div class="insight-body">
+          新人占比（0-1年）最高的生态：
+          <br><br>
+          <span class="tag purple">ICP 82%</span>
+          <span class="tag purple">Base 52%</span>
+          <span class="tag purple">Polygon 49%</span>
+          <span class="tag purple">Solana 45%</span>
+          <br><br>
+          新开发者存量知识浅、对 AI 辅助依赖度最高，是 Skill 产品最容易转化的目标用户群。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: 季度趋势 -->
+  <div class="section">
+    <div class="section-title"><span>04.</span> 主要生态季度趋势（2023Q1 - 2026Q1）</div>
+    <div class="section-desc">六大生态月活开发者季度变化对比</div>
+
+    <div class="chart-wrap">
+      <div class="chart-title">季度月活开发者趋势</div>
+      <canvas id="quarterChart" height="100"></canvas>
+    </div>
+  </div>
+
+  <!-- Section 5: 开发者类型 -->
+  <div class="section">
+    <div class="section-title"><span>05.</span> 开发者类型分析</div>
+    <div class="section-desc">全职占比反映生态成熟度，新人占比反映生态新鲜度</div>
+
+    <div class="chart-grid">
+      <div class="chart-wrap">
+        <div class="chart-title">全职开发者占比 Top 10（生态成熟度）</div>
+        <canvas id="fulltimeChart" height="200"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">新开发者占比 Top 10（新人涌入，0-1年）</div>
+        <canvas id="newdevChart" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div>
+        <strong style="color:#e2e8f0;">数据来源：</strong>
+        <a href="https://data.opendevdata.org" target="_blank">Electric Capital Open Source Developer Data</a>
+        · CC BY 4.0 · 版本 20260321T133239
+      </div>
+      <div>分析整理：<strong style="color:#e2e8f0;">OpenBuild</strong> · 报告时间：2026年3月</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== DATA =====
+const trendData = {
+  labels: ['2022-01','2022-06','2022-12','2023-06','2023-12','2024-06','2024-12','2025-05','2025-06','2025-12','2026-01','2026-03'],
+  allDevs: [31394,34553,31716,31130,31729,36857,33727,44261,44056,37016,29732,29679],
+  fullTime: [7879,9511,9617,9653,9665,10278,10070,10973,10803,11125,9898,9291]
+};
+
+const ecoData = [
+  {name:'Ethereum',devs:10926,yoy:-23,fulltime:33,newdev:38,exclusive:45},
+  {name:'Solana',devs:3904,yoy:-26,fulltime:29,newdev:45,exclusive:49},
+  {name:'Bitcoin',devs:2941,yoy:-15,fulltime:33,newdev:39,exclusive:56},
+  {name:'Base',devs:2525,yoy:25,fulltime:23,newdev:52,exclusive:20},
+  {name:'Arbitrum',devs:1829,yoy:1,fulltime:26,newdev:43,exclusive:15},
+  {name:'Polygon',devs:2032,yoy:3,fulltime:27,newdev:49,exclusive:19},
+  {name:'ICP',devs:1661,yoy:83,fulltime:11,newdev:82,exclusive:91},
+  {name:'Cosmos',devs:1449,yoy:-37,fulltime:26,newdev:29,exclusive:47},
+  {name:'Stellar',devs:1218,yoy:40,fulltime:20,newdev:49,exclusive:57},
+  {name:'Polkadot',devs:1090,yoy:-34,fulltime:34,newdev:25,exclusive:42},
+  {name:'BNB Chain',devs:1074,yoy:-24,fulltime:25,newdev:44,exclusive:19},
+  {name:'Optimism',devs:1065,yoy:-13,fulltime:22,newdev:39,exclusive:13},
+  {name:'Sui',devs:940,yoy:-20,fulltime:30,newdev:36,exclusive:45},
+  {name:'Starknet',devs:764,yoy:-41,fulltime:24,newdev:35,exclusive:35},
+  {name:'TON',devs:550,yoy:-29,fulltime:27,newdev:37,exclusive:50},
+];
+
+const quarterLabels = ['2023Q1','2023Q2','2023Q3','2023Q4','2024Q1','2024Q2','2024Q3','2024Q4','2025Q1','2025Q2','2025Q3','2025Q4','2026Q1'];
+const quarterData = {
+  Ethereum: [10931,11890,11425,11453,11178,12030,11937,13107,12156,14945,16689,16678,13203],
+  Solana:   [3293,2966,2713,2987,3566,4689,4453,5218,4705,5813,5905,5921,5102],
+  Bitcoin:  [1858,1951,1890,2037,2110,2236,2468,2564,2512,3598,3993,4051,3330],
+  Base:     [null,null,829,1155,1134,1564,2032,1895,1624,2136,3068,3398,2800],
+  Polkadot: [2036,2074,1952,1956,1762,1760,1793,1691,1540,1596,1479,1504,1217],
+  Sui:      [78,107,723,739,794,1162,990,1174,1037,1265,1352,1425,1140],
+};
+
+const fulltimeData = {
+  labels:['Aurora','Kusama','Cardano','NEAR','Lightning','Tezos','Hedera','Polkadot','Bitcoin','Ethereum'],
+  values:[47.8,40.0,39.9,39.3,37.0,35.9,34.6,33.9,32.9,32.8]
+};
+
+const newdevData = {
+  labels:['ICP','Hedera','Stacks','Base','Polygon','Stellar','Solana','BNB Chain','Arbitrum','Monad'],
+  values:[81.8,52.5,52.3,52.0,48.9,48.9,45.0,44.2,43.0,42.7]
+};
+
+// ===== CHARTS =====
+const palette = ['#1a56db','#3b82f6','#60a5fa','#93c5fd','#22c55e','#f59e0b','#ef4444','#8b5cf6','#ec4899','#14b8a6','#f97316','#a3e635','#06b6d4','#e879f9','#fb923c'];
+
+// Trend chart
+new Chart(document.getElementById('trendChart'), {
+  type:'line',
+  data:{
+    labels: trendData.labels,
+    datasets:[
+      {label:'月活开发者（全体）',data:trendData.allDevs,borderColor:'#1a56db',backgroundColor:'rgba(26,86,219,0.08)',fill:true,tension:0.3,pointRadius:4},
+      {label:'全职开发者',data:trendData.fullTime,borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.08)',fill:true,tension:0.3,pointRadius:4,borderDash:[6,3]}
+    ]
+  },
+  options:{responsive:true,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:false,ticks:{callback:v=>v.toLocaleString()}}}}
+});
+
+// Ecosystem bar chart
+const top15 = ecoData.slice(0,15);
+new Chart(document.getElementById('ecosystemChart'), {
+  type:'bar',
+  data:{
+    labels: top15.map(d=>d.name),
+    datasets:[{label:'月活开发者',data:top15.map(d=>d.devs),backgroundColor:top15.map(d=>d.yoy>0?'#22c55e':'#1a56db'),borderRadius:4}]
+  },
+  options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v.toLocaleString()}}}}
+});
+
+// Fill table
+const tbody = document.getElementById('ecoTable');
+const maxDevs = ecoData[0].devs;
+ecoData.forEach(d=>{
+  const barW = Math.round((d.devs/maxDevs)*80);
+  const yoyClass = d.yoy>=0?'yoy-pos':'yoy-neg';
+  const yoyStr = d.yoy>=0?`+${d.yoy}%`:`${d.yoy}%`;
+  tbody.innerHTML += `<tr>
+    <td><strong>${d.name}</strong></td>
+    <td><span class="bar-mini" style="width:${barW}px"></span>${d.devs.toLocaleString()}</td>
+    <td class="${yoyClass}">${yoyStr}</td>
+    <td>${d.fulltime}%</td>
+    <td>${d.newdev}%</td>
+    <td>${d.exclusive}%</td>
+  </tr>`;
+});
+
+// Quarter chart
+const colors6 = ['#1a56db','#f59e0b','#f97316','#22c55e','#8b5cf6','#ec4899'];
+new Chart(document.getElementById('quarterChart'),{
+  type:'line',
+  data:{
+    labels:quarterLabels,
+    datasets:Object.entries(quarterData).map(([name,vals],i)=>({
+      label:name,data:vals,borderColor:colors6[i],backgroundColor:'transparent',tension:0.3,pointRadius:3,spanGaps:true
+    }))
+  },
+  options:{responsive:true,plugins:{legend:{position:'top'}},scales:{y:{ticks:{callback:v=>v.toLocaleString()}}}}
+});
+
+// Fulltime bar
+new Chart(document.getElementById('fulltimeChart'),{
+  type:'bar',
+  data:{
+    labels:fulltimeData.labels,
+    datasets:[{label:'全职占比%',data:fulltimeData.values,backgroundColor:'#1a56db',borderRadius:4}]
+  },
+  options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{max:60,ticks:{callback:v=>v+'%'}}}}
+});
+
+// New dev bar
+new Chart(document.getElementById('newdevChart'),{
+  type:'bar',
+  data:{
+    labels:newdevData.labels,
+    datasets:[{label:'新人占比%',data:newdevData.values,backgroundColor:'#8b5cf6',borderRadius:4}]
+  },
+  options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{max:90,ticks:{callback:v=>v+'%'}}}}
+});
+</script>
+</body>
+</html>
