@@ -747,25 +747,26 @@ function renderCharts(){
     }
   });
 
-  // chart6: YoY 条形图
+  // chart6: YoY 条形图（含华语占比标注）
   const ctx6 = document.getElementById('chart6').getContext('2d');
   const yoyData = [
-    { name: 'ICP', yoy: 83 },
-    { name: 'Stellar', yoy: 40 },
-    { name: 'Base', yoy: 25 },
-    { name: 'Polygon', yoy: 3 },
-    { name: 'Arbitrum', yoy: 1 },
-    { name: 'Optimism', yoy: -13 },
-    { name: 'Bitcoin', yoy: -15 },
-    { name: 'Sui', yoy: -20 },
-    { name: 'BNB Chain', yoy: -24 },
-    { name: 'Ethereum', yoy: -23 },
-    { name: 'Solana', yoy: -26 },
-    { name: 'TON', yoy: -29 },
-    { name: 'Polkadot', yoy: -34 },
-    { name: 'Cosmos', yoy: -37 },
-    { name: 'Starknet', yoy: -41 },
+    { name: 'ICP',       yoy: 83,  cn: 0.7 },
+    { name: 'Stellar',   yoy: 40,  cn: 0.2 },
+    { name: 'Base',      yoy: 25,  cn: 1.1 },
+    { name: 'Polygon',   yoy: 3,   cn: 1.2 },
+    { name: 'Arbitrum',  yoy: 1,   cn: 1.6 },
+    { name: 'Optimism',  yoy: -13, cn: 1.5 },
+    { name: 'Bitcoin',   yoy: -15, cn: 1.6 },
+    { name: 'Sui',       yoy: -20, cn: 2.5 },
+    { name: 'Ethereum',  yoy: -23, cn: 1.4 },
+    { name: 'BNB Chain', yoy: -24, cn: 1.9 },
+    { name: 'Solana',    yoy: -26, cn: 1.3 },
+    { name: 'TON',       yoy: -29, cn: 1.3 },
+    { name: 'Polkadot',  yoy: -34, cn: 1.7 },
+    { name: 'Cosmos',    yoy: -37, cn: 2.2 },
+    { name: 'Starknet',  yoy: -41, cn: 0.9 },
   ].sort((a, b) => b.yoy - a.yoy);
+
   new Chart(ctx6, {
     type: 'bar',
     data: {
@@ -774,6 +775,8 @@ function renderCharts(){
         label: 'YoY (%)',
         data: yoyData.map(d => d.yoy),
         backgroundColor: yoyData.map(d => d.yoy >= 0 ? 'rgba(22,163,74,0.82)' : 'rgba(220,38,38,0.72)'),
+        borderColor: yoyData.map(d => d.cn >= 2.0 ? '#d97706' : 'transparent'),
+        borderWidth: yoyData.map(d => d.cn >= 2.0 ? 2.5 : 0),
         borderRadius: 4,
         borderSkipped: false,
       }]
@@ -785,26 +788,50 @@ function renderCharts(){
         legend: { display: false },
         tooltip: {
           callbacks: {
-            label: ctx => `YoY: ${ctx.parsed.x > 0 ? '+' : ''}${ctx.parsed.x}%`
+            label: ctx => {
+              const d = yoyData[ctx.dataIndex];
+              return [`YoY: ${d.yoy > 0 ? '+' : ''}${d.yoy}%`, `华语占比: ${d.cn}%${d.cn >= 2.0 ? ' ⭐ 高华语生态' : ''}`];
+            }
           }
         },
-        datalabels: {
-          display: false
-        }
       },
       scales: {
         x: {
-          grid: { color: isDark ? '#374151' : '#e5e7eb' },
+          grid: { color: '#e5e7eb' },
           ticks: {
-            color: isDark ? '#9ca3af' : '#6b7280',
+            color: '#374151',
+            font: { size: 11 },
             callback: v => `${v > 0 ? '+' : ''}${v}%`
           }
         },
         y: {
           grid: { display: false },
-          ticks: { color: isDark ? '#d1d5db' : '#374151', font: { size: 12 } }
+          ticks: {
+            color: '#111827',
+            font: { size: 12, weight: '500' },
+          }
         }
-      }
+      },
+      animation: { onComplete: function() {
+        const chart = this;
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textBaseline = 'middle';
+        chart.data.datasets[0].data.forEach((val, i) => {
+          const d = yoyData[i];
+          const meta = chart.getDatasetMeta(0);
+          const bar = meta.data[i];
+          const x = val >= 0 ? bar.x + 5 : bar.x - 5;
+          const y = bar.y;
+          const align = val >= 0 ? 'left' : 'right';
+          // cn label
+          ctx.fillStyle = d.cn >= 2.0 ? '#b45309' : '#6b7280';
+          ctx.textAlign = align;
+          ctx.fillText(`华语 ${d.cn}%`, x, y);
+        });
+        ctx.restore();
+      }}
     }
   });
 }
