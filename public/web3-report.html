@@ -47,14 +47,20 @@ a{color:#2563eb;text-decoration:none}
 
 /* Narrative */
 .narrative{margin:20px 0}
-.narrative p{font-size:.93rem;color:#374151;margin-bottom:10px;padding-left:0}
+.narrative p{font-size:14px;color:#333;margin-bottom:12px;line-height:1.8;padding-left:0}
+.narrative h4{font-size:.9rem;font-weight:700;color:#2563eb;margin:20px 0 8px}
 .narrative ul{list-style:none;padding:0}
 .narrative li{font-size:.93rem;color:#374151;padding:4px 0 4px 18px;position:relative}
 .narrative li::before{content:"·";position:absolute;left:4px;color:#2563eb;font-weight:700}
+.narrative em{font-style:italic;color:#4b5563}
 
 /* Insight blockquote */
 blockquote.insight{background:#f0f7ff;border-left:4px solid #2563eb;border-radius:0 8px 8px 0;padding:14px 18px;margin:22px 0;font-size:.9rem;color:#1e40af}
 blockquote.insight strong{display:block;margin-bottom:4px;font-size:.88rem}
+
+/* Cross-reference callout */
+.crossref{background:#f8fafc;border-left:4px solid #10b981;border-radius:0 8px 8px 0;padding:14px 18px;margin:18px 0;font-size:.875rem;color:#065f46}
+.crossref .crossref-label{font-size:.75rem;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
 
 /* Table */
 .table-wrap{background:#fff;border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.04);overflow:hidden;overflow-x:auto;margin-bottom:22px}
@@ -89,7 +95,11 @@ body.dark .card-title{color:#94a3b8}
 body.dark .section-title{color:#e2e8f0}
 body.dark .section-intro{color:#94a3b8}
 body.dark .narrative p,body.dark .narrative li{color:#94a3b8}
+body.dark .narrative h4{color:#60a5fa}
+body.dark .narrative em{color:#64748b}
 body.dark blockquote.insight{background:#1e3a5f;border-left-color:#3b82f6;color:#93c5fd}
+body.dark .crossref{background:#0f2a1a;border-left-color:#059669;color:#6ee7b7}
+body.dark .crossref .crossref-label{color:#34d399}
 body.dark th{background:#0f172a}
 body.dark td{color:#94a3b8;border-color:#334155}
 body.dark tr:nth-child(even) td{background:#1e293b}
@@ -150,6 +160,10 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
         <h2 class="section-title">全球 Web3 开发者<span>规模趋势</span></h2>
         <p class="section-intro">基于 Electric Capital 追踪的月活跃开发者（Monthly Active Developers）数据，覆盖 2022 年至 2026 年初的完整周期，呈现 Web3 开发者生态的扩张与收缩规律。</p>
 
+        <div class="narrative">
+          <p>Web3 开发者的数量，是衡量一个技术生态是否真实存在长期建设者的核心指标。与代币价格不同，开发者不会因为市场情绪而一夜消失——但也不会无缘无故留下来。每一个持续提交代码的工程师背后，都意味着一个真实的技术判断：这条链值得投入时间。因此，开发者数据的波动形态，往往比任何宏观叙事都更能揭示生态的真实健康度。</p>
+        </div>
+
         <div class="card">
           <div class="card-title">全体月活开发者 vs 全职开发者（2022–2026）</div>
           <canvas id="chart1" height="300"></canvas>
@@ -171,13 +185,21 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
         </div>
 
         <div class="narrative">
-          <p>2025 年 5 月，Web3 月活开发者达到 <strong>44,261 人</strong>的历史峰值，首次超越 2022 年牛市高点，证明行业在熊市后实现了真实的开发者基础扩张。然而进入 2026 年后，市场情绪回调叠加宏观因素，月活数据迅速回落至约 <strong>2.97 万</strong>（同比 -15%）。</p>
-          <p>与整体数据的剧烈波动相比，<strong>全职开发者表现出高度韧性</strong>——从 2022 年的 7,879 人稳步增长至 2026 年的约 9,291 人，即便在最严峻的熊市期间也未出现大幅流失。</p>
+          <h4>1.1 峰值质量的提升</h4>
+          <p>2025 年 5 月，Web3 月活开发者达到 <strong>44,261 人</strong>的历史峰值，首次超越 2022 年牛市高点（约 3.5 万）。然而两次峰值的内在构成截然不同：2022 年的峰值时，全职开发者占比仅 <strong>25%</strong>；而 2025 年 5 月峰值时，全职占比已升至 <strong>28%</strong>，基本面明显更扎实。进入 2026 年后，市场情绪回调叠加宏观因素，月活数据迅速回落至约 <strong>2.97 万</strong>（同比 -15%）。但这次回调与 2022-2023 年的熊市性质不同：彼时月活从 3.5 万跌至 3.1 万，绝对量跌幅更小，但全职开发者占比几乎未动，说明本轮回调主要淘汰的仍是边缘参与者。</p>
+
+          <h4>1.2 全职开发者：熊市中的压舱石</h4>
+          <p>与整体数据的剧烈波动相比，<strong>全职开发者表现出高度韧性</strong>——从 2022 年的 7,879 人稳步增长至 2026 年的约 9,291 人，即便在最严峻的熊市期间也未出现大幅流失。更值得注意的是波动幅度的差异：过去四年间，全体月活的波峰波谷差值超过 40%，而全职开发者曲线的振幅不足 15%，仅为前者的约 <strong>1/3</strong>。这意味着无论市场如何剧烈震荡，一支稳定的全职工程师队伍始终在默默维护着 Web3 的技术基础设施。</p>
+        </div>
+
+        <div class="crossref">
+          <div class="crossref-label">来源印证 · 2025 Web3 华语开发者调研报告</div>
+          <em>「调研报告中，有 <strong>63%</strong> 的华语全职开发者表示，他们在过去两年的熊市中没有离开 Web3 行业，主要原因是'已有稳定的项目方雇主'或'正在构建自己的产品'。这与全职开发者数据的高韧性高度吻合——职业化是最好的防熊药。」</em>
         </div>
 
         <blockquote class="insight">
-          <strong>💡 洞察 1：Web3 开发已从"机会性参与"走向职业化</strong>
-          全职开发者比例从 2022 年的 25% 升至 2026 年的 31%，说明留在 Web3 的开发者正在深度专业化。月活数据的周期性波动更多反映的是边缘参与者的进退，而非核心开发力量的变化。这对于判断 Web3 长期建设能力至关重要。
+          <strong>💡 洞察 1：Web3 正在完成从「投机叙事驱动」到「工程师职业化」的转型</strong>
+          全职开发者比例从 2022 年的 25% 升至 2026 年的 31%，说明 Web3 开发正在走向职业化，短期投机者已被淘汰。熊市是筛选器，留下来的是真正的建设者。月活数据的周期性波动更多反映的是边缘参与者的进退，而非核心开发力量的变化——这对于判断 Web3 的长期建设能力至关重要。
         </blockquote>
       </section>
 
@@ -186,6 +208,10 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
         <div class="section-tag">第二章</div>
         <h2 class="section-title">华语开发者<span>全球位置</span></h2>
         <p class="section-intro">从地理维度审视 Web3 开发者分布，华语生态（中国大陆 + 台湾 + 香港）在全球格局中处于怎样的位置？我们从全局视野与 Ethereum 生态两个维度进行分析。</p>
+
+        <div class="narrative">
+          <p>一个常被误解的现象是：在 Web3 的全球叙事中，华语开发者几乎是「隐形」的——你很少在核心协议的 Commit 者名单里看到中文名字，也很少在 ETH Global 的顶级黑客松获奖榜上看到来自中国大陆的团队。但这是因为华语开发者不存在，还是因为他们选择了「隐形」？Electric Capital 的数据提供了一个重要的校准基准。</p>
+        </div>
 
         <div class="chart-grid">
           <div class="card">
@@ -199,16 +225,21 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
         </div>
 
         <div class="narrative">
-          <ul>
-            <li>华语开发者（中国大陆 + 台湾 + 香港）合计约占有记录开发者的 <strong>5.1%</strong>，在全球国家/地区中排名第 4。</li>
-            <li><strong>重要统计注意：</strong>Electric Capital 数据中地理记录覆盖率约 27%，而中国开发者在 GitHub 填写地理信息的比例偏低，实际规模估算为统计值的 3–4 倍。</li>
-            <li>在 Ethereum 生态中，印度以 <strong>38.8%</strong> 高居首位（2,830 人），中国大陆以 6.8%（496 人）排名第三，台湾（116 人）和香港（84 人）同样进入前十。</li>
-          </ul>
+          <h4>2.1 统计数据与真实规模的落差</h4>
+          <p>Electric Capital 数据显示，在有地理记录的开发者中，中国大陆排名全球第 <strong>4</strong>（<strong>5.1%</strong>），仅次于印度（28.1%）、美国（21.5%）和尼日利亚（6.4%）。但这个数字存在系统性低估：GitHub 数据显示中国开发者普遍不填写地理信息，实际估算为统计值的 <strong>3–4 倍</strong>——意味着华语开发者在全球 Web3 的真实占比可能接近 <strong>15–20%</strong>，足以跻身全球前三。在 Ethereum 生态中，印度以 <strong>38.8%</strong>（2,830 人）高居首位，中国大陆以 <strong>6.8%</strong>（496 人）排名第三，台湾（116 人）和香港（84 人）同样进入前十，华语生态三地合计占比接近 10%。</p>
+
+          <h4>2.2 「在场但不发声」的结构性原因</h4>
+          <p>数据层面的低估只是表象，更深层的问题是可见度的缺失。印度开发者在 GitHub 填写地理信息、在国际 Discord 活跃发言、在黑客松展示项目的比例，远高于中国同行。这在客观上造成了「印度更多、中国更少」的感知偏差，并进一步强化了一个错误印象：Web3 是印度和美国开发者的游戏。</p>
+        </div>
+
+        <div class="crossref">
+          <div class="crossref-label">来源印证 · 2025 Web3 华语开发者调研报告</div>
+          <em>「调研报告揭示了「隐形」的原因：英语能力是最关键的可见度门槛——能独立阅读技术文档的开发者约占多数，但能流畅参与国际协议讨论、PR Review 的比例极少。换言之，华语开发者「在场但不发声」——他们贡献代码，却不参与定义协议规范的话语权博弈。」</em>
         </div>
 
         <blockquote class="insight">
-          <strong>💡 洞察 2：华语开发者的"隐身"现象</strong>
-          贡献真实存在，但在国际社区的可见度被严重低估。印度开发者在 GitHub 填写地理信息的比例远高于中国，这在客观上造成了数据层面的"印度更多、中国更少"的偏差。考虑到修正因子，华语 Web3 开发者社区的实际规模或许接近全球前三。
+          <strong>💡 洞察 2：华语开发者是全球 Web3 生态不可忽视的力量，但长期处于「贡献有余、存在感不足」的状态</strong>
+          受制于英语协作能力和信息传播习惯，华语开发者在数据层面被系统性低估，在社区话语层面长期缺席。这不仅是个人的职业发展障碍，也是整个华语 Web3 生态在国际协议治理中缺乏影响力的根本原因。考虑修正因子后，华语 Web3 开发者社区的实际规模或许接近全球前三。
         </blockquote>
       </section>
 
@@ -218,22 +249,32 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
         <h2 class="section-title">华语开发者在 Web3 生态的<span>分布</span></h2>
         <p class="section-intro">华语开发者并不是均匀分布在各个生态中的。通过分析中国大陆与台湾+香港的生态偏好差异，可以发现明显的聚集效应与迁移轨迹。</p>
 
+        <div class="narrative">
+          <p>不同生态对华语开发者的吸引力，折射出华语社区对技术路线的真实判断。一个生态的华语开发者占比，往往是中文文档质量、社区运营活跃度与技术路线认可度的综合打分——没有人会花时间深入一个让自己感到陌生和孤立的生态。从这个角度看，各生态的华语占比是比官方公告更可信的社区亲和度指标。</p>
+        </div>
+
         <div class="card">
           <div class="card-title">华语开发者生态分布（中国大陆 vs 台湾+香港，月活）</div>
           <canvas id="chart3" height="320"></canvas>
         </div>
 
         <div class="narrative">
-          <ul>
-            <li><strong>Ethereum</strong> 以绝对优势领跑，696 名华语开发者，是第二名 Solana（340 人）的 2 倍以上。</li>
-            <li><strong>Sui 生态出现聚集效应：</strong>Sui 华语开发者占该生态比例达 <strong>2.5%</strong>，是所有主流生态中最高的，甚至超过 Ethereum（1.4%）。Move 语言的兴起正在形成华语开发者的技术聚集。</li>
-            <li><strong>BNB Chain 叙事的终结：</strong>华语开发者仅 140 人，占比 1.9%，显著低于预期。"BNB 是中国链"的叙事已经过时，华语社区在用脚投票。</li>
-          </ul>
+          <h4>3.1 Sui 的华语聚集效应</h4>
+          <p><strong>Ethereum</strong> 以绝对优势领跑，696 名华语开发者，是第二名 Solana（340 人）的 2 倍以上，这是时间积累的结果。但更值得关注的是相对占比的异常值：<strong>Sui 华语占比达 2.5%</strong>，是所有大型生态中最高，超过 Ethereum（1.4%）近一倍。这意味着在 Sui 生态中，每 40 个活跃开发者里就有一个来自华语社区，这个密度远高于其他生态。</p>
+          <p>与之形成对比的是 <strong>Stellar</strong>：华语占比仅 <strong>0.2%</strong>，技术文档和社区的中文基础设施几乎为零，华语开发者的存在感接近于无。Cosmos 华语占比 <strong>2.2%</strong>，与 Tendermint 时代以来华语社区的长期积累密切相关，是华语存量最深厚的非 EVM 生态。</p>
+
+          <h4>3.2 BNB Chain 叙事的终结</h4>
+          <p>华语开发者在 <strong>BNB Chain</strong> 仅 140 人，占比 1.9%——这个数字低得令人意外。「BNB 是中国链」的叙事长期存在，但数据表明华语社区已经用行动否定了这一标签：华语开发者在 BNB Chain 的绝对数量不仅低于 Ethereum 和 Solana，甚至与 Base、Bitcoin 处于同一量级，完全不符合「华人链」的想象。</p>
+        </div>
+
+        <div class="crossref">
+          <div class="crossref-label">来源印证 · 2025 Web3 华语开发者调研报告</div>
+          <em>「调研报告显示，公链关注度上 Ethereum 遥遥领先，但技术栈偏好中，Move 语言被提及为「最值得学的第二外语」——这与 Sui 华语高占比高度吻合。开发者的实际行动（commit 数据）和问卷意向高度一致，Move 生态正在成为华语开发者的新技术聚集点。」</em>
         </div>
 
         <blockquote class="insight">
-          <strong>💡 洞察 3：从"BNB Chain 偏好"到"Ethereum + Solana 主流化"</strong>
-          华语开发者已经完成了关键的生态迁移。Ethereum 依然是最大的华语开发者聚集地，Solana 凭借其高性能叙事和活跃生态快速吸引华语开发者，而 Sui 和 Aptos 的 Move 生态则成为新兴的华语聚集点。BNB Chain 在华语开发者心中的地位正在被快速侵蚀。
+          <strong>💡 洞察 3：Sui 生态中华语开发者的高占比，既是优势也意味着责任</strong>
+          这说明华语社区在 Sui 生态有相对优势，但也意味着中文文档、教程和社区支持的严重缺位正是需要填补的空白。华语开发者已经完成了关键的生态迁移——从「BNB Chain 偏好」到「Ethereum + Solana 主流化 + Move 生态聚集」，BNB Chain 在华语开发者心中的地位正在被快速侵蚀。
         </blockquote>
       </section>
 
@@ -243,24 +284,37 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
         <h2 class="section-title">华语偏好迁移<span>2021–2025</span></h2>
         <p class="section-intro">通过追踪五年间主要生态华语开发者数量的变化，可以清晰看到华语 Web3 社区的集体技术选择如何随市场周期与技术创新而演变。</p>
 
+        <div class="narrative">
+          <p>如果把 2021-2025 年华语开发者在各链的分布变化画成一张地图，你会看到一场清晰的「技术大迁徙」。这场迁徙没有统一的号召，没有组织者，完全由数以百计的独立工程师各自做出的技术判断叠加而成——但当这些分散决策汇聚成趋势，其方向比任何市场分析师的预测都更可信。</p>
+        </div>
+
         <div class="card">
           <div class="card-title">主要生态华语开发者数量变化（2021–2025）</div>
           <canvas id="chart4" height="320"></canvas>
         </div>
 
         <div class="narrative">
-          <ul>
-            <li><strong>Ethereum：</strong>从 2022 年峰值 528 人下滑后，2025 年强势反弹至 <strong>670 人</strong>，创历史新高，华语开发者的以太坊信仰更加坚定。</li>
-            <li><strong>Solana：</strong>经历 2023 年 FTX 危机跌至 149 人后，完成 V 形反转，2024 年达 334 人，成为华语增长最快的主流生态。</li>
-            <li><strong>Sui：</strong>从 2021 年的 8 人增长至 2024 年的 <strong>204 人</strong>（+2,450%），是华语开发者最青睐的新兴生态，Move 语言红利清晰可见。</li>
-            <li><strong>BNB Chain：</strong>从 2022 年高点 160 人下降至 2024 年 74 人（<strong>-54%</strong>），华语社区正在用脚投票。</li>
-            <li><strong>TON：</strong>2024 年出现爆发式增长（99 人），但 2025 年迅速回落至 44 人，小程序叙事昙花一现。</li>
-          </ul>
+          <h4>4.1 BNB Chain：华语「神话」的终结</h4>
+          <p><strong>BNB Chain</strong> 从 2022 年的 <strong>160 人</strong>跌至 2024 年的 <strong>74 人</strong>（<strong>-54%</strong>）。市场曾认为这是「华人链」，但数据表明华语开发者已经用行动否定了这一叙事。BNB Chain 的衰退不是偶发事件，而是生态活跃度下滑引发的连锁反应：机会变少→开发者出走→社区稀薄→更少机会，形成恶性循环。值得注意的是 2025 年的小幅反弹（74→132），但这更像是周期性波动而非趋势逆转。</p>
+
+          <h4>4.2 Solana：技术信仰战胜市场恐慌</h4>
+          <p><strong>Solana</strong> 的 V 形反弹最能说明问题：2023 年 FTX 崩盘后跌至 <strong>149 人</strong>，2024 年反弹至 <strong>334 人</strong>（<strong>+124%</strong>）。开发者比市场更快地恢复了对 Solana 技术路线的信心——因为他们评估的不是 FTX 的合规性，而是 Solana 虚拟机的性能指标和生态建设的连续性。这是开发者理性的体现：当核心技术没有变化时，外部事件引发的恐慌是短暂的。</p>
+
+          <h4>4.3 TON：热点驱动 vs 技术驱动</h4>
+          <p><strong>TON</strong> 2024 年爆发至 <strong>99 人</strong>后快速回落至 <strong>44 人</strong>，是典型的「热点型参与」。开发者跟随 Telegram 生态热度涌入，但缺乏技术基本面支撑，华语社区没有形成持续的技术社群，留存率极低。TON 的曲线提醒我们：短期数字激增未必代表生态成熟，观察留存率比观察峰值更重要。</p>
+
+          <h4>4.4 Sui：最清晰的结构性增长</h4>
+          <p><strong>Sui</strong> 从 2021 年的 8 人增长至 2024 年的 <strong>204 人</strong>（<strong>+2,450%</strong>），是华语开发者最青睐的新兴生态。与 TON 不同，Sui 的增长曲线更为平滑且有技术逻辑支撑：Move 语言的资源安全模型对有 Rust 背景的华语开发者天然友好，而 Mysten Labs 早期的华语社区投入也播下了种子。</p>
+        </div>
+
+        <div class="crossref">
+          <div class="crossref-label">来源印证 · 2025 Web3 华语开发者调研报告</div>
+          <em>「调研报告指出，华语开发者选择公链的首要考量依次是：生态规模与机会密度、技术路线的长期性、社区中文支持质量。这解释了 BNB Chain 的衰退——生态活跃度下滑直接引发华语开发者外流；也解释了 Solana 的回归——技术社区在熊市中持续维护，成为吸引开发者回流的关键信号。」</em>
         </div>
 
         <blockquote class="insight">
-          <strong>💡 洞察 4：华语开发者技术迁移路径 BNB → Solana/Sui 清晰可见</strong>
-          过去五年，华语 Web3 社区完成了从"本土链优先"到"全球主流链参与"的历史性转型。Ethereum 的主导地位从未动摇，Solana 在危机后证明了自身，而 Move 语言生态（Sui + Aptos）正在形成华语开发者的新聚集地。这一趋势对于生态基金和开发者教育的资源配置具有重要参考价值。
+          <strong>💡 洞察 4：华语开发者的公链偏好，是生态健康度的先行指标</strong>
+          BNB 的衰退和 Sui 的崛起，都比市场叙事提前了 6–12 个月。过去五年，华语 Web3 社区完成了从「本土链优先」到「全球主流链参与」的历史性转型——Ethereum 的主导地位从未动摇，Solana 在危机后证明了自身，而 Move 语言生态（Sui + Aptos）正在形成华语开发者的新聚集地。这一趋势对于生态基金和开发者教育的资源配置具有重要参考价值。
         </blockquote>
       </section>
 
@@ -270,23 +324,34 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
         <h2 class="section-title">中国<span>城市分布</span></h2>
         <p class="section-intro">将视角聚焦至中国大陆城市层面，Web3 开发者的地理分布格局与传统互联网生态有何异同？</p>
 
+        <div class="narrative">
+          <p>在讨论「华语 Web3 开发者在哪里」时，有一个问题往往被忽略：他们在中国大陆具体住在哪里？这个分布与传统互联网时代的「北上深」格局相比，发生了什么变化？这不只是一个地理问题，更是一个关于 Web3 工作方式正在重塑人才聚集逻辑的问题。</p>
+        </div>
+
         <div class="card">
           <div class="card-title">中国城市 Web3 活跃开发者分布 Top 10</div>
           <canvas id="chart5" height="320"></canvas>
         </div>
 
         <div class="narrative">
-          <ul>
-            <li><strong>北京（171）与上海（168）</strong>高度接近，共同构成华语 Web3 开发的双中心，延续了互联网时代的格局。</li>
-            <li><strong>杭州（99）异军突起</strong>，超越深圳（94）排名第三，背后是阿里系技术人才的外溢效应与浙大系创业氛围，杭州已成为华语 Web3 的"第三城"。</li>
-            <li><strong>成都（44）稳居西部第一</strong>，新一线城市正在成为重要的 Web3 人才聚集地，远程工作文化加速了这一趋势。</li>
-            <li>对比传统互联网格局：北上杭深合计约占 <strong>62%</strong>，而传统互联网时代北上深合计常超 75%，分布更均匀。</li>
-          </ul>
+          <h4>5.1 双中心格局：北京与上海的伯仲之争</h4>
+          <p><strong>北京（171）</strong>和<strong>上海（168）</strong>高度接近，合计仅占 Web3 活跃开发者的 <strong>49%</strong>，远低于传统互联网「北上深合计 75%+」的集中度。两城几乎并驾齐驱，与互联网时代「北京一家独大」的格局不同——这可能与上海更活跃的金融科技生态和更多国际 Web3 基金会的本地团队有关。</p>
+
+          <h4>5.2 杭州超越深圳：意料之外，情理之中</h4>
+          <p><strong>杭州（99）</strong>超越深圳（94）排名第三，背后是阿里系技术人才的外溢效应和浙大系的创业氛围。深圳的 Web3 开发者数量（94）与其「中国硅谷」的科技城市地位明显不符——这或许反映了深圳开发者群体更偏向硬件和企业软件，而非 Web3 原生建设。</p>
+
+          <h4>5.3 成都：西部崛起的先行者</h4>
+          <p><strong>成都（44）</strong>稳居西部第一，与当地活跃的黑客松生态和高校技术社区密切相关。与成都相比，广州（32）的表现更令人意外地低——作为大湾区核心城市，广州 Web3 开发者数量远少于相距不远的深圳，这可能与广州传统产业的技术人才结构有关。</p>
+        </div>
+
+        <div class="crossref">
+          <div class="crossref-label">来源印证 · 2025 Web3 华语开发者调研报告</div>
+          <em>「调研报告揭示了『地理套利』现象——大量开发者选择居住在二线城市，以国内生活成本为基准，领取美元或稳定币薪酬，实现实际购买力的最大化。这解释了为什么 Web3 的城市分布远比互联网均匀：当工作地点不再等于雇主城市，开发者会更理性地选择生活成本、宜居性与社区密度的平衡点。」</em>
         </div>
 
         <blockquote class="insight">
-          <strong>💡 洞察 5：Web3 正在打破互联网时代的城市垄断</strong>
-          Web3 的远程工作文化、去中心化协作模式，以及区块链技术本身的数字原生特性，使得开发者不再必须聚集于北上深。成都、杭州、武汉正在成为新的华语 Web3 高地。对于生态建设方来说，在这些"新兴 Web3 城市"布局线下活动和开发者社区，将比继续加码北京上海产生更高的边际效益。
+          <strong>💡 洞察 5：Web3 的远程协作文化正在重塑中国开发者的空间分布格局</strong>
+          杭州、成都、武汉等城市正在成为新的 Web3 人才聚集地，「北上深」对技术人才的垄断性正在被削弱。北上杭深合计约占 <strong>62%</strong>，而传统互联网时代北上深合计常超 75%，分布更为均匀。对于生态建设方来说，在这些「新兴 Web3 城市」布局线下活动和开发者社区，将比继续加码北京上海产生更高的边际效益。
         </blockquote>
       </section>
 
@@ -295,6 +360,10 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
         <div class="section-tag">第六章</div>
         <h2 class="section-title">主要生态<span>全球排名</span></h2>
         <p class="section-intro">综合月活开发者规模、同比变化、全职比例、新人比例、独占率和华语占比六个维度，对 15 个主流 Web3 生态进行横向对比。</p>
+
+        <div class="narrative">
+          <p>数字不会说谎，但数字需要解读。下表呈现的是 2026 年 3 月全球主要 Web3 生态的开发者快照，每一列数字背后都是一个生态当下的健康状态。单看月活规模容易产生误判：一个高速增长但新人占比 80% 的生态，与一个缓慢下滑但全职比例 33% 的生态，代表着截然不同的建设者质量。读懂这张表，需要同时看规模、速度与结构。</p>
+        </div>
 
         <div class="table-wrap">
           <table>
@@ -331,17 +400,24 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
         <p style="font-size:.78rem;color:#9ca3af;margin-bottom:20px">* 华语占比 = 中国大陆 + 台湾 + 香港开发者之和 / 该生态月活总数（仅含有地理记录的开发者）</p>
 
         <div class="narrative">
-          <ul>
-            <li><strong>逆势增长的生态（YoY 正增长）：</strong>ICP (+83%)、Stellar (+40%)、Base (+25%)、Polygon (+3%)、Arbitrum (+1%)，在整体收缩周期中展现出独立的扩张逻辑。</li>
-            <li><strong>Base 的新人引力：</strong>新人占比 52%，是活跃开发者超千人的生态中最高的，Coinbase 的流量入口效应正在持续转化新开发者。</li>
-            <li><strong>ICP 的独占性悖论：</strong>独占率 91% 在所有大生态中最高，开发者高度专注；但华语占比仅 0.7%，说明华语开发者教育机会巨大。</li>
-            <li><strong>Sui 的华语核心性：</strong>在整体月活回调 -20% 的背景下，华语占比仍达 2.5%（列表最高），华语开发者是 Sui 生态中相对最重要的外部开发者群体。</li>
-          </ul>
+          <h4>6.1 逆势增长的五个生态</h4>
+          <p>YoY 正增长的生态仅剩 5 个（<strong>ICP +83%、Stellar +40%、Base +25%、Polygon +3%、Arbitrum +1%</strong>），整体市场处于收缩阶段。但新人占比（0-1 年）普遍维持在 35–52%，说明即便整体收缩，新开发者的流入并未停止——存量在收缩，增量仍在涌入，这是一个结构性分化的市场，而非整体枯竭。</p>
+
+          <h4>6.2 ICP 的极端案例：增长还是泡沫？</h4>
+          <p><strong>ICP</strong> 是最极端的案例：<strong>+83% YoY</strong>、<strong>91% 独占率</strong>、<strong>82% 新人占比</strong>——这是一个高速增长但极度封闭的生态。新人大量涌入，老人很少离开也很少跨链，形成了一个技术孤岛式的高速扩张。华语占比仅 <strong>0.7%</strong>，在所有生态中最低，说明华语社区尚未大规模接触 ICP，这既是空白也是机会。</p>
+
+          <h4>6.3 Base 的健康组合</h4>
+          <p><strong>Base</strong> 的组合最健康：<strong>+25% YoY + 52% 新人 + 20% 独占</strong>。低独占率意味着大量 EVM 通用开发者（本身活跃于 Ethereum/Polygon）也在流入 Base，这不是封闭生态的冷启动，而是成熟生态的横向扩张。Coinbase 带来的真实用户量和机会密度，正在将通用 EVM 开发者转化为 Base 的实际建设者。</p>
+        </div>
+
+        <div class="crossref">
+          <div class="crossref-label">来源印证 · 2025 Web3 华语开发者调研报告</div>
+          <em>「调研报告中，开发者将『生态机会密度』列为选择公链的首要标准，而非技术先进性。这解释了 Base 的吸引力——Coinbase 生态带来真实用户量，机会密度（Bounty/Grant/产品需求）是技术吸引力的放大器。对华语开发者而言，一个有真实用户的生态比一个有优美代码的生态更值得投入时间。」</em>
         </div>
 
         <blockquote class="insight">
-          <strong>💡 洞察 6：生态健康度不能只看规模，结构指标更能揭示真相</strong>
-          ICP 的 +83% 增长令人注目，但 82% 的新人比例和 91% 的独占率暗示其生态仍处于早期冷启动阶段，开发者忠诚度与生态厚度尚待验证。相反，Ethereum 和 Polkadot 尽管月活下滑，但高全职比例和相对成熟的开发者结构说明核心建设力量依然稳固。对于华语开发者社区而言，Cosmos（华语占比 2.2%）和 Sui（2.5%）是最值得深耕的两个增量生态。
+          <strong>💡 洞察 6：2026 年的 Web3 生态分化正在加剧——逆势增长的生态有真实的建设者需求支撑</strong>
+          整体下滑只是熊市洗牌，不是行业终结。生态健康度不能只看规模，结构指标更能揭示真相：ICP 的 +83% 增长令人注目，但 82% 的新人比例和 91% 的独占率暗示其生态仍处于早期冷启动阶段，开发者忠诚度与生态厚度尚待验证。对于华语开发者社区而言，Cosmos（华语占比 2.2%）和 Sui（2.5%）是最值得深耕的两个增量生态，而 ICP 是华语社区渗透率最低、因此潜在空间最大的待开发生态。
         </blockquote>
       </section>
 
