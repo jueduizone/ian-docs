@@ -142,6 +142,7 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
   <aside class="sidebar">
     <nav>
       <div class="sidebar-title">报告章节</div>
+      <a href="#intro">报告说明</a>
       <a href="#s1" class="active">一、全球开发者规模趋势</a>
       <a href="#s2">二、华语开发者全球位置</a>
       <a href="#s3">三、华语开发者生态分布</a>
@@ -153,6 +154,64 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
 
   <main class="main">
     <div class="content">
+
+      <!-- Section Intro -->
+      <section class="section" id="intro" style="font-size:14px;line-height:1.8">
+        <div class="section-tag">报告说明</div>
+        <h2 class="section-title">报告说明</h2>
+
+        <div class="narrative">
+          <h4>1. 研究背景</h4>
+          <p>本报告是《2025 中国开源年度报告》Web3 洞察篇的数据支撑文档，由 OpenBuild 承担分析与撰写工作。</p>
+          <p>Web3 作为一个高度全球化、以开源协作为核心范式的技术生态，与中国开源社区的交叉日益深入——无论是开发者参与国际协议的维护，还是本土生态在全球格局中的位置，都需要一套基于客观数据的量化视角。</p>
+          <p>本报告尝试回答三个问题：</p>
+          <ul>
+            <li>华语开发者在全球 Web3 开源生态中处于什么位置？</li>
+            <li>过去五年，华语社区的技术偏好发生了哪些结构性迁移？</li>
+            <li>哪些生态对华语开发者最具吸引力，背后的驱动因素是什么？</li>
+          </ul>
+
+          <h4>2. 数据来源</h4>
+
+          <div class="crossref">
+            <div class="crossref-label">主要数据：Electric Capital Open Source Developer Data</div>
+            <p>Electric Capital 是专注于加密原生风险投资的基金，自 2019 年起持续维护全球最权威的 Web3 开发者活跃度数据集。该数据集覆盖：</p>
+            <ul style="list-style:none;padding:0;margin:8px 0">
+              <li style="padding:3px 0 3px 18px;position:relative"><span style="position:absolute;left:4px;color:#059669;font-weight:700">·</span>全球超过 300 万名开发者在区块链相关开源仓库的 Commit 活动</li>
+              <li style="padding:3px 0 3px 18px;position:relative"><span style="position:absolute;left:4px;color:#059669;font-weight:700">·</span>500+ 区块链生态的开发者归因</li>
+              <li style="padding:3px 0 3px 18px;position:relative"><span style="position:absolute;left:4px;color:#059669;font-weight:700">·</span>时间跨度：2008 年至今（本报告使用版本 20260321T133239，数据截至 2026 年 3 月 13 日）</li>
+              <li style="padding:3px 0 3px 18px;position:relative"><span style="position:absolute;left:4px;color:#059669;font-weight:700">·</span>授权协议：CC BY 4.0（允许自由使用与二次传播，需注明来源）</li>
+              <li style="padding:3px 0 3px 18px;position:relative"><span style="position:absolute;left:4px;color:#059669;font-weight:700">·</span>数据地址：<a href="https://data.opendevdata.org" target="_blank">https://data.opendevdata.org</a></li>
+            </ul>
+          </div>
+
+          <div class="crossref">
+            <div class="crossref-label">补充数据：2025 Web3 华语开发者调研报告</div>
+            <p>由 OpenBuild、GCC、登链、Creators、OpenCAS 联合发起，Web3insight 提供数据分析，共收集 220 份有效问卷（2025 年末），覆盖华语 Web3 开发者的职业路径、技术偏好、收入结构与开源参与现状。本报告在各章节中引用其定性洞察，与 Electric Capital 量化数据形成交叉印证。</p>
+            <p style="margin-top:8px">报告地址：<a href="https://openbuildxyz.github.io/web3-chinese-speaking-devs-report/" target="_blank">https://openbuildxyz.github.io/web3-chinese-speaking-devs-report/</a></p>
+          </div>
+
+          <h4>3. 数据局限性说明</h4>
+          <p>在使用本报告数据时，需注意以下局限：</p>
+
+          <p><strong>地理归因覆盖率问题</strong>：Electric Capital 数据集中，约 87 万名开发者（占全体约 27%）有明确的地理位置记录。中国开发者在 GitHub 上填写地理信息的比例显著低于欧美，导致华语开发者的统计数字系统性偏低。本报告基于 GitHub Octoverse 等交叉数据估算，华语开发者的实际规模约为有记录数字的 3-4 倍。</p>
+
+          <p><strong>月活开发者（MAD）定义</strong>：Electric Capital 以「过去 30 天内在区块链相关开源仓库有至少 1 次有效 Commit」作为「月活开发者」的计量标准。这一定义偏向核心贡献者，不包含仅阅读代码、提交 Issue 或参与讨论的开发者。</p>
+
+          <p><strong>生态归因方法</strong>：一个开发者可能同时活跃于多个生态（multichain 开发者），因此各生态开发者数量之和大于全局总量。本报告中华语占比等数据均基于同一口径计算。</p>
+
+          <h4>4. 阅读指引</h4>
+          <p>本报告共六个章节，可按顺序阅读，也可通过左侧导航直接跳转感兴趣的章节：</p>
+          <ul>
+            <li>第一章：全球宏观趋势，建立整体背景认知</li>
+            <li>第二章：华语开发者的全球位置，理解「隐形」现象</li>
+            <li>第三章：华语开发者的生态分布，识别机会与空白</li>
+            <li>第四章：2021-2025 技术偏好迁移路径</li>
+            <li>第五章：中国大陆城市分布，解读 Web3 的空间结构变革</li>
+            <li>第六章：全球生态排名与健康度速览</li>
+          </ul>
+        </div>
+      </section>
 
       <!-- Section 1 -->
       <section class="section" id="s1">
