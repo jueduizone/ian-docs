@@ -458,6 +458,11 @@ body.dark tr:hover td.highlight-cn{background:#243614 !important}
         </div>
         <p style="font-size:.78rem;color:#9ca3af;margin-bottom:20px">* 华语占比 = 中国大陆 + 台湾 + 香港开发者之和 / 该生态月活总数（仅含有地理记录的开发者）</p>
 
+        <div class="chart-card" style="margin-bottom:32px">
+          <div class="card-title">主要生态 YoY 同比增长率（2026-03）</div>
+          <canvas id="chart6" height="220"></canvas>
+        </div>
+
         <div class="narrative">
           <h4>6.1 逆势增长的五个生态</h4>
           <p>YoY 正增长的生态仅剩 5 个（<strong>ICP +83%、Stellar +40%、Base +25%、Polygon +3%、Arbitrum +1%</strong>），整体市场处于收缩阶段。但新人占比（0-1 年）普遍维持在 35–52%，说明即便整体收缩，新开发者的流入并未停止——存量在收缩，增量仍在涌入，这是一个结构性分化的市场，而非整体枯竭。</p>
@@ -738,6 +743,67 @@ function renderCharts(){
       scales: {
         x: { grid: { color: gridColor() }, ticks: { color: textColor() } },
         y: { grid: { display: false }, ticks: { color: textColor(), font: { size: 13 } } }
+      }
+    }
+  });
+
+  // chart6: YoY 条形图
+  const ctx6 = document.getElementById('chart6').getContext('2d');
+  const yoyData = [
+    { name: 'ICP', yoy: 83 },
+    { name: 'Stellar', yoy: 40 },
+    { name: 'Base', yoy: 25 },
+    { name: 'Polygon', yoy: 3 },
+    { name: 'Arbitrum', yoy: 1 },
+    { name: 'Optimism', yoy: -13 },
+    { name: 'Bitcoin', yoy: -15 },
+    { name: 'Sui', yoy: -20 },
+    { name: 'BNB Chain', yoy: -24 },
+    { name: 'Ethereum', yoy: -23 },
+    { name: 'Solana', yoy: -26 },
+    { name: 'TON', yoy: -29 },
+    { name: 'Polkadot', yoy: -34 },
+    { name: 'Cosmos', yoy: -37 },
+    { name: 'Starknet', yoy: -41 },
+  ].sort((a, b) => b.yoy - a.yoy);
+  new Chart(ctx6, {
+    type: 'bar',
+    data: {
+      labels: yoyData.map(d => d.name),
+      datasets: [{
+        label: 'YoY (%)',
+        data: yoyData.map(d => d.yoy),
+        backgroundColor: yoyData.map(d => d.yoy >= 0 ? 'rgba(22,163,74,0.82)' : 'rgba(220,38,38,0.72)'),
+        borderRadius: 4,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => `YoY: ${ctx.parsed.x > 0 ? '+' : ''}${ctx.parsed.x}%`
+          }
+        },
+        datalabels: {
+          display: false
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: isDark ? '#374151' : '#e5e7eb' },
+          ticks: {
+            color: isDark ? '#9ca3af' : '#6b7280',
+            callback: v => `${v > 0 ? '+' : ''}${v}%`
+          }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { color: isDark ? '#d1d5db' : '#374151', font: { size: 12 } }
+        }
       }
     }
   });
