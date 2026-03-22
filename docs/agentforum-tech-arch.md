@@ -660,3 +660,75 @@ Skill 越来越准（类似 eval 飞轮，但衡量的是申请成功率）
 ---
 
 *技术架构文档 v1.1 | AgentRel | 2026-03-18*
+
+---
+
+## 附录：Anthropic 内部 Skills 实践对 AgentRel 的启示
+
+> 来源：Anthropic 工程师 Thariq 的长文（2026-03-18）— Claude Code 数百个 Skill 的实战经验总结
+
+### 关键洞察
+
+**Skill 不是 Markdown 文件，是"作战工具包"**
+
+Skill 的本质是一个文件夹，可包含：
+- `SKILL.md`：主说明文档
+- `scripts/`：可执行脚本，Agent 直接调用
+- `references/`：参考代码片段、常见模式
+- `logs/`：执行历史，帮助模型保持一致性
+- `hooks/`：钩子配置，可注册到 Agent 生命周期
+
+### Anthropic 总结的 9 大 Skill 类型
+
+| 类型 | 描述 | AgentRel 对应 |
+|------|------|-------------|
+| 1. 库与 API 参考 | 正确使用某库的方法、常见坑 | 各链 SDK 文档、废弃 API 警告 |
+| 2. 产品验证 | 测试/验证代码是否正常工作 | 链上交互验证脚本、合约调用测试 |
+| 3. 数据获取分析 | 连接数据和监控系统 | Web3Hub feeds、链上指标查询 |
+| 4. 业务流程自动化 | 将重复工作流变成一条命令 | 报名 Hackathon、提交 Grant 的全流程 |
+| 5. 代码脚手架 | 生成框架代码 | Solana/EVM 项目脚手架 |
+| 6. 代码质量审查 | 执行代码规范、辅助 PR review | 合约安全审查、Gas 优化建议 |
+| 7. 值班与运维 | 生产环境调试工具 | 链上告警、节点健康检查 |
+| 8. 部署与基础设施 | 部署工作流 | 合约部署脚本 |
+| 9. 文档生成 | 从代码自动生成文档 | ABI → 接口文档 |
+
+### 写好 Skill 的关键技巧（直接应用到 AgentRel）
+
+1. **必须有 Gotchas 段落**：专门列出 AI 容易出错的地方。对 Web3 来说最重要，例如：
+   - "该 API 在 v2.0 已废弃，请使用 xxx"
+   - "Gas 估算在 L2 和 L1 计算方式不同"
+   - "签名格式在 EVM 和 Solana 有根本差异"
+
+2. **渐进式信息披露**：SKILL.md 只写概览，细节放子文件（`references/` 或 `docs/`），Agent 需要时再读。避免塞进一个大文件导致 context 浪费。
+
+3. **状态与日志**：把每次执行记录写入 `logs/run.log`。Agent 跨会话时能回顾历史，避免重复操作（如重复报名、重复提交）。
+
+4. **可执行脚本优于纯描述**：与其描述"如何调用 API"，不如直接提供 `scripts/register.sh`。确定性脚本 >> 自然语言描述。
+
+5. **类型要纯**：好的 Skill 属于一个明确类型。横跨多类的 Skill 往往令人困惑、难以维护。
+
+### 对 AgentRel 架构的具体影响
+
+**Skills 内容规范升级：**
+```
+agentrel/
+  solana-core/
+    SKILL.md          # 概览 + Gotchas
+    scripts/
+      deploy.sh       # 合约部署
+      verify.sh       # 交互验证
+    references/
+      anchor-patterns.ts  # 常见 Anchor 代码模式
+    logs/             # Agent 执行日志（.gitignore）
+    CHANGELOG.md      # 版本变更，AI 优先读
+```
+
+**平台分层：**
+- **Layer 1（当前）**：Skill 托管 + 搜索 + 下载
+- **Layer 2（Q2）**：执行日志收集，统计哪些 scripts 被调用最多
+- **Layer 3（Q3）**：Skill 质量评分，基于「成功执行率」而非人工评星
+
+**分发策略：**
+- 小团队：直接 `npx skills add agentrel/web3-core`
+- 大型生态方（Solana Foundation、Base）：AgentRel 提供白标 Skill 市场，项目方维护自己的 Skill 包
+- 最终形态：内部插件市场，支持私有 Skill（类似 GitHub Package Registry）

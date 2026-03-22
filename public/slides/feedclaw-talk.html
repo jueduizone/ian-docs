@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>被我养的死去活来的龙虾 | Ian @ OPC OpenClaw</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/black.css">
+<style>
+  :root {
+    --lobster: #ff4d4d;
+    --cyan: #00d4ff;
+    --dark: #060d1a;
+    --card: #0d1f35;
+    --border: rgba(0,212,255,0.2);
+  }
+
+  .reveal-viewport { background: var(--dark); }
+  .reveal .slides { text-align: left; }
+  .reveal h1, .reveal h2, .reveal h3 { text-align: left; font-weight: 700; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 10px 0;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .card-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.55em;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+  .tag-red { background: rgba(255,77,77,0.2); color: #ff4d4d; border: 1px solid rgba(255,77,77,0.4); }
+  .tag-cyan { background: rgba(0,212,255,0.15); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); }
+  .tag-green { background: rgba(0,230,118,0.15); color: #00e676; border: 1px solid rgba(0,230,118,0.3); }
+  .tag-purple { background: rgba(123,97,255,0.15); color: #a98bff; border: 1px solid rgba(123,97,255,0.3); }
+
+  .hl { color: var(--cyan); font-weight: 700; }
+  .hl-red { color: var(--lobster); font-weight: 700; }
+  .hl-yellow { color: #ffd54f; font-weight: 700; }
+
+  .big-num {
+    font-size: 2.4em;
+    font-weight: 800;
+    color: var(--cyan);
+    line-height: 1;
+  }
+
+  .quote {
+    border-left: 3px solid var(--cyan);
+    padding: 12px 20px;
+    background: rgba(0,212,255,0.05);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: #cce8ff;
+    font-size: 0.85em;
+  }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .compare .col-bad { border-color: rgba(255,77,77,0.3); }
+  .compare .col-good { border-color: rgba(0,212,255,0.4); }
+  .compare h4 { margin: 0 0 12px; font-size: 0.75em; }
+
+  .scene-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .scene-row:last-child { border-bottom: none; }
+  .scene-icon { font-size: 1.6em; flex-shrink: 0; width: 40px; text-align: center; margin-top: 2px; }
+  .scene-body h4 { margin: 0 0 4px; font-size: 0.78em; color: #fff; }
+  .scene-body p { margin: 0; font-size: 0.6em; color: #8bafc8; line-height: 1.5; }
+
+  .pit { display: flex; align-items: flex-start; gap: 14px; margin: 10px 0; }
+  .pit-icon { font-size: 1.4em; flex-shrink: 0; }
+  .pit-body h4 { margin: 0 0 3px; font-size: 0.72em; color: #ff7070; }
+  .pit-body p { margin: 0; font-size: 0.58em; color: #8bafc8; }
+
+  .cover-title {
+    font-size: 2.2em !important;
+    font-weight: 900 !important;
+    line-height: 1.15 !important;
+    background: linear-gradient(135deg, #ffffff 0%, var(--cyan) 60%, #7b61ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px !important;
+  }
+
+  .reveal .slides section { padding: 24px 32px 48px; box-sizing: border-box; overflow: hidden; }
+  .reveal h2 { font-size: 1.2em; color: #fff; margin-bottom: 14px; }
+  .reveal h3 { font-size: 0.88em; color: var(--cyan); margin-bottom: 8px; }
+  .reveal p { font-size: 0.68em; line-height: 1.5; color: #b0c8e0; }
+  .reveal ul { font-size: 0.64em; color: #b0c8e0; line-height: 1.7; padding-left: 1.2em; }
+  .reveal li { margin: 3px 0; }
+
+  .reveal .progress { background: rgba(0,212,255,0.2); }
+  .reveal .progress span { background: var(--cyan); }
+  .reveal .slide-number { color: var(--cyan); font-size: 14px; }
+
+  .slide-footer {
+    position: absolute;
+    bottom: 16px;
+    left: 32px;
+    right: 32px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.4em;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .step-flow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.6em;
+    color: #e0f0ff;
+    white-space: nowrap;
+  }
+  .step-arrow { color: var(--cyan); font-size: 0.8em; }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .pill {
+    background: rgba(0,212,255,0.1);
+    border: 1px solid rgba(0,212,255,0.25);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.58em;
+    color: #a0d8ef;
+  }
+
+  /* Token 技巧专用 */
+  .tip-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .tip-row:last-child { border-bottom: none; }
+  .tip-badge {
+    flex-shrink: 0;
+    width: 56px;
+    height: 22px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.45em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-top: 3px;
+  }
+  .badge-save { background: rgba(0,230,118,0.2); color: #00e676; border: 1px solid rgba(0,230,118,0.4); }
+  .badge-fast { background: rgba(0,212,255,0.15); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); }
+  .tip-body h4 { margin: 0 0 3px; font-size: 0.73em; color: #e8f4ff; }
+  .tip-body p { margin: 0; font-size: 0.58em; color: #7a9ab8; line-height: 1.5; }
+</style>
+</head>
+<body>
+<!-- 全屏按钮 -->
+<button onclick="toggleFullscreen()" style="position:fixed; top:16px; right:16px; z-index:9999; background:rgba(0,212,255,0.15); border:1px solid rgba(0,212,255,0.4); color:#00d4ff; padding:6px 12px; border-radius:8px; font-size:13px; cursor:pointer;">⛶ 全屏</button>
+<script>
+function toggleFullscreen(){
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+</script>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ===== SLIDE 1: 封面 ===== -->
+<section data-background-color="#060d1a">
+  <div style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+    <div style="font-size:3em; margin-bottom:8px;">🦞</div>
+    <h1 class="cover-title">被我养的<br>死去活来的龙虾</h1>
+    <p style="font-size:0.8em; color:#8bafc8; margin:0 0 32px;">用 OpenClaw 搭建个人 AI Agent 系统的实践分享</p>
+    <div style="display:flex; align-items:center; gap:16px; margin-top:8px;">
+      <div style="width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#00d4ff,#7b61ff); display:flex; align-items:center; justify-content:center; font-size:1.1em;">🐂</div>
+      <div>
+        <div style="font-size:0.75em; color:#fff; font-weight:600;">Ian</div>
+        <div style="font-size:0.55em; color:#5a7a9a;">OpenBuild 开源社区发起人 · 开源社理事 · OPC OpenClaw @Shanghai</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SLIDE 2: 引子 ===== -->
+<section data-background-color="#060d1a">
+  <h2>先问一个问题</h2>
+  <div class="quote" style="font-size:1em; margin: 30px 0;">
+    你现在每天用 AI 做什么？
+  </div>
+  <div class="card-grid three" style="margin-top: 28px;">
+    <div class="card" style="text-align:center; border-color: rgba(255,77,77,0.3);">
+      <div style="font-size:1.8em; margin-bottom:8px;">💬</div>
+      <div style="font-size:0.7em; color:#ff7070; font-weight:600;">问答工具</div>
+      <div style="font-size:0.55em; color:#6a8aa0; margin-top:6px;">ChatGPT / Claude<br>用完就关</div>
+    </div>
+    <div class="card" style="text-align:center; border-color: rgba(255,213,79,0.3);">
+      <div style="font-size:1.8em; margin-bottom:8px;">⚡</div>
+      <div style="font-size:0.7em; color:#ffd54f; font-weight:600;">代码助手</div>
+      <div style="font-size:0.55em; color:#6a8aa0; margin-top:6px;">Cursor / Copilot<br>写完就算</div>
+    </div>
+    <div class="card" style="text-align:center; border-color: rgba(0,212,255,0.4);">
+      <div style="font-size:1.8em; margin-bottom:8px;">🦞</div>
+      <div style="font-size:0.7em; color:#00d4ff; font-weight:600;">24/7 员工</div>
+      <div style="font-size:0.55em; color:#6a8aa0; margin-top:6px;">你不在<br>它还在干活</div>
+    </div>
+  </div>
+  <p style="margin-top:24px; color:#6a8aa0; font-size:0.7em;">大多数人卡在第一层 — 这不是 AI 的上限，是使用方式的问题。</p>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 3: 认知误区 ===== -->
+<section data-background-color="#060d1a">
+  <h2>关于 AI Agent，几个常见误区</h2>
+  <div class="compare">
+    <div class="card col-bad">
+      <h4 style="color:#ff6b6b;">❌ 错误认知</h4>
+      <ul style="color:#a07070;">
+        <li>Agent = 更强的 ChatGPT</li>
+        <li>要搭 n8n / Dify / 复杂工作流</li>
+        <li>需要会写代码才能用</li>
+        <li>Agent 会替代我</li>
+        <li>用一次解决一个问题</li>
+      </ul>
+    </div>
+    <div class="card col-good">
+      <h4 style="color:#00d4ff;">✅ 实际是</h4>
+      <ul style="color:#70a0b0;">
+        <li>Agent 是有<span class="hl">持续记忆</span>的协作者</li>
+        <li>框架越小越好，文件即配置</li>
+        <li>Markdown 就够了</li>
+        <li>Agent 帮你<span class="hl">放大</span>，不是取代</li>
+        <li>它在后台<span class="hl">持续运行</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote" style="margin-top:20px;">
+    最大的误区：把 Agent 当工具用，而不是当<strong style="color:#fff;">员工</strong>培养。
+  </div>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 4: OpenClaw 是什么 ===== -->
+<section data-background-color="#060d1a">
+  <h2>OpenClaw 是什么 <span class="tag tag-cyan">不是广告</span></h2>
+  <div class="card" style="margin-bottom:10px; padding:12px 20px;">
+    <p style="margin:0; font-size:0.7em; color:#e0f0ff; line-height:1.6;">
+      一个运行在你自己机器上的 <span class="hl">AI Agent 宿主系统</span>。<br>
+      通过 Telegram / Signal 等通讯工具作为入口，让 Agent 持续在线、有记忆、能主动找你。
+    </p>
+  </div>
+  <div class="card-grid" style="gap:10px;">
+    <div class="card" style="padding:12px 16px;">
+      <h3 style="margin-bottom:4px;">🧠 有记忆</h3>
+      <p style="margin:0;">SOUL.md / MEMORY.md / 每日日志<br>Agent 知道你是谁，上次聊了什么</p>
+    </div>
+    <div class="card" style="padding:12px 16px;">
+      <h3 style="margin-bottom:4px;">⏰ 能主动</h3>
+      <p style="margin:0;">Cron + Heartbeat<br>不等你问，到点自己干</p>
+    </div>
+    <div class="card" style="padding:12px 16px;">
+      <h3 style="margin-bottom:4px;">🔧 有工具</h3>
+      <p style="margin:0;">Skills 生态<br>浏览器、代码、邮件、日历...</p>
+    </div>
+    <div class="card" style="padding:12px 16px;">
+      <h3 style="margin-bottom:4px;">🏠 你的地盘</h3>
+      <p style="margin:0;">数据在本地<br>不依赖云平台，可自托管</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 5: 我的虾塘 ===== -->
+<section data-background-color="#060d1a">
+  <h2>我的虾塘长什么样</h2>
+  <p style="margin-bottom:8px; font-size:0.6em; color:#5a7a9a;">Telegram 每个 Topic = 独立 Agent，有自己的工具集和人格</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:start;">
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">💰 Work</h3>
+        <p style="margin:0;">BD 跟进、提案起草、邮件日历、合同检查</p>
+      </div>
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">📅 Life</h3>
+        <p style="margin:0;">日程管理、财务记账、每日 Briefing、生活助手</p>
+      </div>
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">💡 Product & Devs</h3>
+        <p style="margin:0;">代码 Agent、产品 Review、服务监控报警</p>
+      </div>
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">📚 Research & Study</h3>
+        <p style="margin:0;">信息聚合过滤、资料研究、知识整理入库</p>
+      </div>
+    </div>
+    <div style="background:rgba(0,212,255,0.05); border:1px dashed rgba(0,212,255,0.3); border-radius:12px; height:280px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
+      <div style="font-size:2em; opacity:0.4;">🖼️</div>
+      <div style="font-size:0.5em; color:rgba(0,212,255,0.4);">案例截图</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 6: 实战场景 ===== -->
+<section data-background-color="#060d1a">
+  <h2>实战场景（一）<span class="tag tag-cyan">工作流</span></h2>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:start;">
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">📅 每日 Briefing</h3>
+        <p style="margin:0;">Cron → 拉日历 → 检查邮件 → 推送今日安排，睁眼就知道今天要干啥。</p>
+      </div>
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">🔍 产品自动测试</h3>
+        <p style="margin:0;">丢链接 → Agent 开浏览器跑完所有页面 → 输出 bug 报告，我没动鼠标。</p>
+      </div>
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">📋 会议跟进 & 任务整理执行</h3>
+        <p style="margin:0;">OpenClaw Meet 插件捕获字幕 → AI 整理 action items → 起草邮件/提案等后续跟进。</p>
+      </div>
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">🚨 服务报警 & 自愈</h3>
+        <p style="margin:0;">Heartbeat 发现异常 → Telegram 通知 → 确认后自动重启，凌晨不用起床。</p>
+      </div>
+    </div>
+    <div style="background:rgba(0,212,255,0.05); border:1px dashed rgba(0,212,255,0.3); border-radius:12px; height:280px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
+      <div style="font-size:2em; opacity:0.4;">🖼️</div>
+      <div style="font-size:0.5em; color:rgba(0,212,255,0.4);">案例截图</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 7: 实战场景二 ===== -->
+<section data-background-color="#060d1a">
+  <h2>实战场景（二）<span class="tag tag-purple">个人知识管理</span></h2>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:start;">
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">📝 Weekly Review 自动起草</h3>
+        <p style="margin:0;">每周五 Cron → 读本周日志 → 提炼亮点/反思/下周目标，我只需审阅润色。</p>
+      </div>
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">💰 财务记账 & 月报</h3>
+        <p style="margin:0;">说一句"午饭 38 块" → 自动写入 Google Sheets → 月底 AI 汇总支出报告。</p>
+      </div>
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">🗂️ 订阅信息聚合 & 过滤</h3>
+        <p style="margin:0;">RSS + Newsletter → 每日精选推送，10 条精选 > 100 条未读。</p>
+      </div>
+      <div class="card" style="padding:10px 14px;">
+        <h3 style="margin-bottom:2px;">💡 灵感捕捉 → 项目卡片</h3>
+        <p style="margin:0;">随手一句"想做 XX" → 展开成背景/目标/下一步，想法立刻变可执行。</p>
+      </div>
+    </div>
+    <div style="background:rgba(123,97,255,0.05); border:1px dashed rgba(123,97,255,0.3); border-radius:12px; height:280px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;">
+      <div style="font-size:2em; opacity:0.4;">🖼️</div>
+      <div style="font-size:0.5em; color:rgba(123,97,255,0.4);">案例截图</div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 8: 养虾的关键 ===== -->
+<section data-background-color="#060d1a">
+  <h2>养好虾的关键：给它一个灵魂</h2>
+  <div class="card" style="margin-bottom:14px;">
+    <h3 style="margin-bottom:8px;">核心文件体系（全是 Markdown）</h3>
+    <div class="card-grid three" style="gap:10px; margin-top:8px;">
+      <div style="text-align:center; padding:8px;">
+        <div style="font-size:1.2em;">🪪</div>
+        <div style="font-size:0.6em; color:#00d4ff; font-weight:600; margin-top:4px;">SOUL.md</div>
+        <div style="font-size:0.5em; color:#5a7a9a;">人格 / 价值观</div>
+      </div>
+      <div style="text-align:center; padding:8px;">
+        <div style="font-size:1.2em;">👤</div>
+        <div style="font-size:0.6em; color:#00d4ff; font-weight:600; margin-top:4px;">USER.md</div>
+        <div style="font-size:0.5em; color:#5a7a9a;">关于我</div>
+      </div>
+      <div style="text-align:center; padding:8px;">
+        <div style="font-size:1.2em;">🧠</div>
+        <div style="font-size:0.6em; color:#00d4ff; font-weight:600; margin-top:4px;">MEMORY.md</div>
+        <div style="font-size:0.5em; color:#5a7a9a;">长期记忆</div>
+      </div>
+    </div>
+  </div>
+  <div class="compare" style="gap:12px;">
+    <div class="card">
+      <h3>🔁 主动机制</h3>
+      <ul>
+        <li><span class="hl">Cron</span> — 定时精确触发</li>
+        <li><span class="hl">Heartbeat</span> — 周期性检查</li>
+        <li>Agent 主动推送，而非等你问</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🧩 Skills 扩展</h3>
+      <ul>
+        <li>浏览器自动化</li>
+        <li>代码 Agent（Codex / Claude Code）</li>
+        <li>邮件 / 日历 / 天气...</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 9: 省 Token + 提速技巧 ===== -->
+<section data-background-color="#060d1a">
+  <h2>省 Token &amp; 提速技巧 <span class="tag tag-green">实测有效</span></h2>
+  <div class="card" style="padding:10px 16px;">
+    <div class="tip-row" style="padding:6px 0;">
+      <div class="tip-badge badge-save">省钱</div>
+      <div class="tip-body">
+        <h4>用小模型做路由，大模型做决策</h4>
+        <p>日常检查用 GPT-4o mini / GLM-5，复杂推理才调 Claude Sonnet。一次 Heartbeat 可省 70% 费用。</p>
+      </div>
+    </div>
+    <div class="tip-row" style="padding:6px 0;">
+      <div class="tip-badge badge-save">省钱</div>
+      <div class="tip-body">
+        <h4>Heartbeat 批量合并，减少调用次数</h4>
+        <p>邮件 + 日历 + 系统状态合并进一次 Heartbeat，3 个任务 → 1 次 LLM 调用。</p>
+      </div>
+    </div>
+    <div class="tip-row" style="padding:6px 0;">
+      <div class="tip-badge badge-fast">提速</div>
+      <div class="tip-body">
+        <h4>Sub-agent 并行，长任务后台跑</h4>
+        <p>耗时任务 → sessions_spawn 扔后台，主线程继续聊天，完事自动推送结果。</p>
+      </div>
+    </div>
+    <div class="tip-row" style="padding:6px 0;">
+      <div class="tip-badge badge-fast">提速</div>
+      <div class="tip-body">
+        <h4>memU 共享记忆，避免重复上下文</h4>
+        <p>重要决策 / 项目状态存入 memU → 每次对话秒级恢复，不用塞历史 prompt。</p>
+      </div>
+    </div>
+    <div class="tip-row" style="padding:6px 0; border-bottom:none;">
+      <div class="tip-badge badge-save">省钱</div>
+      <div class="tip-body">
+        <h4>给 Agent 设"静默窗口"</h4>
+        <p>23:00–08:00 非紧急不触发，低频任务每小时一次足矣。频率砍半 = 账单砍半。</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 10: 踩坑 ===== -->
+<section data-background-color="#060d1a">
+  <h2>踩过的坑 <span class="tag tag-red">血泪总结</span></h2>
+  <div class="pit">
+    <div class="pit-icon">🤖</div>
+    <div class="pit-body">
+      <h4>Session 重置后模型悄悄降级</h4>
+      <p>✅ Default 模型没配好，Session 过期/重置后自动 fallback 到弱模型，回复质量暴跌都没发现。先把默认模型配对。</p>
+    </div>
+  </div>
+  <div class="pit">
+    <div class="pit-icon">🔁</div>
+    <div class="pit-body">
+      <h4>Bot Token 多服务复用导致冲突</h4>
+      <p>✅ 每个服务用独立 Bot Token；共用同一个 Token 会导致消息被截断、Webhook 互相抢占。</p>
+    </div>
+  </div>
+  <div class="pit">
+    <div class="pit-icon">🧠</div>
+    <div class="pit-body">
+      <h4>Agent 失忆，每次从头再来</h4>
+      <p>✅ 重要决策、项目状态必须落进 memU / MEMORY.md，"说过了"不算记住。</p>
+    </div>
+  </div>
+  <div class="pit">
+    <div class="pit-icon">🔐</div>
+    <div class="pit-body">
+      <h4>把密钥 / Token 直接告诉 Agent</h4>
+      <p>✅ 敏感信息存环境变量或 Secret 文件，绝不出现在对话上下文里，日志也不能落盘。</p>
+    </div>
+  </div>
+  <div class="pit">
+    <div class="pit-icon">🤖</div>
+    <div class="pit-body">
+      <h4>Agent 凌晨狂推消息</h4>
+      <p>✅ 明确静默窗口（23:00–08:00）；Heartbeat 频率砍半，账单也跟着砍半。</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 11: 安全 ===== -->
+<section data-background-color="#060d1a">
+  <h2>安全这件事 <span class="tag tag-red">SlowMist 出品</span></h2>
+  <p style="font-size:0.6em; color:#5a7a9a; margin-bottom:10px;">高权限 AI Agent 是新型攻击面。SlowMist 安全实践指南核心思路：</p>
+  <div class="card-grid" style="gap:10px; margin-bottom:10px;">
+    <div class="card" style="padding:10px 14px; border-color:rgba(255,77,77,0.3);">
+      <h4 style="color:#ff7070; margin:0 0 4px;">💉 Prompt Injection</h4>
+      <p style="margin:0; font-size:0.58em;">恶意网页 / Skill 注入指令 → Agent 被劫持执行危险操作。</p>
+    </div>
+    <div class="card" style="padding:10px 14px; border-color:rgba(255,77,77,0.3);">
+      <h4 style="color:#ff7070; margin:0 0 4px;">☠️ 供应链投毒</h4>
+      <p style="margin:0; font-size:0.58em;">安装看起来正常的 Skill → 后台偷数据 / 植入后门。</p>
+    </div>
+  </div>
+  <div class="card" style="padding:12px 16px; margin-bottom:10px;">
+    <h4 style="margin:0 0 6px;">🧠 思想钢印（Mental Seal）</h4>
+    <p style="margin:0 0 8px; font-size:0.58em;">把安全策略直接注入 Agent 认知：</p>
+    <div style="display:flex; gap:8px; font-size:0.55em;">
+      <span style="background:rgba(0,212,255,0.1); padding:4px 8px; border-radius:4px;">📋 行动前 黑名单过滤</span>
+      <span>→</span>
+      <span style="background:rgba(0,212,255,0.1); padding:4px 8px; border-radius:4px;">🔐 行动中 权限收窄</span>
+      <span>→</span>
+      <span style="background:rgba(0,212,255,0.1); padding:4px 8px; border-radius:4px;">🔍 行动后 审计</span>
+    </div>
+  </div>
+  <p style="font-size:0.55em; color:#5a7a9a; margin:0;">参考：github.com/slowmist/openclaw-security-practice-guide</p>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 12: 哲学 ===== -->
+<section data-background-color="#060d1a">
+  <h2>一个值得思考的问题</h2>
+  <div class="quote" style="font-size:1em; margin: 16px 0; padding: 16px 20px;">
+    你愿意把多少决策权交给 Agent？<br>
+    <span style="color:#5a7a9a;">边界在哪？</span>
+  </div>
+  <div class="card-grid three" style="gap:10px; margin-top: 12px;">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:0.65em; color:#00d4ff; font-weight:700; margin-bottom:8px;">✅ 放心交给 Agent</div>
+      <ul style="font-size:0.56em; color:#5a8aa0; padding-left:1em; text-align:left;">
+        <li>信息聚合 & 推送</li>
+        <li>日程提醒</li>
+        <li>系统监控 & 报警</li>
+        <li>草稿起草</li>
+      </ul>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:0.65em; color:#ffd54f; font-weight:700; margin-bottom:8px;">⚠️ 需要确认</div>
+      <ul style="font-size:0.56em; color:#7a7050; padding-left:1em; text-align:left;">
+        <li>对外发送邮件</li>
+        <li>代码部署</li>
+        <li>数据修改</li>
+        <li>重要决策建议</li>
+      </ul>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:0.65em; color:#ff6b6b; font-weight:700; margin-bottom:8px;">🚫 人工保留</div>
+      <ul style="font-size:0.56em; color:#7a5050; padding-left:1em; text-align:left;">
+        <li>删除重要数据</li>
+        <li>财务操作</li>
+        <li>对外公开声明</li>
+        <li>人际关系决策</li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 13: 用 AI 做出来的东西 ===== -->
+<section data-background-color="#060d1a">
+  <h2>用 AI 做出来的那些东西</h2>
+  <div class="card-grid" style="gap:10px; margin-bottom:10px;">
+    <div class="card" style="padding:12px 16px;">
+      <h3 style="margin-bottom:4px;">🦞 FeedClaw</h3>
+      <p style="margin:0; font-size:0.6em;">Agent 投票竞技场，今晚在场的 Agent 都可以参赛，实时排行看谁最能打。<br><span style="color:#00d4ff;">feedclaw-puce.vercel.app</span></p>
+    </div>
+    <div class="card" style="padding:12px 16px;">
+      <h3 style="margin-bottom:4px;">🤖 DEV-HUB</h3>
+      <p style="margin:0; font-size:0.6em;">Web3 × AI 内容聚合，自动抓取过滤 + AI 打分去噪，每天 10 条精选 > 100 条未读。</p>
+    </div>
+    <div class="card" style="padding:12px 16px;">
+      <h3 style="margin-bottom:4px;">📡 OpenClaw Meet</h3>
+      <p style="margin:0; font-size:0.6em;">Chrome 插件，自动捕获会议字幕，会后 AI 整理纪要推 Telegram，一行字都不用记。</p>
+    </div>
+    <div class="card" style="padding:12px 16px;">
+      <h3 style="margin-bottom:4px;">🐦 推特数据分析</h3>
+      <p style="margin:0; font-size:0.6em;">调 Twitter API 拉账号数据 → 分析粉丝增长、互动率、内容表现，生成可视化报告。</p>
+    </div>
+    <div class="card" style="padding:12px 16px;">
+      <h3 style="margin-bottom:4px;">📰 SEO 内容机器</h3>
+      <p style="margin:0; font-size:0.6em;">seomachine + Claude Code，配好品牌声音和关键词，批量产出高质量 SEO 文章。</p>
+    </div>
+    <div class="card" style="padding:12px 16px;">
+      <h3 style="margin-bottom:4px;">🔔 服务监控 & 自愈</h3>
+      <p style="margin:0; font-size:0.6em;">Heartbeat + Watchdog，服务挂了自动报警并重启，凌晨不用起床看服务器。</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+<!-- ===== SLIDE 14: 总结 ===== -->
+<section data-background-color="#060d1a">
+  <div style="display:flex; flex-direction:column; justify-content:center; height:85%; gap:24px;">
+    <div>
+      <h2 style="font-size:1.5em;">总结</h2>
+      <div class="pill-row">
+        <div class="pill">Agent ≠ 工具，是员工</div>
+        <div class="pill">框架越小越好</div>
+        <div class="pill">先给它一个灵魂</div>
+        <div class="pill">记忆写文件，不要靠脑子</div>
+        <div class="pill">主动 > 被动</div>
+        <div class="pill">小模型路由省钱</div>
+        <div class="pill">边界要想清楚</div>
+      </div>
+    </div>
+    <div class="quote">
+      养好一只虾，它会帮你再养更多虾。<br>
+      <span style="color:#5a7a9a; font-size:0.9em;">这才是 Agent Native 的工作方式。</span>
+    </div>
+    <div style="display:flex; gap:20px; align-items:center; margin-top:8px;">
+      <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,#00d4ff,#7b61ff); display:flex; align-items:center; justify-content:center; font-size:1.3em; flex-shrink:0;">🐂</div>
+      <div>
+        <div style="font-size:0.75em; color:#fff; font-weight:600;">Ian · @callmeianx</div>
+        <div style="font-size:0.55em; color:#5a7a9a;">OpenBuild 开源社区发起人 · 开源社理事</div>
+      </div>
+      <div style="margin-left:auto; text-align:right;">
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>被我养的死去活来的龙虾</span><span>Ian @ OPC OpenClaw Shanghai</span></div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    progress: true,
+    transition: 'fade',
+    transitionSpeed: 'fast',
+    controls: true,
+    controlsLayout: 'bottom-right',
+    center: false,
+    width: 1200,
+    height: 700,
+    margin: 0.06,
+    plugins: []
+  });
+</script>
+</body>
+</html>
