@@ -437,102 +437,7 @@ function toggleFullscreen(){
   
 </section>
 
-<!-- ===== SLIDE 9: 记忆架构 ===== -->
-<section data-background-color="#060d1a">
-  <h2 style="margin-bottom:8px;">记忆系统：Context as Architecture</h2>
-  <p style="font-size:0.56em; color:#5a7a9a; margin-bottom:12px;">Agent 每次 session 醒来是"失忆"的。Chat History ≠ 记忆 — 线性、易失、难检索。</p>
-  <div class="card-grid three" style="gap:10px; margin-bottom:12px;">
-    <div class="card" style="text-align:center; padding:12px;">
-      <div style="font-size:1.2em;">⚡</div>
-      <div style="font-size:0.62em; color:#00d4ff; font-weight:600; margin:6px 0 4px;">实时</div>
-      <div style="font-size:0.52em; color:#5a7a9a;">事件驱动写入<br>决策 / 方案 / 新任务 → memory/日期.md</div>
-    </div>
-    <div class="card" style="text-align:center; padding:12px;">
-      <div style="font-size:1.2em;">🧠</div>
-      <div style="font-size:0.62em; color:#00d4ff; font-weight:600; margin:6px 0 4px;">共享记忆</div>
-      <div style="font-size:0.52em; color:#5a7a9a;">memU 跨 Agent 共享<br>每天凌晨 3 点自动更新蒸馏</div>
-    </div>
-    <div class="card" style="text-align:center; padding:12px;">
-      <div style="font-size:1.2em;">📖</div>
-      <div style="font-size:0.62em; color:#00d4ff; font-weight:600; margin:6px 0 4px;">长期记忆</div>
-      <div style="font-size:0.52em; color:#5a7a9a;">MEMORY.md 人工审阅<br>精华沉淀，过时剪枝</div>
-    </div>
-  </div>
-  <div class="card" style="padding:12px 16px;">
-    <h4 style="margin:0 0 8px; font-size:0.66em;">🔄 启动时 Context 重建序列</h4>
-    <div style="display:flex; gap:6px; font-size:0.52em; flex-wrap:wrap; align-items:center;">
-      <span style="background:rgba(0,212,255,0.1); padding:4px 8px; border-radius:4px;">🪪 SOUL.md<br><span style="color:#5a7a9a;">我是谁</span></span>
-      <span style="color:#5a7a9a;">→</span>
-      <span style="background:rgba(0,212,255,0.1); padding:4px 8px; border-radius:4px;">👤 USER.md<br><span style="color:#5a7a9a;">我帮谁</span></span>
-      <span style="color:#5a7a9a;">→</span>
-      <span style="background:rgba(0,212,255,0.1); padding:4px 8px; border-radius:4px;">📝 今天/昨天.md<br><span style="color:#5a7a9a;">近期上下文</span></span>
-      <span style="color:#5a7a9a;">→</span>
-      <span style="background:rgba(0,212,255,0.1); padding:4px 8px; border-radius:4px;">🧠 MEMORY.md<br><span style="color:#5a7a9a;">长期记忆</span></span>
-      <span style="color:#5a7a9a;">→</span>
-      <span style="background:rgba(123,97,255,0.15); padding:4px 8px; border-radius:4px;">🔗 memU<br><span style="color:#5a7a9a;">跨 Agent 共享</span></span>
-    </div>
-  </div>
-</section>
-
-<!-- ===== SLIDE 10: 多 Agent 记忆理念 ===== -->
-<section data-background-color="#060d1a">
-  <h2 style="margin-bottom:4px;">多 Agent 共享记忆：tape 协议 <span class="tag tag-green">已落地</span></h2>
-  <p style="font-size:0.54em; color:#5a7a9a; margin-bottom:10px;">
-    借鉴 <a href="https://tape.systems" style="color:#7b61ff; text-decoration:none;">tape.systems</a> — 三种写入类型覆盖任务完整生命周期
-  </p>
-
-  <!-- 任务生命周期时间轴 -->
-  <div style="display:flex; align-items:stretch; gap:0; margin-bottom:10px; font-size:0.52em;">
-    <!-- 开始 -->
-    <div style="background:rgba(255,100,100,0.12); border:1px solid rgba(255,100,100,0.3); border-radius:8px 0 0 8px; padding:10px 12px; flex:1; display:flex; flex-direction:column; gap:4px;">
-      <div style="color:#ff6464; font-weight:600; font-size:1.05em;">① 任务开始</div>
-      <div style="color:#a98bff; font-size:1.1em; font-weight:600;">📋 PENDING_TASK set</div>
-      <div style="color:#7a8a9a; line-height:1.4;">登记任务 + 下一步<br>防止跨 session 遗忘</div>
-    </div>
-    <div style="width:24px; display:flex; align-items:center; justify-content:center; color:#3a5a6a; font-size:1.2em; flex-shrink:0;">→</div>
-    <!-- 执行中 -->
-    <div style="background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.2); padding:10px 12px; flex:2; display:flex; flex-direction:column; gap:4px;">
-      <div style="color:#00d4ff; font-weight:600; font-size:1.05em;">② 执行中（循环）</div>
-      <div style="display:flex; gap:8px; align-items:flex-start; margin-top:2px;">
-        <div style="flex:1;">
-          <div style="color:#00d4ff; font-size:1.05em; font-weight:600;">📼 TAPE</div>
-          <div style="color:#7a8a9a; line-height:1.4;">每步写一条事实<br>append-only 流水账</div>
-          <div style="font-family:monospace; font-size:0.85em; color:#3a5a6a; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:3px; margin-top:4px; white-space:nowrap; overflow:hidden;">TAPE | 提案已发送给 X</div>
-        </div>
-        <div style="color:#3a5a6a; align-self:center;">+</div>
-        <div style="flex:1;">
-          <div style="color:#7b61ff; font-size:1.05em; font-weight:600;">⚓ ANCHOR</div>
-          <div style="color:#7a8a9a; line-height:1.4;">阶段完成打快照<br>重启时快速恢复</div>
-          <div style="font-family:monospace; font-size:0.85em; color:#3a5a6a; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:3px; margin-top:4px; white-space:nowrap; overflow:hidden;">ANCHOR | phase=done | 下一步 review</div>
-        </div>
-      </div>
-    </div>
-    <div style="width:24px; display:flex; align-items:center; justify-content:center; color:#3a5a6a; font-size:1.2em; flex-shrink:0;">→</div>
-    <!-- 完成 -->
-    <div style="background:rgba(0,255,150,0.08); border:1px solid rgba(0,255,150,0.2); border-radius:0 8px 8px 0; padding:10px 12px; flex:1; display:flex; flex-direction:column; gap:4px;">
-      <div style="color:#00e890; font-weight:600; font-size:1.05em;">③ 任务完成</div>
-      <div style="color:#a98bff; font-size:1.1em; font-weight:600;">📋 PENDING_TASK done</div>
-      <div style="color:#7a8a9a; line-height:1.4;">销掉提醒<br>TAPE 记录永久保留</div>
-    </div>
-  </div>
-
-  <!-- 三原则 -->
-  <div class="card" style="padding:8px 14px; border-color:rgba(123,97,255,0.3);">
-    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; font-size:0.52em;">
-      <div style="background:rgba(123,97,255,0.08); padding:6px 8px; border-radius:6px; color:#8a7aaa; text-align:center;">
-        📌 历史<span style="color:#a98bff; font-weight:600;">只增不改</span><br><span style="font-size:0.85em;">修正靠追加新条目</span>
-      </div>
-      <div style="background:rgba(123,97,255,0.08); padding:6px 8px; border-radius:6px; color:#8a7aaa; text-align:center;">
-        🔒 衍生数据<span style="color:#a98bff; font-weight:600;">不覆盖</span><br><span style="font-size:0.85em;">原始事实永久保留</span>
-      </div>
-      <div style="background:rgba(123,97,255,0.08); padding:6px 8px; border-radius:6px; color:#8a7aaa; text-align:center;">
-        🏗️ 上下文<span style="color:#a98bff; font-weight:600;">按需构建</span><br><span style="font-size:0.85em;">按 task_id 组装，不继承</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== SLIDE 11: 省 Token + 提速技巧 ===== -->
+<!-- ===== SLIDE 9: 省 Token + 提速技巧 ===== -->
 <section data-background-color="#060d1a">
   <h2>省 Token &amp; 提速技巧 <span class="tag tag-green">实测有效</span></h2>
   <div class="card" style="padding:10px 16px;">
@@ -540,7 +445,7 @@ function toggleFullscreen(){
       <div class="tip-badge badge-save">省钱</div>
       <div class="tip-body">
         <h4>用小模型做路由，大模型做决策</h4>
-        <p>日常检查用 GPT-4o mini / GLM-5，复杂推理才调 Claude Sonnet。一次 Heartbeat 可省 70% 费用。<br><span style="color:#5a7a9a;">开源工具：</span><a href="https://github.com/CommonstackAI/UncommonRoute" style="color:#00d4ff; font-size:0.9em;">CommonstackAI/UncommonRoute</a></p>
+        <p>日常检查用 GPT-4o mini / GLM-5，复杂推理才调 Claude Sonnet。一次 Heartbeat 可省 70% 费用。</p>
       </div>
     </div>
     <div class="tip-row" style="padding:6px 0;">
@@ -575,7 +480,7 @@ function toggleFullscreen(){
   
 </section>
 
-<!-- ===== SLIDE 12: 踩坑 ===== -->
+<!-- ===== SLIDE 10: 踩坑 ===== -->
 <section data-background-color="#060d1a">
   <h2 style="margin-bottom:8px;">踩过的坑 <span class="tag tag-red">血泪总结</span></h2>
   <div class="pit">
@@ -622,7 +527,7 @@ function toggleFullscreen(){
   </div>
 </section>
 
-<!-- ===== SLIDE 13: 安全 ===== -->
+<!-- ===== SLIDE 11: 安全 ===== -->
 <section data-background-color="#060d1a">
   <h2>安全这件事 <span class="tag tag-red">SlowMist 出品</span></h2>
   <p style="font-size:0.6em; color:#5a7a9a; margin-bottom:10px;">高权限 AI Agent 是新型攻击面。SlowMist 安全实践指南核心思路：</p>
@@ -651,7 +556,7 @@ function toggleFullscreen(){
   
 </section>
 
-<!-- ===== SLIDE 14: 哲学 ===== -->
+<!-- ===== SLIDE 12: 哲学 ===== -->
 <section data-background-color="#060d1a">
   <h2>一个值得思考的问题</h2>
   <div class="quote" style="font-size:1em; margin: 16px 0; padding: 16px 20px;">
@@ -690,7 +595,7 @@ function toggleFullscreen(){
   
 </section>
 
-<!-- ===== SLIDE 15: 用 AI 做出来的东西 ===== -->
+<!-- ===== SLIDE 13: 用 AI 做出来的东西 ===== -->
 <section data-background-color="#060d1a">
   <h2>用 AI 做出来的那些东西</h2>
   <div class="card-grid" style="gap:10px; margin-bottom:10px;">
@@ -722,7 +627,7 @@ function toggleFullscreen(){
   
 </section>
 
-<!-- ===== SLIDE 16: 总结 ===== -->
+<!-- ===== SLIDE 14: 总结 ===== -->
 <section data-background-color="#060d1a">
   <div style="display:flex; flex-direction:column; justify-content:center; height:85%; gap:24px;">
     <div>
@@ -756,12 +661,6 @@ function toggleFullscreen(){
 
 </div>
 </div>
-
-<section>
-  <div style="display:flex; align-items:center; justify-content:center; height:100%; background:#0a0f1a;">
-    <img src="https://ian-docs.vercel.app/slides/openclaw-101.jpg" alt="OpenClaw 101 实战训练营" style="max-width:100%; max-height:680px; border-radius:12px; box-shadow:0 0 40px rgba(0,212,255,0.2);" />
-  </div>
-</section>
 
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
 <script>
