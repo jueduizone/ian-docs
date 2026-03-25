@@ -478,35 +478,54 @@ function toggleFullscreen(){
 <section data-background-color="#060d1a">
   <h2 style="margin-bottom:4px;">多 Agent 共享记忆：tape 协议 <span class="tag tag-green">已落地</span></h2>
   <p style="font-size:0.54em; color:#5a7a9a; margin-bottom:10px;">
-    借鉴 <a href="https://tape.systems" style="color:#7b61ff; text-decoration:none;">tape.systems</a> — "Context as Architecture"：上下文是构建出来的，而非继承历史对话。<br>
-    今天实现并部署到全部 5 个 Agent。
+    借鉴 <a href="https://tape.systems" style="color:#7b61ff; text-decoration:none;">tape.systems</a> — 三种写入类型覆盖任务完整生命周期
   </p>
-  <div class="card-grid" style="gap:10px; margin-bottom:10px;">
-    <div class="card" style="padding:10px 14px;">
-      <h3 style="margin-bottom:4px; font-size:0.72em;">📼 TAPE — 不可变事实流</h3>
-      <p style="margin:0; font-size:0.56em; line-height:1.5;">执行中每完成一个关键步骤写入一条事实，带 <span class="hl">seq_id + agent + task_id + 时间戳</span>，append-only，永不覆盖。</p>
-      <div style="margin-top:6px; font-size:0.46em; color:#3a5a6a; font-family:monospace; background:rgba(0,0,0,0.3); padding:4px 8px; border-radius:4px; overflow:hidden;">TAPE | seq=172… | agent=work | task=bd-0325 | 提案草稿已发送给 X</div>
+
+  <!-- 任务生命周期时间轴 -->
+  <div style="display:flex; align-items:stretch; gap:0; margin-bottom:10px; font-size:0.52em;">
+    <!-- 开始 -->
+    <div style="background:rgba(255,100,100,0.12); border:1px solid rgba(255,100,100,0.3); border-radius:8px 0 0 8px; padding:10px 12px; flex:1; display:flex; flex-direction:column; gap:4px;">
+      <div style="color:#ff6464; font-weight:600; font-size:1.05em;">① 任务开始</div>
+      <div style="color:#a98bff; font-size:1.1em; font-weight:600;">📋 PENDING_TASK set</div>
+      <div style="color:#7a8a9a; line-height:1.4;">登记任务 + 下一步<br>防止跨 session 遗忘</div>
     </div>
-    <div class="card" style="padding:10px 14px;">
-      <h3 style="margin-bottom:4px; font-size:0.72em;">⚓ ANCHOR — 阶段 Checkpoint</h3>
-      <p style="margin:0; font-size:0.56em; line-height:1.5;">任务进入新阶段时打一个状态摘要。下次 Agent 重启后<span class="hl">从 checkpoint 恢复</span>，无需重放全部历史。</p>
-      <div style="margin-top:6px; font-size:0.46em; color:#3a5a6a; font-family:monospace; background:rgba(0,0,0,0.3); padding:4px 8px; border-radius:4px; overflow:hidden;">ANCHOR | task=web3hub-0325 | phase=implement | Discovery 完成，下一步 migration</div>
+    <div style="width:24px; display:flex; align-items:center; justify-content:center; color:#3a5a6a; font-size:1.2em; flex-shrink:0;">→</div>
+    <!-- 执行中 -->
+    <div style="background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.2); padding:10px 12px; flex:2; display:flex; flex-direction:column; gap:4px;">
+      <div style="color:#00d4ff; font-weight:600; font-size:1.05em;">② 执行中（循环）</div>
+      <div style="display:flex; gap:8px; align-items:flex-start; margin-top:2px;">
+        <div style="flex:1;">
+          <div style="color:#00d4ff; font-size:1.05em; font-weight:600;">📼 TAPE</div>
+          <div style="color:#7a8a9a; line-height:1.4;">每步写一条事实<br>append-only 流水账</div>
+          <div style="font-family:monospace; font-size:0.85em; color:#3a5a6a; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:3px; margin-top:4px; white-space:nowrap; overflow:hidden;">TAPE | 提案已发送给 X</div>
+        </div>
+        <div style="color:#3a5a6a; align-self:center;">+</div>
+        <div style="flex:1;">
+          <div style="color:#7b61ff; font-size:1.05em; font-weight:600;">⚓ ANCHOR</div>
+          <div style="color:#7a8a9a; line-height:1.4;">阶段完成打快照<br>重启时快速恢复</div>
+          <div style="font-family:monospace; font-size:0.85em; color:#3a5a6a; background:rgba(0,0,0,0.3); padding:2px 6px; border-radius:3px; margin-top:4px; white-space:nowrap; overflow:hidden;">ANCHOR | phase=done | 下一步 review</div>
+        </div>
+      </div>
     </div>
-    <div class="card" style="padding:10px 14px;">
-      <h3 style="margin-bottom:4px; font-size:0.72em;">📋 PENDING_TASK — 跨 Session 追踪</h3>
-      <p style="margin:0; font-size:0.56em; line-height:1.5;">多步骤任务开始时注册，完成后标记 done。<span class="hl">Heartbeat 自动扫 pending</span>，跨 Agent / 跨 session 不丢进度。</p>
-      <div style="margin-top:6px; font-size:0.46em; color:#3a5a6a; font-family:monospace; background:rgba(0,0,0,0.3); padding:4px 8px; border-radius:4px; overflow:hidden;">PENDING_TASK | id=task-001 | agent=dev | status=pending | next=运行 docker restart</div>
+    <div style="width:24px; display:flex; align-items:center; justify-content:center; color:#3a5a6a; font-size:1.2em; flex-shrink:0;">→</div>
+    <!-- 完成 -->
+    <div style="background:rgba(0,255,150,0.08); border:1px solid rgba(0,255,150,0.2); border-radius:0 8px 8px 0; padding:10px 12px; flex:1; display:flex; flex-direction:column; gap:4px;">
+      <div style="color:#00e890; font-weight:600; font-size:1.05em;">③ 任务完成</div>
+      <div style="color:#a98bff; font-size:1.1em; font-weight:600;">📋 PENDING_TASK done</div>
+      <div style="color:#7a8a9a; line-height:1.4;">销掉提醒<br>TAPE 记录永久保留</div>
     </div>
   </div>
-  <div class="card" style="padding:10px 16px; border-color:rgba(123,97,255,0.3);">
-    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; font-size:0.54em;">
-      <div style="background:rgba(123,97,255,0.08); padding:8px; border-radius:6px; color:#8a7aaa; text-align:center;">
+
+  <!-- 三原则 -->
+  <div class="card" style="padding:8px 14px; border-color:rgba(123,97,255,0.3);">
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; font-size:0.52em;">
+      <div style="background:rgba(123,97,255,0.08); padding:6px 8px; border-radius:6px; color:#8a7aaa; text-align:center;">
         📌 历史<span style="color:#a98bff; font-weight:600;">只增不改</span><br><span style="font-size:0.85em;">修正靠追加新条目</span>
       </div>
-      <div style="background:rgba(123,97,255,0.08); padding:8px; border-radius:6px; color:#8a7aaa; text-align:center;">
+      <div style="background:rgba(123,97,255,0.08); padding:6px 8px; border-radius:6px; color:#8a7aaa; text-align:center;">
         🔒 衍生数据<span style="color:#a98bff; font-weight:600;">不覆盖</span><br><span style="font-size:0.85em;">原始事实永久保留</span>
       </div>
-      <div style="background:rgba(123,97,255,0.08); padding:8px; border-radius:6px; color:#8a7aaa; text-align:center;">
+      <div style="background:rgba(123,97,255,0.08); padding:6px 8px; border-radius:6px; color:#8a7aaa; text-align:center;">
         🏗️ 上下文<span style="color:#a98bff; font-weight:600;">按需构建</span><br><span style="font-size:0.85em;">按 task_id 组装，不继承</span>
       </div>
     </div>
