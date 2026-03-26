@@ -443,3 +443,193 @@ MCP Server 是 Skills 层的进阶补充——Skills 解决"AI 知道什么"，M
 ---
 
 *方案版本 v1.0 | AgentRel — Web3 开发者的 AI Context 基础设施*
+
+---
+
+## 十三、发现体系与 Skill 访问控制
+*补充设计 | 2026-03-26*
+
+### 13.1 核心目标
+
+让开发者**最快找到想要的且有效的 Web3 Skill**，同时激励社区贡献，并支持特有 Skill 的付费访问控制。
+
+---
+
+### 13.2 发现体系
+
+#### 入口设计原则
+
+首页不做列表，做**场景化引导**：
+
+```
+"你在做什么？"
+  ├── 开发某条链的 dApp  → 推荐对应链 Dev Bundle
+  ├── 参加黑客松         → 推荐赛题 + 链技术 Bundle
+  ├── 申请 Grant         → 推荐 Grant 指南 + 成功案例 Bundle
+  └── 安全审计           → 推荐安全合规 Skill
+```
+
+场景引导 → Bundle 组合 → 单条 Skill 按需加减，三层递进。
+
+#### 搜索双路径
+
+| 路径 | 方式 | 场景 |
+|------|------|------|
+| 精确搜 | ecosystem + type 筛选（如 Solana + 技术文档） | 知道要什么 |
+| 模糊搜 | 自然语言语义搜索（如"web3.js deprecated 报错"） | 不确定关键词 |
+
+语义搜索方案：Supabase pgvector（原生支持，无需引入独立向量库）。
+
+#### Skill 卡片信息密度
+
+开发者最怕装了一个过期或错误的 Skill，因此质量信号必须在卡片层直接显示：
+
+```
+┌──────────────────────────────────────┐
+│ Solana web3.js v2 Migration          │
+│ ✅ Official · 🔄 Updated 3d ago      │
+│ ⚡ 已用 2,847 次 · 健康度 98%         │
+│ 覆盖版本：2.0.0 — 2.1.3              │
+└──────────────────────────────────────┘
+```
+
+质量信号由系统自动维护，非人工标注（见 13.3）。
+
+---
+
+### 13.3 Skill 质量分层
+
+#### 三级认证标签
+
+| 级别 | 标签 | 条件 | 展示策略 |
+|------|------|------|---------|
+| ✅ Official | 官方认证 | 链方 DevRel 维护或授权 | 绿标，优先展示 |
+| 👥 Verified | 社区验证 | L3 Review 通过 + 健康度 ≥ 85% | 蓝标，正常展示 |
+| 🤖 Draft | 草稿 | AI 生成待审核 | 灰标，默认不在主列表显示 |
+
+#### 健康度自动计算
+
+```
+健康度 = eval 准确率 × 50%
+       + (1 - feedback 错误率) × 30%
+       + 时效分（源文档同步新鲜度）× 20%
+```
+
+- 健康度 < 70%：自动降级 + 通知维护者
+- 健康度 < 50%：下架，标记 `needs-urgent-update`
+- 每周跑一次 eval pipeline，结果写入 DB
+
+---
+
+### 13.4 贡献体系
+
+#### 贡献路径（按门槛从低到高）
+
+```
+路径 A（最低门槛）
+  发现错误 → Skill 页"报错"按钮 → 填一行描述 → 提交 Issue
+  条件：GitHub 账号即可
+
+路径 B（有经验开发者）
+  认领 Issue → CLI 生成草稿 → Web Editor Review → 提 PR
+  条件：熟悉该链开发，会用 CLI
+
+路径 C（深度贡献者）
+  申请成为某条链 L3 维护者 → 有 Merge 权限 → 生态认证资格
+  条件：OpenBuild 邀请或链方官方推荐
+```
+
+#### 激励设计
+
+| 贡献类型 | 激励 |
+|---------|------|
+| 新建高质量 Skill（Verified 以上） | OpenBuild 积分 + featured 展示 + 贡献者 badge |
+| 更新/修复已有 Skill | OpenBuild 积分 |
+| Issue 纠错（被采纳） | OpenBuild 积分 |
+| 成为 L3 维护者 | 生态合作资格 + 官方认证 + 付费 Skill 分润资格 |
+| 贡献 Pro Skill（产生订阅收入） | 按收入分润（比例待定） |
+
+**分润是最强激励**：贡献一条 Pro Skill，该 Skill 持续产生订阅收入，维护者持续获得分成。
+
+---
+
+### 13.5 Skill 访问控制（Key 体系）
+
+#### 三类 Skill 访问类型
+
+| 类型 | 访问方式 | 典型内容 |
+|------|---------|---------|
+| **Free** | 无限制直接使用 | 基础技术文档、开源内容复用 |
+| **Pro** | AgentRel API Key | Grant 成功案例、实时数据 Skill、安全审计模板 |
+| **Partner** | 项目方分发的 Partner Key | 链方官方内容，项目方买单、开发者免费用 |
+
+#### SKILL.md 头部扩展字段
+
+```yaml
+---
+id: grant/solana-foundation-pro
+access: pro                              # free | pro | partner
+auth_endpoint: https://api.agentrel.xyz/auth
+partner_id: solana-foundation            # 仅 partner 类型填写
+preview_lines: 30                        # 免费预览行数，让开发者看到价值再决定付费
+---
+```
+
+#### 访问流程
+
+```
+# Free Skill
+npx skills add agentrel/solana-dev
+→ 直接装，无需 Key
+
+# Pro Skill
+npx skills add agentrel/grant-solana-pro
+→ 提示：此 Skill 需要 AgentRel Pro Key
+→ 引导：agentrel.xyz/pro（订阅）或使用 Partner Key
+
+# Partner Key（链方提供给开发者）
+AGENTREL_KEY=solana_partner_xxx npx skills add agentrel/solana-official
+→ Key 验证通过，解锁该链方授权的所有 Official Skills
+```
+
+#### Pro 定价策略
+
+| 计划 | 价格 | 说明 |
+|------|------|------|
+| 个人 Pro | $9/月 | 不限 Skill 数量，全部 Pro 内容解锁 |
+| 团队 Pro | $49/月 | 10 人，统一管理 Key |
+| Partner 授权 | 定制定价 | 链方/项目方购买，为其生态开发者买单 |
+
+#### Partner Key 设计要点
+
+- 一个 Partner Key 只能解锁该 Partner 授权的 Skill 集合（隔离）
+- 链方购买 Partner 授权的价值：拿到使用数据（多少开发者在用 → DevRel KPI）
+- AgentRel 收入：B 端 Partner 授权费（比 C 端订阅更稳定）
+
+---
+
+### 13.6 整体数据流
+
+```
+开发者
+  → 场景引导 / 搜索 → 发现 Skill
+  → Free：直接装
+  → Pro：Key 验证 → 订阅或 Partner Key
+  → 使用 Agent 开发
+      ↓
+  Agent 出错 → 自动 feedback → GitHub Issue
+  Agent 用对 → eval 计分 → 健康度 ↑
+      ↓
+  L3 维护者处理 Issue → 更新 Skill → 积分结算
+  Pro Skill 订阅收入 → 维护者分润
+```
+
+---
+
+### 13.7 待决策事项
+
+1. **健康度权重**：eval 50% / feedback 30% / 时效 20%，需上线后根据数据调整
+2. **Pro Key 认证方案**：JWT（有过期）vs HMAC 签名（无状态），倾向 JWT + refresh token
+3. **分润比例**：建议贡献者 40% / 平台 60%，有收入后再谈
+4. **preview_lines 策略**：免费预览多少行合适？太少没说服力，太多付费意愿低
+5. **ethskills license 确认**：复用 ethskills 内容前必须确认是否允许商业用途
