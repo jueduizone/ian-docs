@@ -634,3 +634,99 @@ AGENTREL_KEY=solana_partner_xxx npx skills add agentrel/solana-official
 3. **分润比例**：建议贡献者 40% / 平台 60%，有收入后再谈
 4. **preview_lines 策略**：免费预览多少行合适？太少没说服力，太多付费意愿低
 5. **ethskills license 确认**：复用 ethskills 内容前必须确认是否允许商业用途
+
+---
+
+## 十四、产品路径升级（v1.2 | 2026-03-31）
+
+> 基于与 Ian 的讨论，结合已有功能，确定产品三步走方向。
+
+### 14.1 产品三步走路径
+
+```
+Phase 1（已完成）：Context 基础设施
+    Web3 Skill 聚合 → 212+ Skills / 25 生态
+    Agent 能读到准确的 Web3 context，不再幻觉
+
+Phase 2（当前）：任务匹配 + 材料协助
+    合作伙伴发布任务（Grant/Bounty/测试任务）
+    Agent 帮开发者做「匹配度评估 + 申请材料准备」
+    人工最终提交（不做全自动代劳，降低风险）
+
+Phase 3（中期）：Reputation 沉淀
+    执行记录写入 developer_reputation
+    形成可信的开发者能力证明
+    高门槛任务可设 min_avg_score 准入门槛
+```
+
+### 14.2 合作伙伴任务接入方案（最小可行）
+
+**任务 Skill 格式**（和现有 Skill 一致，零额外接入成本）：
+
+```markdown
+---
+name: [Partner Name] Q2 Grant Program
+ecosystem: ethereum
+type: grant
+time_sensitivity: high
+expires_at: 2026-06-30
+---
+
+## 任务描述
+[合作伙伴填写任务要求]
+
+## 奖励
+- 完成金额：$5,000 - $50,000 USDC
+- 里程碑：3个阶段交付
+
+## 申请要求
+- 技术背景：Solidity 2年以上
+- 提交链接：https://partner.xyz/apply
+- 截止时间：2026-06-30
+
+## 评判标准
+[详细评判标准]
+```
+
+**接入流程**：
+1. 合作伙伴发来任务描述 → 研发侠格式化为 Skill
+2. 发布到 AgentRel（source=official）
+3. 开发者 Agent 读到 → 协助准备申请材料
+4. 完成后记录到 developer_reputation
+
+### 14.3 当前 Reputation 机制
+
+已实现（2026-03-30 上线）：
+- `developer_reputation` 表：hackathon_count / avg_score / top_score
+- 评审完成后自动更新（rolling average）
+- `/api/reputation?email=xxx` 公开查询接口
+
+待实现：
+- [ ] 报名页面 Reputation 卡片展示
+- [ ] 高门槛活动 min_avg_score 准入校验
+- [ ] 链上数据补充（GitHub commit / on-chain proof）
+
+### 14.4 近期 TODO（研发侧）
+
+#### 本周优先
+- [ ] AgentRel：合作伙伴任务 Skill 模板 + 接入文档
+- [ ] HackAgent：报名页面 Reputation 卡片
+- [ ] HackAgent：021_developer_reputation.sql（需 Ian 在 Supabase 执行）
+
+#### 下周
+- [ ] AgentRel：任务完成后 webhook 回调（通知 AgentRel 记录 Reputation）
+- [ ] AgentRel：第二批 Skill（bittensor/virtuals/sentient 内容补全）
+- [ ] HackAgent：高门槛活动 min_score 校验
+
+### 14.5 对产品形态的判断
+
+**当前形态的问题**：
+- 开发者侧做得扎实，但项目方/基金会侧的价值主张不清晰
+- 缺乏「为什么在 AgentRel 发布任务，而不是自己发推」的答案
+
+**建议答案**：
+AgentRel 的价值对项目方在于：**精准触达正在写 Web3 代码的开发者**（不是在刷推特的人）。
+一个开发者正在写 Monad 合约的时候，Agent 给他推送「Monad Foundation Q2 Grant 正在申请」，转化率远高于普通 Twitter 推文。
+
+这个价值等 Phase 2 任务接入后用数据验证。
+
