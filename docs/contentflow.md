@@ -203,3 +203,132 @@ CREATE TABLE datasource_submissions (
 | 方向影响创作深度？ | 中层：prompt 注入受众上下文 |
 | 工具页文案何时改？ | Phase 2，方向功能上线后一并改 |
 | 用户激活引导时机？ | 首次登录后立即引导弹窗 |
+
+---
+
+## 新增需求：管理员后台 - 用户使用统计
+
+### 功能描述
+管理员可在后台查看用户的 AI 使用记录，包括使用的模型、生成的内容、token 消耗等。
+
+### 数据表设计
+
+```sql
+-- 使用记录表
+CREATE TABLE IF NOT EXISTS usage_logs (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid REFERENCES auth.users(id) NOT NULL,
+  model text NOT NULL,                    -- 使用的 AI 模型
+  platform text,                          -- 生成平台（小红书/公众号/Twitter/即刻）
+  prompt_length integer,                  -- prompt 长度
+  output_length integer,                  -- 输出长度
+  tokens_used integer,                    -- 消耗的 token 数
+  generation_time_ms integer,             -- 生成耗时（毫秒）
+  status text DEFAULT 'success',          -- success / error / timeout
+  error_message text,                     -- 错误信息（如果失败）
+  created_at timestamptz DEFAULT now()
+);
+
+-- 索引
+CREATE INDEX idx_usage_logs_user_id ON usage_logs(user_id);
+CREATE INDEX idx_usage_logs_created_at ON usage_logs(created_at);
+CREATE INDEX idx_usage_logs_model ON usage_logs(model);
+
+-- 权限
+GRANT ALL ON usage_logs TO anon, authenticated, service_role;
+```
+
+### 后台页面
+
+**路径：** `/admin/usage`
+
+**功能：**
+- 查看所有用户的使用记录列表
+- 按用户筛选
+- 按模型筛选
+- 按时间范围筛选
+- 统计汇总（总 token 数、总生成次数、平均耗时）
+- 导出 CSV
+
+### 记录时机
+
+在 `/api/generate` 调用 AI 生成内容时记录：
+- 请求前记录：user_id、model、platform、prompt_length
+- 请求后记录：output_length、tokens_used、generation_time_ms、status
+
+### 统计指标
+
+| 指标 | 说明 |
+|------|------|
+| 总生成次数 | 所有用户的生成总次数 |
+| 总 token 消耗 | 累计消耗的 token 数 |
+| 平均生成时间 | 单次生成的平均耗时 |
+| 热门模型 | 使用频率最高的模型 |
+| 活跃用户 | 生成次数最多的用户 |
+
+
+---
+
+## 管理员后台入口设计
+
+### 需求背景
+管理员需要统一的后台入口，集中管理所有功能。
+
+### NavBar 调整
+
+**普通用户看到：**
+- Logo + 核心导航（素材库、内容生成、数据源、工具箱）
+- 用户头像/名称（下拉菜单）
+  - 个人设置
+  - 退出登录
+
+**管理员额外看到：**
+- 用户头像/名称（下拉菜单）
+  - 个人设置
+  - ⚙️ **后台管理** ← 新增
+  - 退出登录
+
+### 后台管理菜单
+
+点击"后台管理"进入 `/admin`，显示侧边栏导航：
+
+```
+┌─────────────────────────────────────┐
+│  ⚡ ContentFlow        [退出]       │
+├──────────┬──────────────────────────┤
+│  后台管理 │                          │
+│  ─────────┤   页面内容区域            │
+│  📋 数据源审核│                          │
+│  📊 使用统计  │                          │
+│  🎟️ 邀请码   │                          │
+│  ⚙️ 系统设置  │                          │
+└──────────┴──────────────────────────┘
+```
+
+### 后台页面路由
+
+| 路径 | 功能 | 说明 |
+|------|------|------|
+| `/admin` | 后台首页 | 默认跳转到数据源审核 |
+| `/admin/datasources` | 数据源审核 | 审核用户提交的数据源 |
+| `/admin/usage` | 使用统计 | 查看用户 AI 使用记录 |
+| `/admin/invite-codes` | 邀请码管理 | 生成、查看邀请码 |
+| `/admin/settings` | 系统设置 | 全局配置 |
+
+### 权限控制
+
+```typescript
+// 仅 admin 角色可访问
+const isAdmin = user?.role === 'admin'
+if (!isAdmin) {
+  redirect('/')
+}
+```
+
+### 设计要点
+
+1. **统一布局** - 所有后台页面共用侧边栏
+2. **面包屑导航** - 显示当前位置
+3. **快捷操作** - 常用功能置顶
+4. **响应式** - 移动端侧边栏可收起
+
