@@ -6,7 +6,7 @@
 **Requested Amount:** $100,000 USD  
 **Grant Type:** Ecosystem Development  
 **Timeline:** May 2025 – November 2025 (6 months)  
-**Deployment Target:** Ethereum Mainnet / Base  
+**Deployment Target:** Ethereum Mainnet
 
 ---
 
@@ -115,7 +115,7 @@ We are the implementation layer for a mechanism none of the above provides.
 
 ### 4.1 SPARK Pledge Registry (On-Chain)
 
-A smart contract deployed on Ethereum (with a Base L2 mirror for gas efficiency) that:
+A smart contract deployed on Ethereum Mainnet that:
 
 - Records each project's Pledge adoption as an on-chain attestation (using EAS — Ethereum Attestation Service)
 - Stores dynamic pledge parameters (default: 4% + 1%, adjustable per project within bounds)
@@ -217,7 +217,7 @@ Grace period: 3 years from commercialization trigger, obligations accrue from Da
 
 To maintain focus and credibility:
 
-- **Not building a blockchain or L2** — deploying on Ethereum/Base
+- **Not building a blockchain or L2** — deploying on Ethereum Mainnet
 - **Not auditing project revenues** — self-reporting + community accountability
 - **Not replacing Gitcoin or RetroPGF** — complementary, not competitive
 - **Not restricting to Web3 projects** — open to any open-source project
@@ -248,7 +248,7 @@ To maintain focus and credibility:
 - Begin Cohort 1 recruitment via OpenBuild network
 
 ### Month 3–4 (July–August 2025): Core Build
-- Mainnet / Base deployment of Registry contract
+- Ethereum Mainnet deployment of Registry contract
 - Dependency Funnel v0.1 (npm + PyPI ecosystems first)
 - Compliance Dashboard v0.1 live
 - Cohort 1: 10+ projects onboarded and pledged
@@ -271,7 +271,7 @@ To maintain focus and credibility:
 | SPARK Reports submitted | 15+ |
 | Dependency Funnel: projects mapped | 100+ upstream dependencies identified |
 | Funding pool seeded | $20,000+ (EF grant allocation + community donations) |
-| Smart contracts deployed & verified | Ethereum mainnet + Base |
+| Smart contracts deployed & verified | Ethereum Mainnet |
 | Public dashboard live | Yes |
 | SPARK Reports including AI-era health data | 80% of submitting projects |
 | Dependency Funnel: average project longevity score | > 3 years |
@@ -300,11 +300,11 @@ If even 3 of the 20 Cohort 1 projects reach commercial scale and honor their 4% 
 
 ## 11. Team
 
-**Richard Lin** — Co-founder, OpenSeed. Founder of OpenBuild, which has grown to [X] registered developers and facilitated [X] projects in the Ethereum ecosystem. Deep experience in open-source community operations across China.
+**Richard Lin (林旅强)** — Co-founder, OpenSeed. President of KAIYUANSHE (China's Open Source Society, est. 2014), China's leading vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Under his leadership, KAIYUANSHE has grown to thousands of members and volunteers, produced the annual China Open Source Report, and organized COSCon — China's most influential open-source conference. Founder of OpenBuild, a developer onboarding and education platform that has onboarded thousands of developers into the Web3/Ethereum ecosystem through courses, hackathons, and bounties.
 
-**Ian Xu** — Co-founder, OpenSeed. [Background]. Member of the SPARK working group Signal channel since April 2025.
+**Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE (2026). Builder and product engineer with a background spanning open-source community infrastructure, Web3 product development, and developer tooling. Member of the SPARK working group Signal channel since April 2025.
 
-**Advisors / Working Group:** Vitalik Buterin (SPARK mechanism co-designer), [other Signal group members as appropriate]
+**Advisors / Working Group:** Vitalik Buterin (SPARK mechanism co-designer), Liraz Siri (open-source and blockchain developer, long-term Ethereum ecosystem contributor), Mario Behling (founder of FOSSASIA, open-source community builder across Asia), Richard Lin, QZ, and other members of the SPARK Signal working group.
 
 ---
 
