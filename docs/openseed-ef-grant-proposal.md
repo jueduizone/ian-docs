@@ -1,4 +1,4 @@
-# OpenSeed: Building the Implementation Infrastructure for the SPARK Pledge
+# OpenSeed: Building the Infrastructure That Lets SPARK Actually Work
 ## Ethereum Foundation Grant Application
 
 **Applicant:** OpenSeed  
@@ -10,31 +10,41 @@
 
 ---
 
-## 1. Executive Summary
+## 1. The Short Version
 
-The SPARK Pledge is a recursive open-source funding framework co-developed with Vitalik Buterin and the SPARK working group. Today it exists only as a draft document circulating in a private Signal group. No implementation infrastructure exists. No project has formally adopted it.
+There is a framework sitting in a private Signal group right now — co-designed with Vitalik Buterin, thoughtfully built, ready to change how open-source software gets funded. It is called the SPARK Pledge. And it is completely inert, because no one has built the infrastructure to run it.
 
-OpenSeed is applying for $100,000 to build that infrastructure: an on-chain Pledge Registry, a Dependency Funding Funnel, a Compliance Dashboard, and a verified pilot cohort of open-source projects from the Chinese-speaking developer community. This grant funds the first real-world test of SPARK's recursive model. The infrastructure we build will be open, permissionless, and replicable globally.
+OpenSeed is asking for $100,000 to change that.
+
+We will build an on-chain Pledge Registry, a Dependency Funding Funnel that routes money to the projects that built the foundation others stand on, a public Compliance Dashboard, and a verified first cohort of real open-source projects — drawn from the Chinese-speaking developer community, a part of the world that has been building on Ethereum for years and receiving far less than its fair share of attention from existing funding mechanisms.
+
+This grant is not about studying the problem. It is about building the thing.
 
 ---
 
-## 2. Problem
+## 2. What We're Actually Trying to Fix
 
-### 2.1 Open Source Funding Is Broken
+### 2.1 The Commons Problem
 
-Open source software underlies every layer of the Ethereum ecosystem: wallets, clients, developer tooling, libraries, and protocols. The funding model for that software has not kept pace:
+Every wallet, client, library, and developer tool in the Ethereum ecosystem runs on open-source software. Most of that software is maintained by people who are either volunteers, underpaid, or waiting on grants that may or may not renew next year.
 
-Most grants are one-off with no continuity. Projects that succeed commercially rarely reinvest into the commons they depended on. Critical infrastructure is maintained by underpaid or volunteer contributors. Existing mechanisms — Gitcoin Grants, RetroPGF, Protocol Guild — address parts of the problem but leave significant gaps, particularly for non-token projects, non-English-speaking communities, and the recursive dependency layer.
+The projects that commercially succeed — the ones that built on these foundations and turned them into businesses — rarely send anything back. Not because they are bad actors, but because there was never a mechanism that expected them to. The commons built them up, and then the relationship ended there.
 
-### 2.2 What SPARK Proposes
+Gitcoin Grants, Optimism RetroPGF, and Protocol Guild each do something real. None of them solve the recursive dependency layer, none of them have strong reach into non-English-speaking communities, and none of them make a forward commitment — a promise, at the beginning of a project's life, to share the upside when it comes.
 
-SPARK (Scaling Public Alignment with Recursive Kindling) is a pledge framework designed by Vitalik Buterin and a small working group. Its core mechanism:
+### 2.2 What SPARK Actually Says
 
-Projects adopting the SPARK Pledge commit 4% of future economic upside to fund other SPARK-aligned projects. The mechanism is recursive: recipients must also adopt the Pledge. Projects additionally commit 1% to fund their direct open-source dependencies. A 3-year grace period allows early-stage projects to defer obligations until commercially viable. Obligations are tiered by revenue stage, not binary.
+SPARK — Scaling Public Alignment with Recursive Kindling — starts from a simple premise: if you built your success on the open commons, you owe the commons something back.
 
-The Pledge specification has been drafted and reviewed within the working group. What does not yet exist is any infrastructure to register projects, track compliance, route funds, or resolve dependency graphs.
+The mechanism: when a project adopts the SPARK Pledge, it commits to directing 4% of its future economic upside toward other SPARK-aligned projects. The recipients of that funding make the same commitment. The 4% flows forward, not once, but recursively. Separately, each project commits 1% specifically to the open-source projects it directly depends on — money flowing back to the actual code that made their product possible.
 
-### 2.3 The Infrastructure Gap
+Early-stage projects are not asked to bleed. There is a three-year grace period from commercialization, and obligations are tiered by revenue rather than triggered the moment a dollar comes in.
+
+The framework is designed. The specification has been reviewed within the working group. What does not exist — at all — is the infrastructure to make any of this real.
+
+No on-chain registry. No dependency graph resolver. No compliance tracking. No projects formally inside the system. A beautifully designed machine with no moving parts yet.
+
+### 2.3 The Gap Is Not Conceptual
 
 | Layer | Status |
 |-------|--------|
@@ -45,17 +55,17 @@ The Pledge specification has been drafted and reviewed within the working group.
 | Verified pilot projects | ❌ Does not exist |
 | Chinese-speaking community bridge | ❌ Does not exist |
 
-OpenSeed builds all of the missing layers.
+Every missing row is something OpenSeed is building.
 
-### 2.4 Why This Matters Now
+### 2.4 Why AI Makes This More Urgent, Not Less
 
-The rise of AI coding tools has introduced a structural shift that makes the open-source sustainability problem more urgent. A July 2025 randomized controlled study by METR found that AI tools increased task completion time by 19% for experienced developers working on complex, established codebases. The cost of understanding, verifying, and correcting AI output exceeded the generation savings.
+There is a trend worth naming directly. AI coding tools were supposed to make open source more productive. In some contexts, they have. But a July 2025 randomized controlled study by METR found that for experienced developers working on complex, established codebases, AI tools increased task completion time by 19%. The cost of understanding, verifying, and correcting AI output turned out to exceed the gains from generating it faster.
 
-Meanwhile, AI tools have flooded open-source repositories with low-quality pull requests. By early 2026, projects like curl, ghostty, and tldraw had closed or severely restricted external contributions. AI lowers the barrier to contributing code but does not lower the cost of reviewing it. Maintainers are shifting from builders to gatekeepers.
+At the same time, AI tools have flooded repositories with low-quality pull requests. By early 2026, projects like curl, ghostty, and tldraw had restricted or closed external contributions entirely. Maintainers were spending more time filtering noise than building things.
 
-This changes what open-source value means. Code production is increasingly commoditized. What becomes scarce is long-term maintenance commitment, architectural judgment, community trust, and the human judgment that determines what code should exist at all. These are exactly the things SPARK is designed to sustain.
+What this shift reveals is something that was always true but is becoming undeniable: the hard part of open source was never writing the code. It was the years of maintenance commitment, the architectural judgment built up over time, the community trust that makes people actually adopt something. These are the things AI cannot replicate. These are exactly the things SPARK is designed to sustain.
 
-It also changes how open-source value should be measured. Existing metrics — lines of code, commit counts, PR volume — are becoming noise. OpenSeed's Dependency Funnel is built around signals that AI cannot fabricate: project longevity, real dependency depth, and maintainer continuity.
+The old metrics — lines of code, commit frequency, PR volume — are becoming meaningless in a world where AI can generate all of them. OpenSeed's Dependency Funnel was built from the start around signals that cannot be faked: how long a project has existed, how many real downstream dependents it has, how continuously a small group of humans has shown up for it.
 
 ---
 
@@ -63,67 +73,65 @@ It also changes how open-source value should be measured. Existing metrics — l
 
 ### 3.1 SPARK Pledge Registry
 
-A smart contract deployed on Ethereum Mainnet that records each project's Pledge adoption as an on-chain attestation using EAS (Ethereum Attestation Service). The Registry stores dynamic pledge parameters, tracks commercialization trigger events, manages grace period timers, and provides a public, permissionless read interface.
+A smart contract on Ethereum Mainnet that turns a promise into a provable, on-chain fact. Each project's Pledge adoption is recorded as an attestation via EAS (Ethereum Attestation Service). The Registry tracks commercialization triggers, manages grace period timers, and exposes a public, permissionless read interface — so anyone can verify, not just trust.
 
-For token-issuing projects, the Registry integrates with TGE contracts to automatically escrow 4% of token supply at issuance. No manual action is required after Pledge adoption.
+For projects launching tokens: the Registry integrates directly with TGE contracts to automatically escrow 4% of supply at issuance. The Pledge is honored without any further manual action required.
 
-For non-token projects, Pledge adoption is recorded on-chain, with obligations fulfilled via annual self-reporting and transfers to the SPARK funding pool.
+For non-token projects: adoption is recorded on-chain, with obligations fulfilled through annual self-reporting and direct transfers to the SPARK funding pool.
 
 ### 3.2 Dependency Funding Funnel
 
-The 1% dependency allocation requires knowing which upstream projects a given project depends on and how to weight them.
+The 1% dependency allocation is only meaningful if you can actually trace what a project depends on and decide how to weight it.
 
 **Dependency Graph Resolution**
 
-The Funnel integrates with Google's deps.dev API, covering npm, PyPI, Maven, Go, and Cargo. It resolves transitive dependencies recursively and maps GitHub repositories to on-chain identities via EAS.
+The Funnel integrates with Google's deps.dev API across npm, PyPI, Maven, Go, and Cargo. It resolves transitive dependencies recursively — not just the packages listed in a manifest, but the packages those packages depend on — and maps GitHub repositories to on-chain identities via EAS.
 
 **Allocation Algorithm**
 
-Traditional metrics like lines of code are no longer reliable signals of open-source value. The Funnel uses five AI-resistant weight dimensions:
+The Funnel weights upstream projects on five dimensions, each chosen specifically because AI cannot fabricate them:
 
-- Longevity (25%): Years the project has been actively maintained. AI can clone a library overnight; it cannot fake five years of maintenance history.
-- Real Usage Depth (30%): Number of downstream projects that actually depend on this package — not stars, but dependents. Source: deps.dev.
-- Maintainer Continuity (25%): How long the top contributors have been continuously active. Measures human long-term commitment.
-- Issue Responsiveness (10%): Average issue close time and close rate over 12 months. A proxy for maintainer judgment quality.
-- Dependency Depth Decay (10%): Direct dependencies weighted higher than transitive ones.
+- Longevity (25%): Years of continuous active maintenance. AI can clone a library overnight. It cannot fake five years of commit history.
+- Real Usage Depth (30%): Downstream dependents that actually use the package, drawn from deps.dev. Not stars. Not forks. Real usage.
+- Maintainer Continuity (25%): How long the core contributors have stayed. Human long-term commitment is the signal.
+- Issue Responsiveness (10%): Close rate and average close time over 12 months. A proxy for whether the maintainers are actually present and making judgments.
+- Dependency Depth Decay (10%): Direct dependencies receive higher weight than transitive ones.
 
-All dimensions are normalized to 0–1 before weighting. The algorithm is fully open-source and upgradeable via OpenSeed multi-sig governance, with an on-chain record of every change. Projects registered in the SPARK Registry receive a 1.2× weight bonus to incentivize Pledge propagation through the dependency graph.
+All dimensions normalize to 0–1 before weighting. The algorithm is fully open-source, upgradeable only through OpenSeed multi-sig governance, with every change recorded on-chain. Projects that have joined the SPARK Registry receive a 1.2× bonus weight — an incentive for the Pledge to propagate through the dependency graph rather than stop with any single project.
 
 **Distribution Execution**
 
-For projects with on-chain identity: direct on-chain transfer. For projects without: funds are held in escrow until claimed, or returned to the SPARK pool after 12 months unclaimed.
+Projects with on-chain identity receive funds directly. Projects without are held in escrow — available to claim, or returned to the SPARK pool after 12 months unclaimed.
 
 ### 3.3 Compliance Dashboard
 
-A public web interface showing all registered SPARK Pledge projects and their current status, commercialization trigger status and grace period countdown, annual SPARK Report submissions, fund flow transparency, and dependency funnel allocation records.
+A public interface where anyone can look up any registered project and see exactly where they stand: current Pledge status, commercialization trigger history, grace period countdown, annual SPARK Report submissions, and dependency funnel allocation records.
 
-Any stakeholder — funders, community members, downstream projects — can verify compliance without requiring trust in OpenSeed as an intermediary.
+The goal is that no one has to take OpenSeed's word for anything. The data is on-chain. The dashboard surfaces it. Trust is not required.
 
 ### 3.4 SPARK Funding Pool
 
-A multi-sig treasury that receives initial seed funding from this EF grant and community donations, receives 4% recursive contributions from commercialized projects, and allocates to new SPARK Pledge projects via a review process. OpenSeed operates as the initial steward, with plans to decentralize governance in Phase 2.
+A multi-sig treasury that receives this EF grant as seed funding, then grows through 4% recursive contributions as Cohort 1 projects commercialize, and allocates to new SPARK Pledge projects through a review process. OpenSeed manages it in Phase 1. Governance moves on-chain in Phase 2.
 
-### 3.5 Chinese-Speaking Community Pilot (Cohort 1)
+### 3.5 Cohort 1: Chinese-Speaking Community Pilot
 
-Using OpenBuild's developer network, we recruit and onboard an initial cohort of 10–20 open-source projects from the Chinese-speaking community. Projects span Web3 tooling, developer infrastructure, AI tooling, and general open-source software. The cohort is not restricted to Ethereum-native projects.
+Using OpenBuild's developer network, we are recruiting 10 to 20 open-source projects from the Chinese-speaking developer community for the first SPARK cohort. The scope is intentionally broad: Web3 tooling, developer infrastructure, AI tooling, and general open-source software. Projects do not need to be Ethereum-native to qualify.
 
-Each project receives Pledge onboarding support, technical integration assistance, visibility within the SPARK Registry, and eligibility for funding from the SPARK pool.
+Each project in Cohort 1 receives hands-on Pledge onboarding support, technical integration help, visibility within the SPARK Registry, and eligibility to apply for SPARK pool funding.
 
-**Cohort 1 Screening Criteria**
+**How we select projects**
 
-Project selection requires affirmative answers to three questions:
+Three questions. All three need a yes.
 
-1. Does the project have identifiable long-term maintainers with multi-year contribution history?
-2. Is the project's core value rooted in judgment and ecosystem position, rather than purely functional code that AI could replicate?
-3. Has the project's maintenance burden held steady or increased with AI tool adoption — evidence of real human maintenance work?
+1. Does the project have identifiable long-term maintainers — people with multi-year contribution histories, not one-time contributors?
+2. Is the project's core value built on judgment and ecosystem position, or is it purely functional code that AI could replicate in a few months?
+3. Has the maintenance burden held steady or increased since AI tools became widespread — evidence that real human work is still happening?
 
-These criteria select for projects whose value survives and becomes more important in an AI-saturated environment.
+We are looking for projects whose value goes up in an AI-saturated environment, not down.
 
 ---
 
-## 4. Obligation Structure
-
-To protect early-stage projects while ensuring eventual contribution:
+## 4. The Obligation Structure
 
 | Annual Revenue | SPARK Obligation |
 |----------------|-----------------|
@@ -132,40 +140,42 @@ To protect early-stage projects while ensuring eventual contribution:
 | $500K to $5M | 4% (standard rate) |
 | Above $5M | 4% plus governance participation |
 
-Token projects: 4% escrowed at TGE regardless of revenue stage. Tokens represent future upside, not current revenue.
+Token projects: 4% escrowed at TGE regardless of revenue. Tokens represent future upside, not current revenue.
 
-Grace period: 3 years from commercialization trigger. Obligations accrue from Day 1 and must be settled in full by end of Year 3.
+Grace period: 3 years from commercialization trigger. Obligations accrue from Day 1 and must be settled in full by end of Year 3. The mechanism is designed so that a project that genuinely never makes money never owes anything, and a project that does well cannot quietly avoid contributing.
 
 ---
 
-## 5. Why OpenSeed
+## 5. Why OpenSeed Is the Right Team to Do This
 
-### 5.1 Community Roots
+### 5.1 We Have Real Community
 
-OpenSeed was founded by the teams behind OpenBuild, KAIYUANSHE (China's largest open-source alliance), PyChina, and RustCC. These organizations collectively represent hundreds of thousands of developers across China, Taiwan, Hong Kong, and the broader Chinese-speaking diaspora.
+OpenSeed was founded by the teams behind OpenBuild, KAIYUANSHE (China's largest vendor-neutral open-source community and the first Chinese member of the Open Source Initiative), PyChina, and RustCC. Collectively, these organizations represent hundreds of thousands of developers across China, Taiwan, Hong Kong, and the Chinese-speaking diaspora.
 
-OpenBuild has onboarded thousands of developers into the Ethereum ecosystem through developer education, hackathons, and project incubation. This existing trust network is the distribution channel for SPARK adoption in Phase 1.
+OpenBuild has brought thousands of developers into the Ethereum ecosystem through education, hackathons, and project incubation. The network already exists. The trust is already there. SPARK adoption in Phase 1 does not require cold outreach — it requires a conversation with people we have been building with for years.
 
-### 5.2 Direct Involvement in SPARK Design
+### 5.2 We Were in the Room
 
-The OpenSeed team has been part of the Signal group initiated by Vitalik Buterin since April 2025, participating directly in the mechanism design discussions that produced the current SPARK Pledge draft. We are building on direct design knowledge, not a secondhand interpretation.
+The OpenSeed team joined the Signal group initiated by Vitalik Buterin in April 2025 and participated directly in the mechanism design discussions that produced the current SPARK Pledge specification. We are not interpreting a document from the outside. We helped shape it.
 
-### 5.3 Relationship to the SPARK Working Group
+### 5.3 We Are Builders, Not Owners
 
-We view our role as threefold: the first and primary implementation of the SPARK Pledge infrastructure; a feedback loop back to the working group, where our pilot data informs mechanism refinement; and a steward rather than an owner. The SPARK Pledge specification is open. Any organization can implement it. We are building the reference implementation.
+We are clear about what we are and are not. We are the first implementation of SPARK Pledge infrastructure. We are a feedback channel back to the working group, where pilot data informs mechanism refinement. We are stewards of the initial pool, transitioning to on-chain governance as quickly as is responsible.
 
-### 5.4 Complementary to Existing Mechanisms
+We are not claiming any ownership of SPARK. The specification is open. Anyone can implement it. We are building the reference implementation, and we intend to make it good enough that it sets a useful precedent.
 
-| Mechanism | Funding Source | Recursive | Scope |
-|-----------|---------------|-----------|-------|
-| Gitcoin QF | Community donations | No | Web3, English-first |
-| Optimism RetroPGF | OP token inflation | No | Optimism ecosystem |
-| Protocol Guild | Project donations | No | Ethereum core devs only |
-| Drips Network | Any donor | Partial | Any, manual config |
-| Open Source Pledge | Company budgets | No | Any, voluntary |
-| SPARK / OpenSeed | Upside % pledge | Yes | Any open source, global |
+### 5.4 What Makes This Different from Existing Mechanisms
 
-OpenSeed is the implementation layer for a mechanism none of the above provides.
+| Mechanism | Funding Source | Recursive | Chain-enforced | Scope |
+|-----------|---------------|-----------|----------------|-------|
+| Gitcoin QF | Community donations | No | No | Web3, English-first |
+| Optimism RetroPGF | OP token inflation | No (retroactive) | Partial | Optimism ecosystem |
+| Protocol Guild | Project donations | No | Vesting contract | ETH core devs only |
+| Drips Network | Any donor | Partial (splits) | Yes (EVM) | Any, manual config |
+| Open Source Pledge | Company budgets | No | No | Any, voluntary |
+| **SPARK / OpenSeed** | **Upside % pledge** | **Yes (by design)** | **Yes (token) + soft (revenue)** | **Any open source, global** |
+
+The existing mechanisms are doing real work. None of them provide what SPARK provides: a forward commitment, built into a project's structure from the start, that grows with the project and propagates recursively through the ecosystem.
 
 ---
 
@@ -185,18 +195,18 @@ OpenSeed is the implementation layer for a mechanism none of the above provides.
 
 ### Timeline
 
-**Month 1–2 (May–June 2025): Foundation**
-Finalize smart contract architecture. Deploy SPARK Pledge Registry v0.1 to testnet. Launch Pledge onboarding website. Begin Cohort 1 recruitment via OpenBuild network.
+**Month 1–2 (May–June): Foundation**  
+Finalize smart contract architecture. Deploy SPARK Pledge Registry v0.1 to testnet. Launch Pledge onboarding site. Begin Cohort 1 recruitment.
 
-**Month 3–4 (July–August 2025): Core Build**
-Ethereum Mainnet deployment of Registry contract. Dependency Funnel v0.1 covering npm and PyPI ecosystems. Compliance Dashboard v0.1 live. Cohort 1: 10+ projects onboarded and pledged.
+**Month 3–4 (July–August): Build**  
+Mainnet deployment of Registry contract. Dependency Funnel v0.1 live across npm and PyPI. Compliance Dashboard v0.1 up. Cohort 1: 10+ projects onboarded and pledged.
 
-**Month 5–6 (September–November 2025): Pilot and Validation**
-First SPARK Report cycle from Cohort 1 projects. Dependency Funnel processing first allocations. Public launch open to global projects. Grant completion report to EF with full metrics.
+**Month 5–6 (September–November): Validate**  
+First SPARK Report cycle from Cohort 1. Dependency Funnel processing first real allocations. Open registration to global projects. Full grant completion report to EF with all metrics.
 
 ---
 
-## 7. Success Metrics
+## 7. What We're Measuring
 
 | Metric | Target (6 months) |
 |--------|-------------------|
@@ -212,23 +222,23 @@ First SPARK Report cycle from Cohort 1 projects. Dependency Funnel processing fi
 
 ---
 
-## 8. Long-Term Vision
+## 8. What Comes After
 
-This grant funds the infrastructure build and pilot validation. The path to self-sustainability runs through the recursive mechanism itself: as Cohort 1 projects commercialize, 4% flows back into the SPARK pool. If even three of the twenty Cohort 1 projects reach commercial scale and honor their pledge, the pool becomes self-replenishing without further grants. That is the ultimate validation of the mechanism.
+Six months of infrastructure work and pilot validation is the beginning, not the end. The sustainability argument is built into the mechanism: as Cohort 1 projects commercialize over the next two to five years, their 4% commitments flow back into the SPARK pool. If three of twenty Cohort 1 projects reach commercial scale and honor their pledge, the pool becomes self-replenishing. That outcome — not this grant, but what the grant enables — is the real proof of concept.
 
-OpenSeed generates operational revenue through optional premium Registry services, ecosystem partnerships, and grant support facilitation. The on-chain infrastructure is permissionless and can outlive OpenSeed as an organization.
+OpenSeed as an organization generates operational revenue through optional premium Registry services and ecosystem partnerships. But the on-chain infrastructure is permissionless and designed to outlive us. If OpenSeed disappears tomorrow, the contracts keep running.
 
-In Phase 2 (2026), we expand the cohort to 100+ projects globally, integrate with Gitcoin Grants and RetroPGF as a complementary compliance layer, transition SPARK pool governance to on-chain DAO, and publish open-source tooling for other ecosystems to fork and deploy their own SPARK implementations.
+Phase 2, starting in 2026: 100+ projects globally, integration with Gitcoin and RetroPGF as a complementary compliance layer, SPARK pool governance transitioning to an on-chain DAO, and open tooling for other ecosystems to fork and deploy their own SPARK implementations. The goal was never for this to be one team's project.
 
-All infrastructure built with this grant will be open-sourced under MIT license: smart contracts verified on GitHub and Etherscan, the Dependency Funnel algorithm fully open and auditable, the dashboard frontend open-source, and SPARK Pledge tooling forkable by any ecosystem.
+Everything built with this grant will be MIT-licensed and fully open: contracts verified on GitHub and Etherscan, the Funnel algorithm auditable, the dashboard frontend open-source, the tooling forkable by anyone.
 
 ---
 
 ## 9. Team
 
-**Richard Lin (林旅强)** — Co-founder, OpenSeed. Co-founder of KAIYUANSHE, China's leading vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Open Source Ecosystem Lead at Datastrato.ai. Previously Head of Developer Ecosystem at Huawei Cloud and 01.AI. Long-term participant in Apache, Linux Foundation, and OSI communities.
+**Richard Lin (林旅强)** — Co-founder, OpenSeed. Co-founder of KAIYUANSHE, China's largest vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Open Source Ecosystem Lead at Datastrato.ai. Previously Head of Developer Ecosystem at Huawei Cloud and 01.AI. Long-term participant in Apache, Linux Foundation, and OSI international communities.
 
-**Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Organizer of RustCC and PyChina communities. Member of the SPARK working group Signal channel since April 2025.
+**Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Organizer of RustCC and PyChina. Member of the SPARK working group Signal channel since April 2025.
 
 **SPARK Working Group:** Vitalik Buterin (mechanism co-designer), Liraz Siri, Mario Behling, Richard Lin, QZ, and other members of the original SPARK Signal group.
 
