@@ -3,10 +3,13 @@
 
 **Applicant:** OpenSeed  
 **Co-founders:** Richard Lin, Ian Xu  
+
+<!--
 **Requested Amount:** $100,000 USD  
 **Grant Type:** Ecosystem Development  
 **Timeline:** May 2025 – November 2025 (6 months)  
 **Deployment Target:** Ethereum Mainnet
+-->
 
 ---
 
@@ -233,6 +236,7 @@ To maintain focus and credibility:
 
 ---
 
+<!--
 ## 7. Budget Breakdown
 
 | Category | Amount | Notes |
@@ -246,6 +250,7 @@ To maintain focus and credibility:
 | **Total** | **$100,000** | |
 
 ---
+-->
 
 ## 8. Timeline
 
