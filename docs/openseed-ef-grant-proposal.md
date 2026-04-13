@@ -172,7 +172,7 @@ A public web interface showing:
 - Fund flow transparency (who funded whom, amounts, dates)
 - Dependency funnel allocation records
 
-Any stakeholder — funders, community members, downstream projects — can verify compliance without requiring trust in OpenSeed as an intermediary.
+This is the trust layer. Any stakeholder — funders, community members, downstream projects — can verify compliance without requiring trust in OpenSeed as an intermediary.
 
 ### 4.4 SPARK Funding Pool
 
