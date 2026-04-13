@@ -286,16 +286,17 @@ AI coding tools have introduced a structurally new problem: when a developer use
 
 **Mechanism 1: SPARK Metadata Standard**
 
-Every SPARK-licensed project maintains two declaration files, each targeting a different reader:
+Every SPARK-licensed project places a `SPARK.md` file in the repository root — a natural-language declaration for AI agents, stating project identity, license type, and AI usage disclosure requirements. Tools like Cursor, GitHub Copilot, Continue, and Sourcegraph feed `.md` files as context when indexing repositories. `SPARK.md` lets the agent understand and follow disclosure requirements without relying on any programmatic parsing protocol.
 
-- **`.well-known/spark.json`**: Machine-readable format for programmatic parsing. Declares project identity, registry address, license version, and AI usage disclosure requirements.
-- **`SPARK.md`**: Natural language format for AI agents to read directly. Tools like Cursor, GitHub Copilot, Continue, and Sourcegraph feed `.md` files as context when indexing repositories — `SPARK.md` lets the agent understand and follow disclosure requirements, not just parse structured fields.
-
-Both coexist: `spark.json` for programs, `SPARK.md` for agents. When an AI tool references a SPARK-licensed project during code generation, it can surface a disclosure notice, log an anonymized usage event to the Registry, and include an attribution comment in generated code.
+When an AI tool references a SPARK-licensed project during code generation, it can surface a disclosure notice, log an anonymized usage event to the Registry, and include an attribution comment in generated code.
 
 **SPARK Metadata Standard as a standalone initiative**
 
-The `.well-known/spark.json` + `SPARK.md` dual-file spec is designed to exist as an open standard independent of the SPARK License — any open source project can add these two files without adopting SPARK License, simply declaring "this project exists; please attribute when AI tools reference it." This follows the path of `security.txt` (RFC 9116): community convention first, formal standard later. OpenSeed drives adoption of the spec independent of the license; once it becomes common practice, the disclosed dependency data feeds back as input to Funnel weight calculations.
+The `SPARK.md` spec is designed to exist as an open standard independent of the SPARK License — any open source project can place this file without adopting SPARK License, simply declaring "this project exists; please attribute when AI tools reference it." The adoption bar is as low as `robots.txt`: drop a file, declare an intent.
+
+The precedent is `security.txt`. In 2017, two security researchers proposed a simple idea: place a plain-text file at `/.well-known/security.txt` telling security researchers where to report vulnerabilities. No complex protocol, no standards body, just a convention. It spread quickly — Google, GitHub, and Facebook adopted it — and in 2022 it was published by the IETF as RFC 9116, a formal internet standard.
+
+`SPARK.md` follows the same path. OpenSeed drives adoption of this spec under the name **SPARK Agent Disclosure Standard**, independent of the SPARK License adoption curve. Once it becomes common practice, the disclosed dependency data feeds back as input to Dependency Funnel weight calculations, closing the loop between AI usage and open source funding.
 
 **Mechanism 2: Declarative AI Dependency Reporting**
 

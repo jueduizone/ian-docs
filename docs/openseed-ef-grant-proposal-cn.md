@@ -288,16 +288,17 @@ SPARK License 中的商业义务条款在设计上具备法律可执行性，司
 
 #### 机制一：SPARK 元数据标准
 
-每个 SPARK 许可项目维护两个声明文件，面向不同的读取方：
+每个 SPARK 许可项目在仓库根目录放置一个 `SPARK.md` 文件——面向 AI Agent 的自然语言声明，标注项目身份、License 类型和 AI 使用披露要求。Cursor、GitHub Copilot、Continue、Sourcegraph 等工具在索引仓库时会将 `.md` 文件作为上下文直接喂给模型，`SPARK.md` 让 Agent 能够理解并遵循披露要求，而不依赖任何程序解析协议。
 
-- **`.well-known/spark.json`**：机器可读格式，供程序直接解析。标注 License 类型、Registry 地址、AI 使用披露要求和项目链上身份。
-- **`SPARK.md`**：自然语言格式，供 AI Agent 直接读取。Cursor、GitHub Copilot、Continue、Sourcegraph 等工具在索引仓库时会将 `.md` 文件作为上下文喂给模型，`SPARK.md` 让 Agent 能够理解并遵循披露要求，而不只是解析结构化字段。
-
-两者并存：`spark.json` 给程序读，`SPARK.md` 给 Agent 读。当 AI 工具在代码生成过程中引用 SPARK 许可项目时，它可以向开发者显示披露提示、向 SPARK Registry 记录匿名化使用事件，并在生成的代码中附上署名注释。
+当 AI 工具在代码生成过程中引用 SPARK 许可项目时，它可以向开发者显示披露提示、向 SPARK Registry 记录匿名化使用事件，并在生成的代码中附上署名注释。
 
 **SPARK 元数据标准作为独立倡议**
 
-`.well-known/spark.json` + `SPARK.md` 的双文件规范被设计为独立于 SPARK License 存在的开放标准——任何开源项目都可以放置这两个文件，无需采用 SPARK License，只需声明「本项目已存在，AI 工具使用时请注明」。这参考 `security.txt`（RFC 9116）的路径：先是社区倡议，后成为正式标准。OpenSeed 作为发起方推动该规范独立传播，形成行业惯例后，披露数据反向作为 Funnel 权重的输入。
+`SPARK.md` 规范被设计为独立于 SPARK License 存在的开放标准——任何开源项目都可以放置这个文件，无需采用 SPARK License，只需声明「本项目已存在，AI 工具使用时请注明」。采用门槛极低，类似于 `robots.txt` 的逻辑：放一个文件，声明一种意愿。
+
+先例是 `security.txt`。2017 年，两位安全研究员提出了一个简单想法：在 `/.well-known/security.txt` 放一个纯文本文件，告诉安全研究者该往哪里报告漏洞。没有复杂协议，没有标准组织背书，只是一个约定。这个约定扩散得很快，Google、GitHub、Facebook 相继采用，最终在 2022 年被 IETF 收录为 RFC 9116，成为正式互联网标准。
+
+`SPARK.md` 走同样的路。OpenSeed 作为发起方推动这个规范以 **SPARK Agent Disclosure Standard** 的名义独立传播，不依赖 SPARK License 的采用速度。一旦成为惯例，披露数据反向作为 Dependency Funnel 权重计算的输入，打通 AI 使用与开源资助之间的闭环。
 
 #### 机制二：声明式 AI 依赖申报
 
