@@ -12,9 +12,13 @@
 
 ## 1. Executive Summary
 
+Open source has always been sustained by something other than code: the long-term presence of maintainers, the trust built over years of consistent work, and the dependency relationships that quietly hold up entire ecosystems. These things were always what mattered. They were just hard to measure, so funding mechanisms ignored them.
+
+AI has made this impossible to ignore. When code generation becomes cheap, what remains scarce is exactly what was always valuable: projects that have survived for years, maintainers who have stayed, dependencies that thousands of real projects rely on. SPARK is not a response to the AI moment. It is a funding mechanism built around the signals that have always indicated real open-source value — and that AI cannot fake.
+
 The SPARK Pledge is a recursive open-source funding framework co-developed with Vitalik Buterin and the SPARK working group. It exists today only as a draft document circulating in a private Signal group. No implementation infrastructure exists. No project has formally adopted it. The mechanism cannot propagate on its own.
 
-OpenSeed is applying for $100,000 to build the infrastructure that turns SPARK from a concept into a working system: an on-chain Pledge Registry, a Dependency Funding Funnel, a compliance Dashboard, and a verified pilot cohort of open-source projects from the Chinese-speaking developer community. Chinese-speaking developers make up one of the largest developer populations in the world and are significantly underserved by existing Ethereum-ecosystem funding mechanisms. As AI commoditizes code production, OpenSeed's infrastructure is built to fund what AI cannot replace: the long-term human judgment, maintenance commitment, and ecosystem trust that make open source sustainable.
+OpenSeed is applying for $100,000 to build the infrastructure that turns SPARK from a concept into a working system: an on-chain Pledge Registry, a Dependency Funding Funnel, a compliance Dashboard, and a verified pilot cohort of open-source projects from the Chinese-speaking developer community. Chinese-speaking developers make up one of the largest developer populations in the world and are significantly underserved by existing Ethereum-ecosystem funding mechanisms.
 
 This grant funds the first real-world test of SPARK's recursive model. If it works, the infrastructure we build will be open, permissionless, and replicable globally.
 
@@ -60,7 +64,9 @@ OpenSeed builds all of the missing layers.
 
 ### 2.5 The AI Inflection Point: Why Open Source Funding Matters More Now
 
-AI coding tools (GitHub Copilot, Cursor, and the broader "vibe coding" movement) have introduced a structural shift that makes the open-source sustainability problem both more urgent and more complex.
+Open source value was never really about code volume. It was about projects that stayed alive, maintainers who kept showing up, and dependency relationships that quietly became load-bearing infrastructure for entire ecosystems. The problem was that these signals were difficult to measure systematically, so most funding mechanisms fell back on proxies: commit counts, star ratings, PR velocity.
+
+AI has broken those proxies entirely. It has also made the underlying truth harder to ignore.
 
 **Research findings:**
 
@@ -76,7 +82,9 @@ AI commoditizes code production. What becomes scarce is:
 - Community trust and ecosystem coordination
 - The human judgment that determines what code should exist at all
 
-SPARK is designed to sustain exactly these things. A mechanism that funds projects based on long-term existence and recursive value propagation, rather than one-off code metrics, fits this moment.
+These were always the things that mattered. AI has made them newly legible as scarce resources.
+
+SPARK is designed to fund exactly these. A mechanism that weights longevity, real dependency depth, and maintainer continuity is not a reaction to AI — it is what a well-designed open-source funding mechanism should have looked like all along. The AI era just makes the case undeniable.
 
 **The measurement implication:**
 
@@ -305,7 +313,7 @@ If even 3 of the 20 Cohort 1 projects reach commercial scale and honor their 4% 
 
 **Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Organizer of RustCC and PyChina communities. Member of the SPARK working group Signal channel since April 2025.
 
-**SPARK Working Group (earliest Pledge discussants):** Vitalik Buterin (mechanism co-designer), Liraz Siri, Mario Behling, Richard Lin, QZ, and other members of the original SPARK Signal group.
+**SPARK Working Group (earliest Pledge discussants):** Vitalik Buterin, Liraz Siri, Mario Behling, Richard Lin, QZ, and other members of the original SPARK Signal group.
 
 ---
 
