@@ -300,7 +300,7 @@ If even 3 of the 20 Cohort 1 projects reach commercial scale and honor their 4% 
 
 ## 11. Team
 
-**Richard Lin (林旅强)** — Co-founder, OpenSeed. President of KAIYUANSHE (China's Open Source Society, est. 2014), China's leading vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Under his leadership, KAIYUANSHE has grown to thousands of members and volunteers, produced the annual China Open Source Report, and organized COSCon — China's most influential open-source conference. Founder of OpenBuild, a developer onboarding and education platform that has onboarded thousands of developers into the Web3/Ethereum ecosystem through courses, hackathons, and bounties.
+**Richard Lin (林旅强)** — Co-founder, OpenSeed. Co-founder of KAIYUANSHE (China's Open Source Society), China's leading vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Open Source Ecosystem Lead at Datastrato.ai (Silicon Valley AI/Big Data startup). Previously Head of Developer Ecosystem at Huawei Cloud and 01.AI (LLM). Has advised multiple open-source and infrastructure projects on global expansion. Long-term participant in international open-source communities including Apache, Linux Foundation, and OSI.
 
 **Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE (2026). Builder and product engineer with a background spanning open-source community infrastructure, Web3 product development, and developer tooling. Member of the SPARK working group Signal channel since April 2025.
 
