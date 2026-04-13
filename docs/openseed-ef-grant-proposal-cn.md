@@ -62,15 +62,13 @@ SPARK（Scaling Public Alignment with Recursive Kindling）是由 Vitalik Buteri
 
 OpenSeed 构建所有缺失的层级。
 
----
-
 ### 2.4 为什么现有 License 无法解决这个问题
 
 现有开源 License 是为另一个问题设计的。MIT 和 Apache 给用户最大使用自由，GPL 确保代码衍生物保持开源，BSL 和 Commons Clause 限制商业使用。但没有一个创造了正向义务：一个商业成功的项目，对它赖以依赖的上游开源项目不欠任何东西。
 
 AI 时代带来了第二个缺口。当开发者使用 AI 编程工具时，生成的代码可能深度参考了某些开源项目的算法、模式和架构决策，但没有任何显式依赖记录在任何地方。deps.dev 可以映射一个项目导入了哪些包，却无法映射 AI 模型在训练时吸收了哪些思路、在代码生成时又如何复现了这些思路。
 
-SPARK License 的设计目标是同时填补这两个缺口，与 Pledge 基础设施并行开发，详见第 4.6 节。
+SPARK License 的设计目标是同时填补这两个缺口，与 Pledge 基础设施并行开发，详见 4.6 节。
 
 ---
 
@@ -220,7 +218,7 @@ Cohort 1 项目选择需对以下四个问题给出肯定回答：
 3. 随着 AI 工具普及，项目的维护负担是否增加或持平？（面临更高审查负担的项目显然在进行真实的人工维护工作）
 4. 项目是否愿意在发布新作品时采用 SPARK License？（Cohort 1 项目被鼓励——非强制——在 SPARK License 下发布新作品，成为首批参考实现。）
 
-这三个问题有意筛选出在 AI 普及后价值不降反升的项目。
+这四个标准有意筛选出在 AI 普及后价值不降反升的项目。
 
 ### 4.6 SPARK License
 
@@ -290,7 +288,16 @@ SPARK License 中的商业义务条款在设计上具备法律可执行性，司
 
 #### 机制一：SPARK 元数据标准
 
-每个 SPARK 许可项目在 `.well-known/spark.json` 路径下包含一个机器可读的声明文件，标注 License 类型、Registry 地址和 AI 使用披露要求。索引代码仓库的 AI 工具——Cursor、GitHub Copilot、Continue、Sourcegraph——本来就会爬取这类文件。当 AI 工具在代码生成过程中引用 SPARK 许可项目时，它可以向开发者显示披露提示、向 SPARK Registry 记录匿名化使用事件，并在生成的代码中附上署名注释。这不需要改变 License 的落地机制，只需要 AI 工具厂商实现一个轻量协议。
+每个 SPARK 许可项目维护两个声明文件，面向不同的读取方：
+
+- **`.well-known/spark.json`**：机器可读格式，供程序直接解析。标注 License 类型、Registry 地址、AI 使用披露要求和项目链上身份。
+- **`SPARK.md`**：自然语言格式，供 AI Agent 直接读取。Cursor、GitHub Copilot、Continue、Sourcegraph 等工具在索引仓库时会将 `.md` 文件作为上下文喂给模型，`SPARK.md` 让 Agent 能够理解并遵循披露要求，而不只是解析结构化字段。
+
+两者并存：`spark.json` 给程序读，`SPARK.md` 给 Agent 读。当 AI 工具在代码生成过程中引用 SPARK 许可项目时，它可以向开发者显示披露提示、向 SPARK Registry 记录匿名化使用事件，并在生成的代码中附上署名注释。
+
+**SPARK 元数据标准作为独立倡议**
+
+`.well-known/spark.json` + `SPARK.md` 的双文件规范被设计为独立于 SPARK License 存在的开放标准——任何开源项目都可以放置这两个文件，无需采用 SPARK License，只需声明「本项目已存在，AI 工具使用时请注明」。这参考 `security.txt`（RFC 9116）的路径：先是社区倡议，后成为正式标准。OpenSeed 作为发起方推动该规范独立传播，形成行业惯例后，披露数据反向作为 Funnel 权重的输入。
 
 #### 机制二：声明式 AI 依赖申报
 

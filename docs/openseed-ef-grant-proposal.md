@@ -70,8 +70,6 @@ The AI era adds a second gap. When developers use AI coding tools, the resulting
 
 SPARK License is designed to close both gaps. It is developed in parallel with the Pledge infrastructure and is covered in Section 4.6.
 
----
-
 ### 2.5 The AI Inflection Point: Why Open Source Funding Matters More Now
 
 Open source value was never really about code volume. It was about projects that stayed alive, maintainers who kept showing up, and dependency relationships that quietly became load-bearing infrastructure for entire ecosystems. The problem was that these signals were difficult to measure systematically, so most funding mechanisms fell back on proxies: commit counts, star ratings, PR velocity.
@@ -211,14 +209,14 @@ Using OpenBuild's developer network, we recruit and onboard an initial cohort of
 
 **Cohort 1 Screening Criteria (AI-Era Adapted)**
 
-Cohort 1 project selection requires affirmative answers to three questions:
+Cohort 1 project selection requires affirmative answers to four criteria:
 
 1. Does the project have identifiable long-term maintainers? (Named individuals with multi-year contribution history, not anonymous or bulk AI-assisted commits)
 2. Is the project's core value rooted in judgment and ecosystem position, rather than purely functional code that AI could replicate in months?
 3. Has the project's maintenance burden increased or held steady with AI tool adoption? (Projects facing increased review burden are demonstrably doing real human maintenance work)
 4. Is the project willing to adopt the SPARK License at publication? (Cohort 1 projects are encouraged — not required — to publish new work under SPARK License, making them the first reference implementations.)
 
-These criteria intentionally select for projects whose value holds up — and becomes more important — as AI tooling proliferates.
+These four criteria intentionally select for projects whose value holds up — and becomes more important — as AI tooling proliferates.
 
 ### 4.6 SPARK License
 
@@ -288,7 +286,16 @@ AI coding tools have introduced a structurally new problem: when a developer use
 
 **Mechanism 1: SPARK Metadata Standard**
 
-Every SPARK-licensed project includes a machine-readable `spark.json` at `.well-known/spark.json`, declaring project identity, registry address, license version, and AI usage disclosure requirements. AI tools that index code repositories — Cursor, GitHub Copilot, Continue, Sourcegraph — already crawl this type of file. When an AI tool references a SPARK-licensed project during code generation, it can surface a disclosure notice, log an anonymized usage event to the Registry, and include an attribution comment in generated code. This requires no change to license enforcement; it requires AI tool vendors to implement a lightweight protocol.
+Every SPARK-licensed project maintains two declaration files, each targeting a different reader:
+
+- **`.well-known/spark.json`**: Machine-readable format for programmatic parsing. Declares project identity, registry address, license version, and AI usage disclosure requirements.
+- **`SPARK.md`**: Natural language format for AI agents to read directly. Tools like Cursor, GitHub Copilot, Continue, and Sourcegraph feed `.md` files as context when indexing repositories — `SPARK.md` lets the agent understand and follow disclosure requirements, not just parse structured fields.
+
+Both coexist: `spark.json` for programs, `SPARK.md` for agents. When an AI tool references a SPARK-licensed project during code generation, it can surface a disclosure notice, log an anonymized usage event to the Registry, and include an attribution comment in generated code.
+
+**SPARK Metadata Standard as a standalone initiative**
+
+The `.well-known/spark.json` + `SPARK.md` dual-file spec is designed to exist as an open standard independent of the SPARK License — any open source project can add these two files without adopting SPARK License, simply declaring "this project exists; please attribute when AI tools reference it." This follows the path of `security.txt` (RFC 9116): community convention first, formal standard later. OpenSeed drives adoption of the spec independent of the license; once it becomes common practice, the disclosed dependency data feeds back as input to Funnel weight calculations.
 
 **Mechanism 2: Declarative AI Dependency Reporting**
 
@@ -386,7 +393,7 @@ This $100K grant funds the infrastructure build and pilot validation. After 6 mo
 - Transition SPARK pool governance to on-chain DAO
 - Publish open-source tooling for other ecosystems to fork and deploy their own SPARK implementations
 
-**The recursive hypothesis:**
+**Recursive Validation:**
 
 If even 3 of the 20 Cohort 1 projects reach commercial scale and honor their 4% pledge, the SPARK pool becomes self-replenishing without further grants. That is the validation the mechanism needs.
 
