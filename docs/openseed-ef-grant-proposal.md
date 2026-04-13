@@ -62,6 +62,14 @@ The full SPARK Pledge document has been drafted and reviewed within the working 
 
 OpenSeed builds all of the missing layers.
 
+### 2.4 Why Existing Licenses Don't Solve This
+
+The open source license landscape was designed for a different problem. MIT and Apache give users maximum freedom. GPL ensures code derivatives remain open. BSL and Commons Clause restrict commercial use. None of them create positive obligations: a project that becomes commercially successful owes nothing back to the projects it depended on.
+
+The AI era adds a second gap. When developers use AI coding tools, the resulting code may be deeply informed by open source projects — their algorithms, patterns, architectural decisions — with no explicit dependency recorded anywhere. deps.dev can map what packages a project imports. It cannot map what ideas and patterns an AI model absorbed during training and reproduced during code generation.
+
+SPARK License is designed to close both gaps. It is developed in parallel with the Pledge infrastructure and is covered in Section 4.6.
+
 ---
 
 ### 2.5 The AI Inflection Point: Why Open Source Funding Matters More Now
@@ -88,7 +96,7 @@ These were always the things that mattered. AI has made them newly legible as sc
 
 SPARK is designed to fund exactly these. A mechanism that weights longevity, real dependency depth, and maintainer continuity is not a reaction to AI — it is what a well-designed open-source funding mechanism should have looked like all along. The AI era just makes the case undeniable.
 
-**The measurement implication:**
+**Measurement in the AI era:**
 
 Existing open-source metrics (lines of code, commit counts, PR volume) are becoming noise in the AI era. OpenSeed's Dependency Funnel is built around signals that AI cannot fake: project longevity, real dependency depth, maintainer continuity, and issue response quality, not LOC.
 
@@ -296,24 +304,7 @@ The longest-term mechanism. Embed statistically detectable patterns into SPARK-l
 
 ---
 
-## 5. Revenue / Obligation Tiering
-
-To protect early-stage projects while ensuring eventual contribution:
-
-| Annual Revenue Stage | SPARK Obligation |
-|---------------------|-----------------|
-| < $50,000 | Not triggered |
-| $50K – $500K | 2% (reduced rate, early-stage) |
-| $500K – $5M | 4% (standard rate) |
-| > $5M | 4% + governance participation |
-
-Token projects: 4% escrowed at TGE regardless of revenue stage. Tokens represent future upside, not current revenue.
-
-Grace period: 3 years from commercialization trigger. Obligations accrue from Day 1 and must be settled in full by end of Year 3.
-
----
-
-## 6. What We Are NOT Building
+## 5. What We Are NOT Building
 
 To maintain focus and credibility:
 
@@ -326,7 +317,7 @@ To maintain focus and credibility:
 
 ---
 
-## 7. Budget Breakdown
+## 6. Budget Breakdown
 
 | Category | Amount | Notes |
 |----------|--------|-------|
@@ -341,7 +332,7 @@ To maintain focus and credibility:
 
 ---
 
-## 8. Timeline
+## 7. Timeline
 
 ### Month 1–2 (May–June 2025): Foundation
 - Finalize smart contract architecture
@@ -363,7 +354,7 @@ To maintain focus and credibility:
 
 ---
 
-## 9. Success Metrics
+## 8. Success Metrics
 
 | Metric | Target (6 months) |
 |--------|-------------------|
@@ -380,7 +371,7 @@ To maintain focus and credibility:
 
 ---
 
-## 10. Long-Term Vision and Sustainability
+## 9. Long-Term Vision and Sustainability
 
 This $100K grant funds the infrastructure build and pilot validation. After 6 months:
 
@@ -401,7 +392,7 @@ If even 3 of the 20 Cohort 1 projects reach commercial scale and honor their 4% 
 
 ---
 
-## 11. Team
+## 10. Team
 
 **Richard Lin (林旅强)** — Co-founder, OpenSeed. Co-founder of KAIYUANSHE (China's Open Source Society), China's leading vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Open Source Ecosystem Lead at Datastrato.ai (Silicon Valley AI/Big Data startup). Previously Head of Developer Ecosystem at Huawei Cloud and 01.AI (LLM). Has advised multiple open-source and infrastructure projects on global expansion. Long-term participant in international open-source communities including Apache, Linux Foundation, and OSI.
 
@@ -409,11 +400,7 @@ If even 3 of the 20 Cohort 1 projects reach commercial scale and honor their 4% 
 
 **SPARK Working Group (earliest Pledge discussants):** Vitalik Buterin, Liraz Siri, Mario Behling, Richard Lin, QZ, and other members of the original SPARK Signal group.
 
----
-
-## 12. Relationship to the SPARK Working Group
-
-OpenSeed's grant application is submitted with the working group's awareness and alignment. We view our role as:
+Our role within the working group:
 
 1. The first and primary implementation of the SPARK Pledge infrastructure
 2. A feedback loop back to the working group. Our pilot data informs mechanism refinement
@@ -423,7 +410,7 @@ We are not claiming exclusive rights to SPARK. We are asking for resources to bu
 
 ---
 
-## 13. Open Source Commitment
+## 11. Open Source Commitment
 
 All infrastructure built with this grant will be open-sourced under MIT license:
 - Smart contracts: verified and open on GitHub and Etherscan
