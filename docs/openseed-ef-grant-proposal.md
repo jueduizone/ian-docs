@@ -179,7 +179,27 @@ The existing mechanisms are doing real work. None of them provide what SPARK pro
 
 ---
 
-## 6. Budget and Timeline
+## 6. What We Are Not Building
+
+Scope discipline matters, especially in a first grant. Being explicit about what we are not doing is as important as describing what we are.
+
+- **Not building a new blockchain or L2.** We are deploying on Ethereum Mainnet.
+- **Not auditing project revenues.** The mechanism runs on self-reporting and community accountability. Social and reputational pressure is the enforcement layer for non-token projects, not surveillance.
+- **Not replacing Gitcoin, RetroPGF, or Protocol Guild.** We are the layer none of them provide — forward commitments, recursive propagation, global scope. We are designed to complement them, not compete.
+- **Not restricting to Web3 projects.** Any open-source project with genuine usage and real maintainers can join.
+- **Not claiming to solve all of open-source funding.** SPARK is one mechanism. It addresses one part of the problem. We are not the last word.
+
+---
+
+## 7. Open Source Commitment
+
+Everything built with this grant will be open-sourced under the MIT license. Smart contracts verified and public on GitHub and Etherscan. The Dependency Funnel algorithm fully open and auditable. The dashboard frontend open-source. SPARK Pledge tooling forkable by any ecosystem that wants to run its own implementation.
+
+This is not a nice-to-have. Infrastructure built to support open-source must itself be open-source. That is not negotiable.
+
+---
+
+## 8. Budget and Timeline
 
 ### Budget
 
@@ -206,7 +226,7 @@ First SPARK Report cycle from Cohort 1. Dependency Funnel processing first real 
 
 ---
 
-## 7. What We're Measuring
+## 9. What We're Measuring
 
 | Metric | Target (6 months) |
 |--------|-------------------|
@@ -222,7 +242,7 @@ First SPARK Report cycle from Cohort 1. Dependency Funnel processing first real 
 
 ---
 
-## 8. What Comes After
+## 10. What Comes After
 
 Six months of infrastructure work and pilot validation is the beginning, not the end. The sustainability argument is built into the mechanism: as Cohort 1 projects commercialize over the next two to five years, their 4% commitments flow back into the SPARK pool. If three of twenty Cohort 1 projects reach commercial scale and honor their pledge, the pool becomes self-replenishing. That outcome — not this grant, but what the grant enables — is the real proof of concept.
 
@@ -234,7 +254,7 @@ Everything built with this grant will be MIT-licensed and fully open: contracts 
 
 ---
 
-## 9. Team
+## 11. Team
 
 **Richard Lin (林旅强)** — Co-founder, OpenSeed. Co-founder of KAIYUANSHE, China's largest vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Open Source Ecosystem Lead at Datastrato.ai. Previously Head of Developer Ecosystem at Huawei Cloud and 01.AI. Long-term participant in Apache, Linux Foundation, and OSI international communities.
 
