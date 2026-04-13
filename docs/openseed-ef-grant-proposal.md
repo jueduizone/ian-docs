@@ -179,7 +179,50 @@ The existing mechanisms are doing real work. None of them provide what SPARK pro
 
 ---
 
-## 6. What We Are Not Building
+## 6. SPARK License
+
+The SPARK Pledge is a forward commitment that projects adopt voluntarily. But there is a second, complementary entry point into the SPARK ecosystem: the SPARK License.
+
+When a project releases its code under the SPARK License, the obligation structure is embedded in the license itself rather than in a separate pledge document. The mechanism is the same — 4% of commercial upside to SPARK-aligned projects, 1% to direct dependencies — but the trigger is different. Any downstream project that incorporates SPARK-licensed code and later commercializes inherits the obligation. The license propagates recursively through the dependency graph.
+
+Before commercialization, SPARK License is equivalent to MIT: zero obligations, complete freedom to use, modify, and distribute. The obligations only activate when the project crosses the $50K revenue threshold or completes a TGE. At that point, the 3-year grace period and tiered obligation structure kick in, identical to the Pledge path.
+
+The two registration paths — Pledge and License — are independent on-chain attestations using separate EAS schemas but sharing the same SPARKRegistry contract. A project can adopt both, and many will: Pledge as an organizational commitment, License as the technical mechanism that makes the commitment propagate downstream.
+
+## 7. SPARK.md — The Metadata Standard
+
+The SPARK Pledge and License handle the funding mechanics. SPARK.md handles the transparency layer.
+
+Every SPARK-registered repository is expected to include a `SPARK.md` file in its root directory. The file has two layers:
+
+- **YAML frontmatter** — structured, machine-parseable fields for scanners and tooling: registration status, license type, attribution preferences, and AI dependency declarations
+- **Markdown body** — natural language context for human readers and AI coding assistants; when Cursor, Copilot, or Continue indexes a repository, this section loads automatically as context
+
+The AI dependency section is the part that matters most in 2025. When a developer uses an AI coding tool and the generated code references or adapts patterns from a SPARK-licensed project, `SPARK.md` provides the standard mechanism for declaring that dependency. The declaration is a best-effort estimate — not a complete audit — and the act of filing it is itself considered compliant. We are not building a surveillance system. We are building a culture of attribution.
+
+A minimal SPARK.md frontmatter looks like this:
+
+```yaml
+spark-version: "1.0.0"
+project:
+  github: "org/repo"
+license:
+  type: "SPARK-LICENSE-1.0"
+  adopted-at: "2025-01-01"
+spark-ai-disclosure:
+  wants-attribution: true
+  dynamic-reporting: false
+ai-dependencies:
+  - repo: "expressjs/express"
+    confidence: "high"
+    reason: "Core routing patterns referenced in AI-generated code"
+```
+
+Dynamic reporting — where a project opts into real-time AI usage event reporting via the SPARK Report API — is optional and off by default. The open-source principle of freedom to use without obligation to report is preserved. Projects that do opt in receive a higher weight in the Dependency Funnel's AI usage dimension, creating a real incentive without creating a mandate.
+
+SPARK.md is designed to propagate as an independent open standard. Its adoption does not depend on whether a project has signed the Pledge or adopted the License. Think of it as `robots.txt` for the AI era: a file you place in your repository to declare an intent and provide context. The more repositories include it, the more signal the Funnel has.
+
+## 8. What We Are Not Building
 
 Scope discipline matters, especially in a first grant. Being explicit about what we are not doing is as important as describing what we are.
 
@@ -191,7 +234,7 @@ Scope discipline matters, especially in a first grant. Being explicit about what
 
 ---
 
-## 7. Open Source Commitment
+## 9. Open Source Commitment
 
 Everything built with this grant will be open-sourced under the MIT license. Smart contracts verified and public on GitHub and Etherscan. The Dependency Funnel algorithm fully open and auditable. The dashboard frontend open-source. SPARK Pledge tooling forkable by any ecosystem that wants to run its own implementation.
 
@@ -199,7 +242,7 @@ This is not a nice-to-have. Infrastructure built to support open-source must its
 
 ---
 
-## 8. Budget and Timeline
+## 10. Budget and Timeline
 
 ### Budget
 
@@ -226,7 +269,7 @@ First SPARK Report cycle from Cohort 1. Dependency Funnel processing first real 
 
 ---
 
-## 9. What We're Measuring
+## 11. What We're Measuring
 
 | Metric | Target (6 months) |
 |--------|-------------------|
@@ -242,7 +285,7 @@ First SPARK Report cycle from Cohort 1. Dependency Funnel processing first real 
 
 ---
 
-## 10. What Comes After
+## 12. What Comes After
 
 Six months of infrastructure work and pilot validation is the beginning, not the end. The sustainability argument is built into the mechanism: as Cohort 1 projects commercialize over the next two to five years, their 4% commitments flow back into the SPARK pool. If three of twenty Cohort 1 projects reach commercial scale and honor their pledge, the pool becomes self-replenishing. That outcome — not this grant, but what the grant enables — is the real proof of concept.
 
@@ -254,7 +297,7 @@ Everything built with this grant will be MIT-licensed and fully open: contracts 
 
 ---
 
-## 11. Team
+## 13. Team
 
 **Richard Lin (林旅强)** — Co-founder, OpenSeed. Co-founder of KAIYUANSHE, China's largest vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Open Source Ecosystem Lead at Datastrato.ai. Previously Head of Developer Ecosystem at Huawei Cloud and 01.AI. Long-term participant in Apache, Linux Foundation, and OSI international communities.
 
