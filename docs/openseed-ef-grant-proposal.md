@@ -20,6 +20,8 @@ The SPARK Pledge is a recursive open-source funding framework co-developed with 
 
 OpenSeed is applying for $100,000 to build the infrastructure that turns SPARK from a concept into a working system: an on-chain Pledge Registry, a Dependency Funding Funnel, a compliance Dashboard, and a verified pilot cohort of open-source projects from the Chinese-speaking developer community. Chinese-speaking developers make up one of the largest developer populations in the world and are significantly underserved by existing Ethereum-ecosystem funding mechanisms.
 
+OpenSeed is also developing the SPARK License — extending this infrastructure to cover AI-era usage patterns that existing licenses were never designed to address.
+
 This grant funds the first real-world test of SPARK's recursive model. If it works, the infrastructure we build will be open, permissionless, and replicable globally.
 
 ---
@@ -92,6 +94,8 @@ Existing open-source metrics (lines of code, commit counts, PR volume) are becom
 
 This makes OpenSeed relevant not just as a funding mechanism, but as a framework for measuring open-source value in the AI era.
 
+The SPARK License addresses the measurement problem at the source. By defining AI-era usage — training data, retrieval-augmented generation, AI coding tool references — as a first-class category requiring disclosure, it makes the dependency graph legible in ways that deps.dev alone cannot achieve. The License and the Funnel are designed to work together: disclosed AI dependencies feed directly into Funnel weight calculations, closing the loop between usage and funding.
+
 ---
 
 ## 3. Why OpenSeed
@@ -135,6 +139,8 @@ For token-issuing projects: the Registry integrates with TGE contracts to automa
 
 For non-token projects: Pledge adoption is recorded on-chain, with obligations fulfilled via annual self-reporting and manual transfers to the SPARK funding pool.
 
+The Registry is designed to support both Pledge adoption and License adoption as distinct but interoperable registration types. A project can register under either or both.
+
 ### 4.2 Dependency Funding Funnel
 
 The 1% dependency allocation requires knowing which upstream projects a given project depends on, and how to weight them. We build:
@@ -146,13 +152,14 @@ The 1% dependency allocation requires knowing which upstream projects a given pr
 
 **Allocation Algorithm (v1.1, AI-Era Adapted)**
 
-Traditional metrics like lines of code (LOC) are no longer reliable signals of open-source value when AI tools can generate thousands of lines in minutes. OpenSeed's Funnel uses five dimensions that AI cannot easily game:
+Traditional metrics like lines of code (LOC) are no longer reliable signals of open-source value when AI tools can generate thousands of lines in minutes. OpenSeed's Funnel uses six dimensions that AI cannot easily game:
 
 - **Longevity (25%):** Years the project has been actively maintained. AI can clone a library overnight; it cannot fake 5 years of maintenance history. Source: GitHub `created_at`
 - **Real Usage Depth (30%):** Number of downstream projects that actually depend on this package. Not stars (gameable), but dependents. Source: deps.dev dependents count
 - **Maintainer Continuity (25%):** How long the top-3 contributors have been continuously active. Measures human long-term commitment. Source: GitHub contributor API
 - **Issue Responsiveness (10%):** Average issue close time and close rate over 12 months. Proxy for maintainer judgment quality. Source: GitHub Issues API
 - **Dependency Depth Decay (10%):** Direct dependencies weighted higher than transitive ones. Preserved from original design.
+- **AI Usage Depth (bonus weight):** Disclosed AI dependencies from AI_DEPENDENCIES.md submissions and SPARK Protocol tool integrations. Projects identified as implicit dependencies in AI-generated code receive additional weight in the Funnel, capturing value that the explicit dependency graph misses.
 
 All dimensions normalized to 0–1 before weighting. Algorithm is fully open-source, upgradeable via OpenSeed multi-sig governance with on-chain record of every change. SPARK Registry members receive a 1.2× weight bonus to incentivize Pledge propagation through the dependency graph.
 
@@ -171,6 +178,8 @@ A public web interface showing:
 - Annual SPARK Report submissions
 - Fund flow transparency (who funded whom, amounts, dates)
 - Dependency funnel allocation records
+- License adoption status and AI disclosure history
+- AI_DEPENDENCIES.md submission records
 
 This is the trust layer. Any stakeholder — funders, community members, downstream projects — can verify compliance without requiring trust in OpenSeed as an intermediary.
 
@@ -199,8 +208,91 @@ Cohort 1 project selection requires affirmative answers to three questions:
 1. Does the project have identifiable long-term maintainers? (Named individuals with multi-year contribution history, not anonymous or bulk AI-assisted commits)
 2. Is the project's core value rooted in judgment and ecosystem position, rather than purely functional code that AI could replicate in months?
 3. Has the project's maintenance burden increased or held steady with AI tool adoption? (Projects facing increased review burden are demonstrably doing real human maintenance work)
+4. Is the project willing to adopt the SPARK License at publication? (Cohort 1 projects are encouraged — not required — to publish new work under SPARK License, making them the first reference implementations.)
 
 These criteria intentionally select for projects whose value holds up — and becomes more important — as AI tooling proliferates.
+
+### 4.6 SPARK License
+
+SPARK License is a software license that does two things traditional licenses do not: it attaches economic obligations to commercial success, and it defines AI-era usage as a first-class category requiring disclosure.
+
+**License Structure**
+
+SPARK License 1.0 has three tiers, triggered by project stage:
+
+**Tier 0 — Pre-commercial (default)**
+
+Identical to MIT. No obligations active. Full freedom to use, modify, distribute.
+
+**Tier 1 — Commercially active**
+
+Triggered by: annual revenue exceeding $50,000, or token issuance (TGE).
+
+Obligations:
+- 4% of economic upside directed to SPARK-aligned projects (via Registry)
+- 1% of economic upside directed to declared dependencies
+- Annual SPARK Report submission
+- AI usage disclosure (AI_DEPENDENCIES.md and SPARK metadata standard)
+
+**Tier 2 — Scaled (> $5M annual revenue)**
+
+All Tier 1 obligations, plus:
+- Participation in SPARK governance (multi-sig or DAO, depending on phase)
+- Enhanced dependency audit (not self-reported, third-party verified)
+
+**Grace period:** 3 years from commercialization trigger. Obligations accrue from Day 1 and must be settled by end of Year 3.
+
+**Token projects:** 4% escrowed at TGE regardless of revenue stage.
+
+**Relationship to SPARK Pledge**
+
+SPARK License and SPARK Pledge are complementary entry points into the same ecosystem:
+
+| | SPARK Pledge | SPARK License |
+|--|--|--|
+| Adoption mechanism | Voluntary commitment | Applied to code at publication |
+| Who is bound | The project that adopts it | Anyone who uses the licensed code commercially |
+| Propagation | Recipients must also adopt | Viral through code reuse |
+| Enforcement | Reputation + social | Reputation + legal |
+| AI usage coverage | No | Yes |
+
+Together they create two vectors of growth:
+- **Pledge:** ideologically motivated projects actively joining the ecosystem
+- **License:** dependency-driven propagation through the broader software supply chain
+
+A project can adopt both. A project that only uses SPARK-licensed code (but hasn't signed the Pledge) is still bound by the License obligations at commercialization.
+
+**Enforcement Model**
+
+SPARK License enforcement relies on three layers, not one:
+
+**Layer 1: On-chain reputation** — SPARK Registry status is public. A project in `Defaulted` status cannot receive SPARK pool funding, cannot display the SPARK badge, and is publicly searchable as non-compliant. For projects that depend on community trust — which is most open source projects — this is a real cost.
+
+**Layer 2: Ecosystem pressure** — SPARK-aligned projects and funders can make adoption of the license a condition of funding, integration, or partnership. This creates network effects: as SPARK coverage grows, being outside it becomes a liability.
+
+**Layer 3: Legal enforceability (long-term)** — The commercial obligation clauses in SPARK License are designed to be legally enforceable, with jurisdictional coverage expanding as case law develops around similar mechanisms (BSL, Commons Clause). OpenSeed is working with legal counsel to ensure the license text is enforceable in key jurisdictions (US, EU, Taiwan, Singapore) from day one.
+
+The honest assessment: Layer 3 will be weak initially. Layers 1 and 2 carry most of the weight in the near term. This is the same trajectory as GPL — the legal theory preceded practical enforcement by years. The mechanism works before the courts have weighed in.
+
+### 4.7 AI Usage Visibility Toolchain
+
+AI coding tools have introduced a structurally new problem: when a developer uses Cursor or Copilot to generate code, that code may be deeply informed by open source projects — their algorithms, patterns, architectural decisions — without any explicit import or attribution. The dependency exists; it just isn't visible. Four mechanisms address this, in order of near-term feasibility:
+
+**Mechanism 1: SPARK Metadata Standard**
+
+Every SPARK-licensed project includes a machine-readable `spark.json` at `.well-known/spark.json`, declaring project identity, registry address, license version, and AI usage disclosure requirements. AI tools that index code repositories — Cursor, GitHub Copilot, Continue, Sourcegraph — already crawl this type of file. When an AI tool references a SPARK-licensed project during code generation, it can surface a disclosure notice, log an anonymized usage event to the Registry, and include an attribution comment in generated code. This requires no change to license enforcement; it requires AI tool vendors to implement a lightweight protocol.
+
+**Mechanism 2: Declarative AI Dependency Reporting**
+
+For projects that use AI coding tools, SPARK License requires an annual `AI_DEPENDENCIES.md` declaration — a best-effort estimate of which open source projects materially informed AI-generated code. This is a self-attestation, not an audit, acknowledged to be imprecise. The SPARK toolchain provides a scanner that analyzes import patterns and code structure, cross-references against the SPARK Registry, and generates a draft `AI_DEPENDENCIES.md` for developer review. Submissions update dependency weights in the Funding Funnel, directing a portion of the 1% obligation toward projects identified as AI-era dependencies.
+
+**Mechanism 3: AI Tool Protocol Integration**
+
+The highest-leverage intervention is at the AI tool layer. A SPARK Protocol integration checks at code generation time whether referenced code originates from SPARK-licensed repositories, logs anonymized usage events (project identity, not user identity) to the Registry, and provides developers with a one-click disclosure flow. Target integrations in priority order: Continue.dev (open source, fastest to integrate), Cursor (largest developer mindshare), GitHub Copilot (requires Microsoft partnership, long-term goal). The data model is privacy-preserving by design: usage frequency informs Funnel weights; no individual developer is identified or tracked.
+
+**Mechanism 4: Semantic Code Fingerprinting**
+
+The longest-term mechanism. Embed statistically detectable patterns into SPARK-licensed codebases — structural regularities in algorithm design, test coverage patterns, and naming conventions that survive transformation by AI tools. When AI-generated code contains these patterns at above-baseline frequency, it is evidence (not proof) of training influence from that project. This is currently a research-stage capability demonstrated by academic groups at MIT CSAIL and Stanford; productionizing it at license-enforcement scale is a 3–5 year horizon. OpenSeed will monitor this space and incorporate fingerprinting capabilities into the toolchain as the research matures.
 
 ---
 
@@ -230,6 +322,7 @@ To maintain focus and credibility:
 - **Not replacing Gitcoin or RetroPGF.** Complementary, not competitive
 - **Not restricting to Web3 projects.** Open to any open-source project
 - **Not claiming to solve all of open-source funding.** SPARK is one mechanism, not a silver bullet
+- **Not solving AI training data attribution at the legal level** — SPARK License creates disclosure obligations and ecosystem norms; it does not attempt to resolve the unsettled legal questions around AI training and copyright.
 
 ---
 
@@ -241,8 +334,9 @@ To maintain focus and credibility:
 | Frontend / Dashboard | $20,000 | Registry UI, Compliance Dashboard, Pledge onboarding flow |
 | Dependency Funnel integration | $15,000 | deps.dev API integration, allocation algorithm |
 | Pilot cohort program | $20,000 | Project onboarding, support, first-round SPARK pool seeding |
-| Operations & legal | $10,000 | Entity setup, documentation, community management |
-| Contingency | $5,000 | |
+| Operations & legal | $5,000 | Entity setup, documentation, community management |
+| SPARK License legal review | $5,000 | License text drafting, jurisdictional review (US, EU, Singapore) |
+| AI toolchain & SPARK.json standard | $5,000 | Scanner tool, metadata standard, Continue.dev integration scoping |
 | **Total** | **$100,000** | |
 
 ---
