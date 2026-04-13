@@ -302,9 +302,9 @@ If even 3 of the 20 Cohort 1 projects reach commercial scale and honor their 4% 
 
 **Richard Lin (林旅强)** — Co-founder, OpenSeed. Co-founder of KAIYUANSHE (China's Open Source Society), China's leading vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Open Source Ecosystem Lead at Datastrato.ai (Silicon Valley AI/Big Data startup). Previously Head of Developer Ecosystem at Huawei Cloud and 01.AI (LLM). Has advised multiple open-source and infrastructure projects on global expansion. Long-term participant in international open-source communities including Apache, Linux Foundation, and OSI.
 
-**Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE (2026). Builder and product engineer with a background spanning open-source community infrastructure, Web3 product development, and developer tooling. Member of the SPARK working group Signal channel since April 2025.
+**Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Organizer of RustCC and PyChina communities. Member of the SPARK working group Signal channel since April 2025.
 
-**Advisors / Working Group:** Vitalik Buterin (SPARK mechanism co-designer), Liraz Siri (open-source and blockchain developer, long-term Ethereum ecosystem contributor), Mario Behling (founder of FOSSASIA, open-source community builder across Asia), Richard Lin, QZ, and other members of the SPARK Signal working group.
+**SPARK Working Group (earliest Pledge discussants):** Vitalik Buterin (mechanism co-designer), Liraz Siri, Mario Behling, Richard Lin, QZ, and other members of the original SPARK Signal group.
 
 ---
 
