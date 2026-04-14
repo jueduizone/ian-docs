@@ -45,9 +45,12 @@ export default async function DocPage({ params }: Props) {
             {doc.description}
           </p>
         )}
-        <div className="flex items-center gap-3">
-          <time className="text-sm text-gray-500 font-mono">{doc.date}</time>
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-900/30 text-blue-400 border border-blue-800/50">
+        <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 font-mono">
+          <span>创建 {doc.createdAt}</span>
+          {doc.updatedAt !== doc.createdAt && (
+            <span>更新 {doc.updatedAt}</span>
+          )}
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-900/30 text-blue-400 border border-blue-800/50 font-sans">
             文档
           </span>
         </div>

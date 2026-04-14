@@ -13,6 +13,8 @@ export interface DocMeta {
   slug: string
   title: string
   date: string
+  createdAt: string
+  updatedAt: string
   description: string
 }
 
@@ -26,11 +28,19 @@ function extractTitleFromContent(content: string): string {
 }
 
 function extractDescriptionFromContent(content: string): string {
-  // Remove headings and get first meaningful paragraph
   const lines = content.split('\n')
   for (const line of lines) {
     const trimmed = line.trim()
-    if (trimmed && !trimmed.startsWith('#') && !trimmed.startsWith('```') && trimmed.length > 20) {
+    if (
+      trimmed &&
+      !trimmed.startsWith('#') &&
+      !trimmed.startsWith('```') &&
+      !trimmed.startsWith('**') &&
+      !trimmed.startsWith('|') &&
+      !trimmed.startsWith('-') &&
+      !trimmed.startsWith('>') &&
+      trimmed.length > 20
+    ) {
       return trimmed.slice(0, 160) + (trimmed.length > 160 ? '...' : '')
     }
   }
@@ -41,6 +51,15 @@ function extractDateFromContent(content: string): string {
   const match = content.match(/(\d{4}-\d{2}-\d{2})/)
   if (match) return match[1]
   return new Date().toISOString().split('T')[0]
+}
+
+function formatDateTime(date: Date): string {
+  const y = date.getFullYear()
+  const mo = String(date.getMonth() + 1).padStart(2, '0')
+  const d = String(date.getDate()).padStart(2, '0')
+  const h = String(date.getHours()).padStart(2, '0')
+  const m = String(date.getMinutes()).padStart(2, '0')
+  return `${y}-${mo}-${d} ${h}:${m}`
 }
 
 export function getAllDocs(): DocMeta[] {
@@ -65,11 +84,12 @@ export function getAllDocs(): DocMeta[] {
       slug,
       title: data.title || extractTitleFromContent(content),
       date: dateStr,
+      createdAt: formatDateTime(stat.birthtime || stat.mtime),
+      updatedAt: formatDateTime(stat.mtime),
       description: data.description || extractDescriptionFromContent(content),
     }
   })
 
-  // Sort by date descending
   return docs.sort((a, b) => (a.date < b.date ? 1 : -1))
 }
 
@@ -79,6 +99,8 @@ export async function getDocBySlug(slug: string): Promise<DocFull | null> {
 
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(fileContents)
+
+  const stat = fs.statSync(fullPath)
 
   const processedContent = await remark()
     .use(remarkGfm)
@@ -98,6 +120,8 @@ export async function getDocBySlug(slug: string): Promise<DocFull | null> {
     slug,
     title: data.title || extractTitleFromContent(content),
     date: dateStr,
+    createdAt: formatDateTime(stat.birthtime || stat.mtime),
+    updatedAt: formatDateTime(stat.mtime),
     description: data.description || extractDescriptionFromContent(content),
     contentHtml,
   }
