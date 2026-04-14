@@ -8,7 +8,7 @@ description: ""
 **Co-founders:** Richard Lin, Ian Xu, Cynthia Xin  
 **Requested Amount:** $100,000 USD  
 **Grant Type:** Ecosystem Development  
-**Timeline:** May 2025 – November 2025 (6 months)  
+**Timeline:** May 2026 – November 2026 (6 months)  
 **Deployment Target:** Ethereum Mainnet
 
 ---
@@ -72,7 +72,7 @@ What this shift reveals is something that was always true but is becoming undeni
 
 The old metrics, lines of code, commit frequency, PR volume, are becoming meaningless in a world where AI can generate all of them. OpenSeed's Dependency Funnel was built from the start around signals that cannot be faked: how long a project has existed, how many real downstream dependents it has, how continuously a small group of humans has shown up for it.
 
-But AI changes something else too, something that cuts deeper into how SPARK's funding mechanism works — not just what value looks like, but whether the mechanism can see it at all. We will return to this in Section 5, after describing what Phase 1 builds.
+But AI changes something else too, something that cuts deeper into how SPARK's funding mechanism works — not just what value looks like, but whether the mechanism can see it at all. We will return to this in Section 3.7, after establishing what Phase 1 builds.
 
 ---
 
@@ -158,7 +158,7 @@ The legal argument is that SPARK License satisfies all ten conditions of the Ope
 
 Phase 1 drafts the legal text and deploys the License alongside the Registry, with Cohort 1 projects as the first adopters. Phase 2 opens the OSI license-review process with a complete legal draft and OSD compliance analysis. Simultaneously, we file for an SPDX identifier through the Linux Foundation, which is faster and makes the license machine-readable across toolchains. OpenSeed's existing relationships within OSI's international community — through Richard Lin's long-standing participation in Apache, Linux Foundation, and OSI governance — provide the pre-consultation channel to surface objections before formal submission. Real adoption data from Cohort 1 projects is the most compelling evidence that the mechanism is operationally viable, not just theoretically sound.
 
-SPARK License v1.0 ships in Phase 2, with legal review complete, SPDX identifier filed, and OSI review process initiated.
+By the end of Phase 2, SPARK License v1.0 is out with a complete legal review, an SPDX identifier filed, and the OSI review process underway. The goal is not just a working license. It is a license that belongs to the commons — machine-readable, ecosystem-adopted, and recognized by the same institutions that have governed open source for decades.
 
 ### 3.7 SPARK.md: Making the Invisible Dependency Graph Visible
 
@@ -177,6 +177,8 @@ There is precedent for how a simple convention in a root file becomes infrastruc
 SPARK.md is designed to spread as an independent open standard, independent of Pledge or License adoption speed. A project does not need to sign the Pledge or adopt the License to place a SPARK.md in its repository. The analogy is robots.txt: placing the file is a unilateral act that declares intent and provides context. The wider the coverage, the more accurate the Funnel's signal.
 
 ### 3.8 Obligation Structure
+
+The Registry and Funnel need a shared set of rules for when obligations activate and how large they are. These are the parameters the Pledge and License both reference.
 
 | Annual Revenue | SPARK Obligation |
 |----------------|-----------------|
@@ -249,13 +251,13 @@ Infrastructure built to support open-source must itself be open-source. That is 
 
 ### Timeline
 
-**Month 1–2 (May–June): Foundation**  
+**Month 1–2 (May–June 2026): Foundation**  
 Finalize smart contract architecture. Deploy SPARK Pledge Registry v0.1 to testnet. Launch Pledge onboarding site. Begin Cohort 1 recruitment. Draft SPARK License legal text. Publish SPARK.md spec v0.1.
 
-**Month 3–4 (July–August): Build**  
+**Month 3–4 (July–August 2026): Build**  
 Mainnet deployment of Registry contract. Dependency Funnel v0.1 live across npm and PyPI. Compliance Dashboard v0.1 up. Cohort 1: 10+ projects onboarded, pledged, and deploying SPARK.md. SPARK License v0.9 distributed to Cohort 1 projects.
 
-**Month 5–6 (September–November): Validate**  
+**Month 5–6 (September–November 2026): Validate**  
 First SPARK Report cycle from Cohort 1. Dependency Funnel processing first real allocations, including AI dependency signals. Open registration to global projects. Full grant completion report to EF with all metrics.
 
 ---
@@ -282,7 +284,7 @@ Six months of infrastructure work and pilot validation is the beginning, not the
 
 OpenSeed as an organization generates operational revenue through optional premium Registry services and ecosystem partnerships. The on-chain infrastructure is permissionless and designed to outlive us.
 
-Phase 2, starting in 2026: 100+ projects globally, integration with Gitcoin and RetroPGF as a complementary compliance layer, SPARK pool governance transitioning to an on-chain DAO, SPARK License v1.0 entering OSI review with a complete legal draft and SPDX identifier filed, and open tooling for other ecosystems to fork and deploy their own SPARK implementations. The goal was never for this to be one team's project.
+Phase 2, building on these foundations: 100+ projects globally, integration with Gitcoin and RetroPGF as a complementary compliance layer, SPARK pool governance transitioning to an on-chain DAO, SPARK License v1.0 entering OSI review with a complete legal draft and SPDX identifier filed, and open tooling for other ecosystems to fork and deploy their own SPARK implementations. The goal was never for this to be one team's project.
 
 ---
 
