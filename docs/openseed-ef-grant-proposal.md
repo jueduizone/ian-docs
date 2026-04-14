@@ -290,7 +290,7 @@ Phase 2, starting in 2026: 100+ projects globally, integration with Gitcoin and 
 
 **Richard Lin (林旅强)** — Co-founder, OpenSeed. Co-founder of KAIYUANSHE, China's largest vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Open Source Ecosystem Lead at Datastrato.ai. Previously Head of Developer Ecosystem at Huawei Cloud and 01.AI. Long-term participant in Apache, Linux Foundation, and OSI international communities.
 
-**Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Organizer of RustCC and PyChina. Member of the SPARK working group Signal channel since April 2025.
+**Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Core contributor to RustCC and PyChina. Member of the SPARK working group Signal channel since April 2025.
 
 **Qing Xin (辛庆)** — Co-founder, OpenSeed. Lead organizer of PyChina community.
 
