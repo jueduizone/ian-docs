@@ -12,7 +12,7 @@
 
 ## 1. The Short Version
 
-There is a framework sitting in a private Signal group right now, co-designed with Vitalik Buterin, thoughtfully built, ready to change how open-source software gets funded. It is called the SPARK Pledge. And it is completely inert, because no one has built the infrastructure to run it.
+There is a framework sitting in a private Signal group right now, designed by Vitalik Buterin and a working group that OpenSeed is part of, thoughtfully built, ready to change how open-source software gets funded. It is called the SPARK Pledge. And it is completely inert, because no one has built the infrastructure to run it.
 
 OpenSeed is asking for $100,000 to change that.
 
@@ -69,7 +69,7 @@ What this shift reveals is something that was always true but is becoming undeni
 
 The old metrics, lines of code, commit frequency, PR volume, are becoming meaningless in a world where AI can generate all of them. OpenSeed's Dependency Funnel was built from the start around signals that cannot be faked: how long a project has existed, how many real downstream dependents it has, how continuously a small group of humans has shown up for it.
 
-But AI changes something else too, something that cuts deeper into how SPARK's funding mechanism works — not just what value looks like, but whether the mechanism can see it at all. We will return to this in Section 6, after describing what Phase 1 builds.
+But AI changes something else too, something that cuts deeper into how SPARK's funding mechanism works — not just what value looks like, but whether the mechanism can see it at all. We will return to this in Section 5, after describing what Phase 1 builds.
 
 ---
 
