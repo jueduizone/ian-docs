@@ -292,6 +292,8 @@ Phase 2, starting in 2026: 100+ projects globally, integration with Gitcoin and 
 
 **Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Organizer of RustCC and PyChina. Member of the SPARK working group Signal channel since April 2025.
 
+**Qing Xin (辛庆)** — Co-founder, OpenSeed. Lead organizer of PyChina community.
+
 **SPARK Working Group:** Vitalik Buterin (mechanism co-designer), Liraz Siri, Mario Behling, Richard Lin, QZ, and other members of the original SPARK Signal group.
 
 ---
