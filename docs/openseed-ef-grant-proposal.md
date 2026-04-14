@@ -61,9 +61,9 @@ Every missing row is something OpenSeed is building.
 
 ### 2.4 Why AI Makes This More Urgent, Not Less
 
-There is a trend worth naming directly. AI coding tools were supposed to make open source more productive. In some contexts, they have. But a randomized controlled study by METR found that for experienced developers working on complex, established codebases, AI tools increased task completion time by 19%. The cost of understanding, verifying, and correcting AI output turned out to exceed the gains from generating it faster.
+There is a trend worth naming directly. AI coding tools were supposed to make open source more productive. In some contexts, they have. But a July 2025 randomized controlled study by METR found that for experienced developers working on complex, established codebases, AI tools increased task completion time by 19%. The cost of understanding, verifying, and correcting AI output turned out to exceed the gains from generating it faster.
 
-At the same time, AI tools have flooded repositories with low-quality pull requests. Projects like curl, ghostty, and tldraw have restricted or closed external contributions entirely. Maintainers are spending more time filtering noise than building things.
+At the same time, AI tools have flooded repositories with low-quality pull requests. By early 2026, projects like curl, ghostty, and tldraw had restricted or closed external contributions entirely. Maintainers were spending more time filtering noise than building things.
 
 What this shift reveals is something that was always true but is becoming undeniable: the hard part of open source was never writing the code. It was the years of maintenance commitment, the architectural judgment built up over time, the community trust that makes people actually adopt something. These are the things AI cannot replicate. These are exactly the things SPARK is designed to sustain.
 
