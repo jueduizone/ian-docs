@@ -61,9 +61,9 @@ Every missing row is something OpenSeed is building.
 
 ### 2.4 Why AI Makes This More Urgent, Not Less
 
-There is a trend worth naming directly. AI coding tools were supposed to make open source more productive. In some contexts, they have. But a July 2025 randomized controlled study by METR found that for experienced developers working on complex, established codebases, AI tools increased task completion time by 19%. The cost of understanding, verifying, and correcting AI output turned out to exceed the gains from generating it faster.
+There is a trend worth naming directly. AI coding tools were supposed to make open source more productive. In some contexts, they have. But a randomized controlled study by METR found that for experienced developers working on complex, established codebases, AI tools increased task completion time by 19%. The cost of understanding, verifying, and correcting AI output turned out to exceed the gains from generating it faster.
 
-At the same time, AI tools have flooded repositories with low-quality pull requests. By early 2026, projects like curl, ghostty, and tldraw had restricted or closed external contributions entirely. Maintainers were spending more time filtering noise than building things.
+At the same time, AI tools have flooded repositories with low-quality pull requests. Projects like curl, ghostty, and tldraw have restricted or closed external contributions entirely. Maintainers are spending more time filtering noise than building things.
 
 What this shift reveals is something that was always true but is becoming undeniable: the hard part of open source was never writing the code. It was the years of maintenance commitment, the architectural judgment built up over time, the community trust that makes people actually adopt something. These are the things AI cannot replicate. These are exactly the things SPARK is designed to sustain.
 
@@ -133,7 +133,47 @@ Three questions. All three need a yes.
 
 We are looking for projects whose value goes up in an AI-saturated environment, not down.
 
-### 3.6 Obligation Structure
+### 3.6 SPARK License: Embedding Obligations Into the Code Itself
+
+The Pledge requires a project to actively find the mechanism, understand it, and sign. Every voluntary opt-in mechanism has this ceiling. It works for projects that are ideologically aligned and paying attention. Most projects that build on open-source infrastructure and later commercialize never sign anything — not because they object, but because the friction is enough to prevent it.
+
+SPARK License is the second entry path, designed for passive propagation rather than active opt-in.
+
+Traditional open-source licenses govern one thing: the right to use code. GPL governs code derivatives. BSL restricts commercial use. The Open Source Pledge asks nicely. None of them attach an economic obligation to a project's commercial lifecycle. SPARK License embeds the obligation structure into the license text itself. Any downstream project that incorporates SPARK-licensed code and later commercializes inherits the same obligations: 4% of economic upside to SPARK-aligned projects, 1% to declared dependencies. The commitment travels with the code. A project that has never heard of OpenSeed but ships SPARK-licensed code in its stack becomes part of the network at the moment it commercializes — without any further voluntary action required.
+
+Before commercialization, SPARK License is identical to MIT. Zero obligations. Complete freedom to use, modify, and distribute. The mechanism only activates when a project succeeds.
+
+SPARK License also explicitly covers something GPL was never designed to address: AI-era usage. Using a SPARK-licensed project as a training source, a retrieval reference for an AI coding tool, or a foundational pattern in AI-generated code constitutes a use case that triggers disclosure obligations. This is the first license to treat AI intermediation as a first-class dependency category.
+
+**Pledge and License are independent entry points, not a bundle.** Signing the Pledge does not require switching licenses. Adopting the SPARK License does not require filing a Pledge. Many mature projects have stable license terms that downstream users depend on; requiring a license change as a condition of Pledge adoption would turn a values-alignment decision into a legal coordination problem. The two paths are designed to compound, not gate each other. Projects that adopt both receive a 1.3x Funnel weight multiplier — an economic incentive, not a requirement.
+
+**The path to OSI recognition**
+
+For SPARK License to achieve lasting ecosystem impact, it needs to enter the standard license infrastructure — not remain a project-specific instrument. The target is OSI certification and an SPDX identifier.
+
+The legal argument is that SPARK License satisfies all ten conditions of the Open Source Definition. It does not restrict fields of endeavor. It does not discriminate. The economic obligation only activates post-commercialization, through a tiered and transparent structure that is closer in spirit to copyleft — a mechanism the open-source community has accepted for decades — than to any commercial restriction. Pre-commercialization, it is indistinguishable from MIT.
+
+Phase 1 drafts the legal text and deploys the License alongside the Registry, with Cohort 1 projects as the first adopters. Phase 2 opens the OSI license-review process with a complete legal draft and OSD compliance analysis. Simultaneously, we file for an SPDX identifier through the Linux Foundation, which is faster and makes the license machine-readable across toolchains. OpenSeed's existing relationships within OSI's international community — through Richard Lin's long-standing participation in Apache, Linux Foundation, and OSI governance — provide the pre-consultation channel to surface objections before formal submission. Real adoption data from Cohort 1 projects is the most compelling evidence that the mechanism is operationally viable, not just theoretically sound.
+
+SPARK License v1.0 ships in Phase 2, with legal review complete, SPDX identifier filed, and OSI review process initiated.
+
+### 3.7 SPARK.md: Making the Invisible Dependency Graph Visible
+
+The Dependency Funnel routes the 1% obligation by tracing what a project depends on. That tracing assumes dependencies are visible — that when a project uses something, that usage shows up in a manifest or import statement. AI coding tools have broken this assumption. When a developer uses Cursor or Copilot to generate code, the output may be deeply informed by open-source projects — their algorithms, design patterns, architectural decisions — without any explicit import, fork, or attribution. The dependency exists. It just does not appear in any manifest. As AI tools become the primary interface between developers and the open-source ecosystem, the Funnel's dependency graph becomes systematically incomplete.
+
+This is not a corner case. It is the default condition of AI-assisted development in 2025. The projects whose patterns are most heavily recycled by AI tools — the foundational libraries that shaped how entire generations of code gets written — may receive the least from the Funnel, because their influence runs through AI intermediation rather than direct import. The mechanism designed to fund the most important open-source work would systematically miss its targets.
+
+SPARK.md is the mechanism for closing this gap. Every SPARK-registered repository includes a SPARK.md file at its root. The YAML frontmatter is machine-parseable: registration status, license type, attribution preferences. The Markdown body is natural language — written for human developers, but also loaded as context by AI coding tools. When Cursor or Copilot indexes a repository, the Markdown body enters the context window. When a developer then generates code informed by that project, they have already been told what the project is, what its registration status means, and what an AI dependency declaration looks like.
+
+The declaration itself is a best-effort estimate, not an audit. A developer looks at AI-generated code, identifies which upstream projects plausibly influenced it, and files the declaration. Submission is compliance. The goal is not perfect accuracy — it is building a practice. The same habit developers already have for package dependencies, extended to AI dependencies.
+
+These declarations feed directly into the Funnel's AI usage depth scoring. Projects frequently declared as AI-era dependencies receive up to a 1.3x weight multiplier in Funnel distributions. The more a project's patterns are actually being used by the ecosystem, the more it benefits — even when that usage runs through AI intermediation rather than a direct import statement.
+
+There is precedent for how a simple convention in a root file becomes infrastructure. In 2017, two security researchers proposed security.txt: a plain text file at `/.well-known/security.txt` where organizations could publish a vulnerability disclosure policy. No standards body, no governance process. Within a few years, Google, GitHub, and Facebook had adopted it. By 2022, it was RFC 9116, an official IETF standard. SPARK.md follows the same logic: a low-friction convention that creates value immediately for early adopters, whose usefulness compounds as adoption spreads, and whose trajectory points toward standardization rather than away from it.
+
+SPARK.md is designed to spread as an independent open standard, independent of Pledge or License adoption speed. A project does not need to sign the Pledge or adopt the License to place a SPARK.md in its repository. The analogy is robots.txt: placing the file is a unilateral act that declares intent and provides context. The wider the coverage, the more accurate the Funnel's signal.
+
+### 3.8 Obligation Structure
 
 | Annual Revenue | SPARK Obligation |
 |----------------|-----------------|
@@ -172,59 +212,7 @@ Gitcoin QF, Optimism RetroPGF, Protocol Guild, and Drips Network each do real wo
 
 ---
 
-## 5. Two More Pieces: SPARK License and SPARK.md
-
-The Pledge Registry and Dependency Funnel are the core of Phase 1. But building this infrastructure made two structural gaps visible — gaps the Pledge alone was never designed to close.
-
-The Pledge requires a project to actively find the mechanism, understand it, and sign. Every voluntary opt-in mechanism has this ceiling. It works for projects that are ideologically aligned and paying attention. Most projects that build on open-source infrastructure and later commercialize never sign anything, not because they object, but because the friction is enough to prevent it.
-
-The second gap is different in kind. The Dependency Funnel routes the 1% obligation by tracing what a project depends on. That tracing assumes dependencies are visible — that when a project uses something, that usage shows up in a manifest or import statement. AI coding tools have broken this assumption. When a developer uses Cursor or Copilot to generate code, the output may be deeply informed by open-source projects — their algorithms, design patterns, architectural decisions — without any explicit import, fork, or attribution. The dependency exists. It just does not appear in any manifest. As AI tools become the primary interface between developers and the open-source ecosystem, the Funnel's dependency graph becomes systematically incomplete.
-
-SPARK License addresses the first gap. SPARK.md addresses the second. Both are Phase 2 deliverables, built on the Registry infrastructure this grant funds.
-
-### 5.1 SPARK License: Embedding Obligations Into the Code Itself
-
-Traditional open-source licenses govern one thing: the right to use code. GPL governs code derivatives. BSL restricts commercial use. The Open Source Pledge asks nicely. None of them attach an economic obligation to a project's commercial lifecycle — to what happens after the code gets used to build something successful.
-
-SPARK License embeds the obligation structure into the license text itself. Any downstream project that incorporates SPARK-licensed code and later commercializes inherits the same obligations: 4% of economic upside to SPARK-aligned projects, 1% to declared dependencies. The commitment travels with the code. A project that has never heard of OpenSeed but ships SPARK-licensed code in its stack becomes part of the network at the moment it commercializes — without any further voluntary action required.
-
-Before commercialization, SPARK License is identical to MIT. Zero obligations. Complete freedom to use, modify, and distribute. The mechanism only activates when a project succeeds.
-
-SPARK License also explicitly covers something GPL was never designed to address: AI-era usage. Using a SPARK-licensed project as a training source, a retrieval reference for an AI coding tool, or a foundational pattern in AI-generated code constitutes a use case that triggers disclosure obligations. This is the first license to treat AI intermediation as a first-class dependency category.
-
-**Pledge and License are independent entry points, not a bundle.** Signing the Pledge does not require switching licenses. Adopting the SPARK License does not require filing a Pledge. Many mature projects have stable license terms that downstream users depend on; requiring a license change as a condition of Pledge adoption would turn a values-alignment decision into a legal coordination problem. The two paths are designed to compound, not gate each other. Projects that adopt both receive a 1.3x Funnel weight multiplier — an economic incentive, not a requirement.
-
-**The path to OSI recognition**
-
-For SPARK License to achieve lasting ecosystem impact, it needs to enter the standard license infrastructure — not remain a project-specific instrument. The target is OSI certification and an SPDX identifier.
-
-The legal argument is that SPARK License satisfies all ten conditions of the Open Source Definition. It does not restrict fields of endeavor. It does not discriminate. The economic obligation only activates post-commercialization, through a tiered and transparent structure that is closer in spirit to copyleft — a mechanism the open-source community has accepted for decades — than to any commercial restriction. Pre-commercialization, it is indistinguishable from MIT.
-
-Phase 2 opens the OSI license-review process with a complete legal draft and OSD compliance analysis. Simultaneously, we file for an SPDX identifier through the Linux Foundation, which is faster and makes the license machine-readable across toolchains. Richard Lin's existing relationships within OSI's international community provide the pre-consultation channel to surface objections before formal submission. Real adoption data from Pledge projects that voluntarily adopt the License is the most compelling evidence that the mechanism is operationally viable, not just theoretically sound.
-
-SPARK License v1.0 ships in Phase 2, with legal review complete, SPDX identifier filed, and OSI review process initiated.
-
-### 5.2 SPARK.md: Making the Invisible Dependency Graph Visible
-
-The second structural gap requires a different kind of fix. It is not about propagation — it is about visibility.
-
-For most of software history, the dependency graph was traceable because usage was explicit. You imported a package; it appeared in your manifest; the Funnel could see it. AI coding tools broke that assumption at the infrastructure level. A developer using Cursor generates a routing module. That module's architecture is informed by express, its validation logic by zod, its error handling pattern by a library the developer has never directly imported. The influence is real. None of it is visible to any existing tooling.
-
-This is not a corner case. It is the default condition of AI-assisted development in 2025. The projects whose patterns are most heavily recycled by AI tools — the foundational libraries that shaped how entire generations of code gets written — may receive the least from the Funnel, because their influence runs through AI intermediation rather than direct import. The mechanism designed to fund the most important open-source work would systematically miss its targets.
-
-SPARK.md is the mechanism for closing this gap. Every SPARK-registered repository includes a SPARK.md file at its root. The YAML frontmatter is machine-parseable: registration status, license type, attribution preferences. The Markdown body is natural language — written for human developers, but also loaded as context by AI coding tools. When Cursor or Copilot indexes a repository, the Markdown body enters the context window. When a developer then generates code informed by that project, they have already been told what the project is, what its registration status means, and what an AI dependency declaration looks like.
-
-The declaration itself is a best-effort estimate, not an audit. A developer looks at AI-generated code, identifies which upstream projects plausibly influenced it, and files the declaration. Submission is compliance. The goal is not perfect accuracy — it is building a practice. The same habit developers already have for package dependencies, extended to AI dependencies.
-
-These declarations feed directly into the Funnel's AI usage depth scoring. Projects frequently declared as AI-era dependencies receive up to a 1.3x weight multiplier in Funnel distributions. The more a project's patterns are actually being used by the ecosystem, the more it benefits — even when that usage runs through AI intermediation rather than a direct import statement.
-
-There is precedent for how a simple convention in a root file becomes infrastructure. In 2017, two security researchers proposed security.txt: a plain text file at `/.well-known/security.txt` where organizations could publish a vulnerability disclosure policy. No standards body, no governance process. Within a few years, Google, GitHub, and Facebook had adopted it. By 2022, it was RFC 9116, an official IETF standard. SPARK.md follows the same logic: a low-friction convention that creates value immediately for early adopters, whose usefulness compounds as adoption spreads, and whose trajectory points toward standardization rather than away from it.
-
-Together, SPARK License and SPARK.md address the two failure modes the Pledge cannot reach on its own: projects that never voluntarily join, and value flows that never appear in any manifest. Phase 1 builds the registry infrastructure both depend on. Phase 2 ships them.
-
----
-
-## 6. What We Are Not Building
+## 5. What We Are Not Building
 
 - Not building a new blockchain or L2. We are deploying on Ethereum Mainnet.
 - Not auditing project revenues. The mechanism runs on self-reporting and community accountability. Social and reputational pressure is the enforcement layer for non-token projects, not surveillance.
@@ -234,7 +222,7 @@ Together, SPARK License and SPARK.md address the two failure modes the Pledge ca
 
 ---
 
-## 7. Open Source Commitment
+## 6. Open Source Commitment
 
 Everything built with this grant will be open-sourced under MIT. Smart contracts verified and public on GitHub and Etherscan. The Dependency Funnel algorithm fully open and auditable. The dashboard frontend open-source. SPARK Pledge tooling forkable by any ecosystem that wants to run its own implementation.
 
@@ -242,7 +230,7 @@ Infrastructure built to support open-source must itself be open-source. That is 
 
 ---
 
-## 8. Budget and Timeline
+## 7. Budget and Timeline
 
 ### Budget
 
@@ -259,17 +247,17 @@ Infrastructure built to support open-source must itself be open-source. That is 
 ### Timeline
 
 **Month 1–2 (May–June): Foundation**  
-Finalize smart contract architecture. Deploy SPARK Pledge Registry v0.1 to testnet. Launch Pledge onboarding site. Begin Cohort 1 recruitment.
+Finalize smart contract architecture. Deploy SPARK Pledge Registry v0.1 to testnet. Launch Pledge onboarding site. Begin Cohort 1 recruitment. Draft SPARK License legal text. Publish SPARK.md spec v0.1.
 
 **Month 3–4 (July–August): Build**  
-Mainnet deployment of Registry contract. Dependency Funnel v0.1 live across npm and PyPI. Compliance Dashboard v0.1 up. Cohort 1: 10+ projects onboarded and pledged.
+Mainnet deployment of Registry contract. Dependency Funnel v0.1 live across npm and PyPI. Compliance Dashboard v0.1 up. Cohort 1: 10+ projects onboarded, pledged, and deploying SPARK.md. SPARK License v0.9 distributed to Cohort 1 projects.
 
 **Month 5–6 (September–November): Validate**  
-First SPARK Report cycle from Cohort 1. Dependency Funnel processing first real allocations. Open registration to global projects. Full grant completion report to EF with all metrics.
+First SPARK Report cycle from Cohort 1. Dependency Funnel processing first real allocations, including AI dependency signals. Open registration to global projects. Full grant completion report to EF with all metrics.
 
 ---
 
-## 9. What We're Measuring
+## 8. What We're Measuring
 
 | Metric | Target (6 months) |
 |--------|-------------------|
@@ -285,7 +273,7 @@ First SPARK Report cycle from Cohort 1. Dependency Funnel processing first real 
 
 ---
 
-## 10. What Comes After
+## 9. What Comes After
 
 Six months of infrastructure work and pilot validation is the beginning, not the end. The sustainability argument is built into the mechanism: as Cohort 1 projects commercialize over the next two to five years, their 4% commitments flow back into the SPARK pool. If three of twenty Cohort 1 projects reach commercial scale and honor their pledge, the pool becomes self-replenishing. That is the real proof of concept — not this grant, but what it enables.
 
@@ -295,11 +283,11 @@ Phase 2, starting in 2026: 100+ projects globally, integration with Gitcoin and 
 
 ---
 
-## 11. Team
+## 10. Team
 
 **Richard Lin (林旅强)** — Co-founder, OpenSeed. Co-founder of KAIYUANSHE, China's largest vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Open Source Ecosystem Lead at Datastrato.ai. Previously Head of Developer Ecosystem at Huawei Cloud and 01.AI. Long-term participant in Apache, Linux Foundation, and OSI international communities.
 
-**Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Organizer of RustCC and PyChina. Member of the SPARK working group Signal channel since April 2025.
+**Ian Xu (许银就)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Organizer of RustCC and PyChina. Member of the SPARK working group Signal channel since April 2025.
 
 **SPARK Working Group:** Vitalik Buterin (mechanism co-designer), Liraz Siri, Mario Behling, Richard Lin, QZ, and other members of the original SPARK Signal group.
 
