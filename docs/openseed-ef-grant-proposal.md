@@ -1,8 +1,11 @@
+---
+description: ""
+---
 # OpenSeed: Building the Infrastructure That Lets SPARK Actually Work
 ## Ethereum Foundation Grant Application
 
 **Applicant:** OpenSeed  
-**Co-founders:** Richard Lin, Ian Xu  
+**Co-founders:** Richard Lin, Ian Xu, Qing Xin  
 **Requested Amount:** $100,000 USD  
 **Grant Type:** Ecosystem Development  
 **Timeline:** May 2025 – November 2025 (6 months)  
@@ -287,7 +290,7 @@ Phase 2, starting in 2026: 100+ projects globally, integration with Gitcoin and 
 
 **Richard Lin (林旅强)** — Co-founder, OpenSeed. Co-founder of KAIYUANSHE, China's largest vendor-neutral open-source community and the first Chinese member of the Open Source Initiative (OSI). Open Source Ecosystem Lead at Datastrato.ai. Previously Head of Developer Ecosystem at Huawei Cloud and 01.AI. Long-term participant in Apache, Linux Foundation, and OSI international communities.
 
-**Ian Xu (许银就)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Organizer of RustCC and PyChina. Member of the SPARK working group Signal channel since April 2025.
+**Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Organizer of RustCC and PyChina. Member of the SPARK working group Signal channel since April 2025.
 
 **SPARK Working Group:** Vitalik Buterin (mechanism co-designer), Liraz Siri, Mario Behling, Richard Lin, QZ, and other members of the original SPARK Signal group.
 
