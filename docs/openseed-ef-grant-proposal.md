@@ -5,7 +5,7 @@ description: ""
 ## Ethereum Foundation Grant Application
 
 **Applicant:** OpenSeed  
-**Co-founders:** Richard Lin, Ian Xu, Qing Xin  
+**Co-founders:** Richard Lin, Ian Xu, Cynthia Xin  
 **Requested Amount:** $100,000 USD  
 **Grant Type:** Ecosystem Development  
 **Timeline:** May 2025 – November 2025 (6 months)  
@@ -292,7 +292,7 @@ Phase 2, starting in 2026: 100+ projects globally, integration with Gitcoin and 
 
 **Ian Xu (许银)** — Co-founder, OpenSeed. Board Director of KAIYUANSHE. Founder of OpenBuild community. Core contributor to RustCC and PyChina. Member of the SPARK working group Signal channel since April 2025.
 
-**Qing Xin (辛庆)** — Co-founder, OpenSeed. Lead organizer of PyChina community.
+**Cynthia Xin (辛庆)** — Co-founder, OpenSeed. Lead organizer of PyChina community.
 
 **SPARK Working Group:** Vitalik Buterin (mechanism co-designer), Liraz Siri, Mario Behling, Richard Lin, QZ, and other members of the original SPARK Signal group.
 

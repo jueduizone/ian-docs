@@ -86,7 +86,7 @@ export function getAllDocs(): DocMeta[] {
       date: dateStr,
       createdAt: formatDateTime(stat.birthtime || stat.mtime),
       updatedAt: formatDateTime(stat.mtime),
-      description: data.description || extractDescriptionFromContent(content),
+      description: data.description !== undefined ? data.description : extractDescriptionFromContent(content),
     }
   })
 
@@ -122,7 +122,7 @@ export async function getDocBySlug(slug: string): Promise<DocFull | null> {
     date: dateStr,
     createdAt: formatDateTime(stat.birthtime || stat.mtime),
     updatedAt: formatDateTime(stat.mtime),
-    description: data.description || extractDescriptionFromContent(content),
+    description: data.description !== undefined ? data.description : extractDescriptionFromContent(content),
     contentHtml,
   }
 }
