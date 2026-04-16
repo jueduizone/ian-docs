@@ -850,5 +850,25 @@ h1.title .gradient-text,.h1 .gradient-text{background:var(--grad);-webkit-backgr
   });
 })();
 </script>
+
+<script>
+// Touch swipe navigation
+(function(){
+  var startX, startY;
+  document.addEventListener('touchstart', function(e){
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, {passive: true});
+  document.addEventListener('touchend', function(e){
+    if(startX == null) return;
+    var dx = e.changedTouches[0].clientX - startX;
+    var dy = e.changedTouches[0].clientY - startY;
+    if(Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    if(dx < 0) document.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
+    else document.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowLeft',bubbles:true}));
+    startX = null;
+  }, {passive: true});
+})();
+</script>
 </body>
 </html>
