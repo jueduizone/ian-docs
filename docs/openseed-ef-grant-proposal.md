@@ -36,7 +36,7 @@ The projects that commercially succeed, the ones that built on these foundations
 
 This problem is not evenly distributed. The open-source infrastructure running inside Chinese-speaking developer communities, tooling that serves tens of millions of developers across China, Taiwan, Hong Kong, and the diaspora, sits even further from the existing funding mechanisms, nearly all of which are English-first and Western-community-centered. Years of real contribution, largely invisible to the grants that could sustain it.
 
-Gitcoin Grants, Optimism RetroPGF, and Protocol Guild each do something real. None of them solve the recursive dependency layer, none of them have strong reach into non-English-speaking communities, and none of them make a forward commitment, a promise at the beginning of a project's life to share the upside when it comes.
+Gitcoin Grants, Optimism RetroPGF, and Protocol Guild each do something real. None of them solve the recursive dependency layer, none of them have strong reach beyond their existing ecosystems, and none of them make a forward commitment, a promise at the beginning of a project's life to share the upside when it comes.
 
 ### 2.2 What SPARK Actually Says
 

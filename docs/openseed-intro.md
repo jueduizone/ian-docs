@@ -16,7 +16,7 @@ Every layer of the Ethereum ecosystem runs on open source software — wallets, 
 
 Most grants are one-shot: scoped, time-limited, then done. Projects that started open source and grew into successful companies rarely send anything back upstream. Critical infrastructure maintainers work for well below market rate, or for free. The mechanism to make that sustainable simply doesn't exist.
 
-Existing approaches each cover part of the picture. Gitcoin Grants relies on community donations. Optimism RetroPGF funds retroactively within its own ecosystem. Protocol Guild only covers Ethereum core contributors. The recursive dependency layer, non-token projects, and developer communities outside English-speaking Web3 — these remain uncovered.
+Existing approaches each cover part of the picture. Gitcoin Grants relies on community donations. Optimism RetroPGF funds retroactively within its own ecosystem. Protocol Guild only covers Ethereum core contributors. The recursive dependency layer and non-token projects — these remain uncovered.
 
 ### 1.2 What SPARK proposes
 
@@ -93,9 +93,9 @@ Anyone — community members, downstream projects, partner organizations — can
 
 A multisig treasury that accepts community donations and, over time, the 4% recursive contributions from commercialized projects. Funds are allocated to new SPARK projects through a review process. OpenSeed manages it initially; governance transitions on-chain in Phase 2.
 
-### 2.5 Cohort 1: Chinese-speaking Developer Pilot
+### 2.5 Cohort 1: Seed Projects
 
-Through OpenBuild's developer network, we're recruiting 10–20 open source projects from Chinese-speaking communities as the first cohort. Scope is broad — not just Ethereum-native projects. Web3 tooling, developer infrastructure, AI tooling, general open source software all qualify.
+OpenBuild has spent years building a developer community with real depth. That's where Cohort 1 starts. We're recruiting 10–20 open source projects — Web3 tooling, developer infrastructure, AI tooling, general open source software. Not limited to Ethereum-native projects. This is the first time the SPARK mechanism runs on real projects.
 
 Selected projects receive onboarding support, technical integration assistance, visibility in the SPARK Registry, and eligibility to apply for treasury funding.
 
