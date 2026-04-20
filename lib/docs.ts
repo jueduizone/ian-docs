@@ -16,6 +16,7 @@ export interface DocMeta {
   createdAt: string
   updatedAt: string
   description: string
+  hidden?: boolean
 }
 
 export interface DocFull extends DocMeta {
@@ -87,10 +88,11 @@ export function getAllDocs(): DocMeta[] {
       createdAt: formatDateTime(stat.birthtime || stat.mtime),
       updatedAt: formatDateTime(stat.mtime),
       description: data.description !== undefined ? data.description : extractDescriptionFromContent(content),
+      hidden: data.hidden === true,
     }
   })
 
-  return docs.sort((a, b) => (a.date < b.date ? 1 : -1))
+  return docs.filter(d => !d.hidden).sort((a, b) => (a.date < b.date ? 1 : -1))
 }
 
 export async function getDocBySlug(slug: string): Promise<DocFull | null> {

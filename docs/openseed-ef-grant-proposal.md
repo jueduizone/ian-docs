@@ -1,5 +1,6 @@
 ---
 description: ""
+hidden: true
 ---
 # OpenSeed: Building the Infrastructure That Lets SPARK Actually Work
 ## Ethereum Foundation Grant Application
