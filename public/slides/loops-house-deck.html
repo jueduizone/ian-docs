@@ -89,6 +89,24 @@
   .collab .h{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--green-700);font-weight:700;margin-bottom:10px}
   .collab .names{font-size:15px;line-height:1.7;color:var(--ink);font-weight:600}
 
+  /* ============ SLIDE 3 · CO-ORGANIZERS ============ */
+  .co-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
+  .co-card{border:1px solid var(--line);border-radius:12px;padding:28px;background:#fff;display:flex;flex-direction:column;gap:18px}
+  .co-head{display:flex;align-items:center;gap:20px}
+  .co-logo{background:var(--green-900);border:1px solid var(--green-900);border-radius:10px;padding:14px 20px;height:78px;min-width:140px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .co-logo img{max-height:48px;max-width:150px;object-fit:contain}
+  .co-title h3{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
+  .co-title .tag{font-size:13px;color:var(--green-700);font-weight:600;margin-top:4px}
+  .co-body{font-size:15px;line-height:1.6;color:var(--ink-2)}
+  .co-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:auto}
+  .co-stats > div{background:var(--green-50);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center}
+  .co-stats b{display:block;font-size:26px;font-weight:800;color:var(--green-700);letter-spacing:-0.01em;line-height:1}
+  .co-stats span{display:block;margin-top:6px;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .co-collab{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+  .co-collab .cc-row{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:10px 14px;background:var(--green-50);border:1px solid var(--line);border-radius:8px;align-items:baseline}
+  .co-collab .cc-row b{font-size:11px;color:var(--green-700);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .co-collab .cc-row span{font-size:13px;color:var(--ink);font-weight:500;line-height:1.45}
+
   /* ============ SLIDE 4 · PARTNERS ============ */
   .partners-block{margin-bottom:28px}
   .partners-block > .h{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--green-700);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:12px}
@@ -260,44 +278,55 @@
     </div>
   </section>
 
-  <!-- ============= SLIDE 3 · MEET AI 搞什么 ============= -->
+  <!-- ============= SLIDE 3 · CO-ORGANIZERS ============= -->
   <section class="slide">
     <div class="band">
-      <h2><em>02</em>Meet AI 搞什么</h2>
-      <p>The community for AI builders who actually ship.</p>
+      <h2><em>02</em>Meet the Co-Organizers</h2>
+      <p>Two complementary operators — one bridging global builders, one anchoring the China AI community.</p>
     </div>
     <div class="slide-body">
-      <div class="aigsm-hero">
-        <img src="loops-house-logos/aigaoshenme.png" alt="AI 搞什么">
-        <div class="t">
-          <h3>AI 搞什么 · Co-organizer</h3>
-          <p>A practitioner-only community for builders using AI in production.</p>
+      <div class="co-grid">
+        <!-- Germina Labs -->
+        <div class="co-card">
+          <div class="co-head">
+            <div class="co-logo dark"><img src="loops-house-logos/germina.png" alt="Germina Labs"></div>
+            <div class="co-title">
+              <h3>Germina Labs</h3>
+              <p class="tag">Operator of Loops House</p>
+            </div>
+          </div>
+          <p class="co-body">
+            Germina Labs builds the infrastructure for AI-native product founders — curating residencies, shipping programs, and revenue-validation loops. Two pilots run so far (Delhi, Buenos Aires), both delivering measurable launches and first-dollar revenue.
+          </p>
+          <div class="co-stats">
+            <div><b>491</b><span>Pilot applicants</span></div>
+            <div><b>62</b><span>Builders selected</span></div>
+            <div><b>35</b><span>Products shipped</span></div>
+          </div>
         </div>
-      </div>
-      <p class="aigsm-body">
-        AI 搞什么 is a practitioner-only community for builders using AI in production. No hype. No theory. Just real deployments, real lessons, real edges — connecting every builder making things happen with AI.
-      </p>
-      <div>
-        <div class="block-title">Past Collaborators</div>
-        <div class="collab-grid">
-          <div class="collab">
-            <div class="h">Model Labs</div>
-            <div class="names">Zhipu AI · StepFun · Moonshot (Kimi) · Doubao</div>
+        <!-- AI 搞什么 -->
+        <div class="co-card">
+          <div class="co-head">
+            <div class="co-logo dark"><img src="loops-house-logos/aigaoshenme.png" alt="AI 搞什么"></div>
+            <div class="co-title">
+              <h3>AI 搞什么</h3>
+              <p class="tag">China-based builder community · Shanghai host</p>
+            </div>
           </div>
-          <div class="collab">
-            <div class="h">AI Infrastructure</div>
-            <div class="names">ModelScope · Zilliz · OceanBase · RTE Dev Community</div>
-          </div>
-          <div class="collab">
-            <div class="h">Developer Communities</div>
-            <div class="names">Datawhale · Kaiyuanshe · OpenBuild · SegmentFault · VibeFriends · dbaplus</div>
+          <p class="co-body">
+            AI 搞什么 is a practitioner-only community for builders using AI in production. No hype. No theory. Just real deployments, real lessons, real edges — connecting every builder making things happen with AI.
+          </p>
+          <div class="co-collab">
+            <div class="cc-row"><b>Model Labs</b><span>Zhipu AI · StepFun · Moonshot · Doubao</span></div>
+            <div class="cc-row"><b>AI Infra</b><span>ModelScope · Zilliz · OceanBase · RTE</span></div>
+            <div class="cc-row"><b>Dev Communities</b><span>Datawhale · Kaiyuanshe · OpenBuild · SegmentFault · VibeFriends · dbaplus</span></div>
           </div>
         </div>
       </div>
     </div>
     <div class="footer-band">
-      <div>Co-organized with AI 搞什么 — a curated network of 10,000+ China-based AI practitioners.</div>
-      <div class="fb-right">02 · Meet AI 搞什么</div>
+      <div>Germina Labs brings the playbook. AI 搞什么 brings the room. Together: Loops House Shanghai.</div>
+      <div class="fb-right">02 · Co-Organizers</div>
     </div>
   </section>
 
@@ -333,7 +362,6 @@
       <div class="partners-block">
         <div class="h">Organized by</div>
         <div class="logo-row organizers">
-          <div class="logo-cell dark"><span class="loops-mark">Loops<span>.</span></span></div>
           <div class="logo-cell dark"><img src="loops-house-logos/germina.png" alt="Germina Labs"></div>
           <div class="logo-cell dark"><img src="loops-house-logos/aigaoshenme.png" alt="AI 搞什么"></div>
         </div>
