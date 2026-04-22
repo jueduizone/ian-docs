@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Loops House · Shanghai Residency — Sponsorship Deck</title>
+<meta name="viewport" content="width=1280" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-900:#14361f;
+    --green-700:#1f5a33;
+    --green-500:#2f7a4a;
+    --green-200:#d7e8dc;
+    --green-50:#f3f8f4;
+    --ink:#0f1b14;
+    --ink-2:#3b4a41;
+    --muted:#6b7a70;
+    --line:#d8e0da;
+    --accent:#e8b64a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#e9ece9;font-family:'Inter','Noto Sans SC',system-ui,-apple-system,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+  body{padding:24px 0 80px}
+  .deck{width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+
+  /* 16:9 slide frame */
+  .slide{
+    width:1280px;height:720px;background:#fff;border-radius:12px;
+    box-shadow:0 14px 40px rgba(20,54,31,.14);overflow:hidden;position:relative;
+    display:flex;flex-direction:column;
+  }
+
+  /* ---------- Header band shared across content slides ---------- */
+  .band{
+    background:var(--green-900);color:#fff;padding:24px 56px;display:flex;align-items:flex-end;gap:24px;
+  }
+  .band h2{font-weight:800;font-size:34px;letter-spacing:-0.01em}
+  .band h2 em{color:var(--accent);font-style:normal;font-weight:800;margin-right:10px}
+  .band p{color:#b9d0c0;font-size:16px;margin-bottom:4px;font-weight:500}
+  .slide-body{flex:1;padding:48px 56px;display:flex;flex-direction:column;gap:28px;min-height:0}
+  .footer-band{
+    background:var(--green-50);color:var(--ink-2);font-size:12.5px;
+    padding:14px 56px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;
+  }
+  .footer-band .fb-right{color:var(--muted);font-weight:500}
+
+  /* ============ SLIDE 1 · COVER ============ */
+  .cover{background:linear-gradient(135deg,#14361f 0%,#1f5a33 55%,#2f7a4a 100%);color:#fff;padding:72px 80px;display:flex;flex-direction:column;justify-content:space-between}
+  .cover-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .cover-tag{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#b9d0c0;font-weight:600}
+  .cover-contact{font-size:13px;color:#b9d0c0;text-align:right;line-height:1.7}
+  .cover-mid h1{font-size:104px;line-height:.98;letter-spacing:-0.03em;font-weight:800}
+  .cover-mid h1 span{display:block;color:var(--accent);font-weight:800}
+  .cover-mid .tagline{margin-top:28px;font-size:22px;max-width:720px;line-height:1.45;color:#e8f2ec;font-weight:400}
+  .cover-bot{display:flex;justify-content:space-between;align-items:flex-end;gap:48px}
+  .cover-hosts{display:flex;flex-direction:column;gap:10px}
+  .cover-hosts .label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#b9d0c0;font-weight:600}
+  .cover-hosts .names{font-size:22px;font-weight:700;color:#fff}
+  .cover-meta{display:flex;gap:40px}
+  .cover-meta .item{display:flex;flex-direction:column;gap:4px}
+  .cover-meta .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#b9d0c0;font-weight:600}
+  .cover-meta .v{font-size:20px;font-weight:700}
+
+  /* ============ SLIDE 2 · ABOUT LOOPS ============ */
+  .two-col{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
+  .hero-p{font-size:18px;line-height:1.65;color:var(--ink)}
+  .hero-p b{color:var(--green-700);font-weight:700}
+  .kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+  .kpi{background:var(--green-50);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .kpi .n{font-size:30px;font-weight:800;color:var(--green-700);letter-spacing:-0.01em}
+  .kpi .l{font-size:12px;color:var(--muted);margin-top:4px;font-weight:500;letter-spacing:.02em;text-transform:uppercase}
+
+  .pilots-title{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:14px}
+  .pilot{border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:12px;background:#fff}
+  .pilot h4{font-size:16px;color:var(--green-700);font-weight:700;margin-bottom:6px}
+  .pilot .line{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+  .pilot .line b{color:var(--ink);font-weight:700}
+
+  /* ============ SLIDE 3 · AI 搞什么 ============ */
+  .aigsm-hero{display:flex;align-items:center;gap:40px;margin-bottom:12px}
+  .aigsm-hero img{height:100px;width:auto}
+  .aigsm-hero .t h3{font-size:30px;font-weight:800;letter-spacing:-0.01em}
+  .aigsm-hero .t p{font-size:17px;color:var(--muted);margin-top:6px;line-height:1.5;font-weight:500}
+  .aigsm-body{font-size:17px;line-height:1.65;color:var(--ink-2);max-width:1040px}
+  .collab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:6px}
+  .collab{background:var(--green-50);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+  .collab .h{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--green-700);font-weight:700;margin-bottom:10px}
+  .collab .names{font-size:15px;line-height:1.7;color:var(--ink);font-weight:600}
+
+  /* ============ SLIDE 4 · PARTNERS ============ */
+  .partners-block{margin-bottom:28px}
+  .partners-block > .h{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--green-700);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+  .partners-block > .h::after{content:"";flex:1;height:1px;background:var(--line)}
+  .logo-row{display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+  .logo-row.sponsors .logo-cell{min-width:220px;height:96px;padding:14px 28px}
+  .logo-row.sponsors .logo-cell img{max-height:64px}
+  .logo-cell{
+    background:#fff;border:1px solid var(--line);border-radius:10px;
+    height:78px;padding:10px 20px;display:flex;align-items:center;justify-content:center;
+    flex:0 0 auto;min-width:170px;
+  }
+  .logo-cell img{max-height:48px;max-width:180px;object-fit:contain}
+  .more-coming{
+    display:inline-flex;align-items:center;gap:8px;height:78px;padding:0 22px;
+    border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-weight:600;font-size:14px;
+    font-style:italic;
+  }
+
+  /* ============ SLIDE 5 · THE EVENT ============ */
+  .event-hero{background:var(--green-50);border:1px solid var(--line);border-radius:12px;padding:20px 24px;font-size:16px;font-weight:600;color:var(--ink);display:flex;gap:32px;flex-wrap:wrap}
+  .event-hero .i{display:flex;align-items:center;gap:10px}
+  .event-hero .i em{font-style:normal;color:var(--green-700)}
+  .event-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:40px}
+  .block-title{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--green-700);font-weight:700;margin-bottom:16px}
+  .who-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .who-cell{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .who-cell .n{font-size:28px;font-weight:800;color:var(--green-700);letter-spacing:-0.01em}
+  .who-cell .l{font-size:12.5px;color:var(--muted);margin-top:4px;font-weight:500}
+  .tracks{display:flex;flex-direction:column;gap:10px}
+  .track{display:flex;gap:14px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .track .dot{width:28px;height:28px;border-radius:50%;background:var(--green-50);color:var(--green-700);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px;flex:0 0 28px}
+  .track .txt{font-size:14px;line-height:1.5}
+  .track .txt b{color:var(--green-700);font-weight:700;display:block;margin-bottom:2px}
+  .track .txt span{color:var(--ink-2)}
+
+  /* ============ SLIDE 6 · PROGRAM ============ */
+  .prog-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:40px}
+  .ptable{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+  .ptable .row{display:grid;grid-template-columns:1.1fr .9fr 1.6fr;border-bottom:1px solid var(--line)}
+  .ptable .row:last-child{border-bottom:none}
+  .ptable .row.head{background:var(--green-900);color:#fff}
+  .ptable .row.head .cell{color:#fff;font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+  .ptable .cell{padding:14px 16px;font-size:14px;line-height:1.5;color:var(--ink-2)}
+  .ptable .cell.b{color:var(--ink);font-weight:700}
+  .ptable .row.highlight{background:#fff8e8}
+  .ptable .row.highlight .cell.b{color:var(--accent)}
+  .dollar-box{background:var(--green-900);color:#fff;border-radius:12px;padding:20px 22px;margin-top:16px}
+  .dollar-box .t{font-size:15px;font-weight:800;color:var(--accent);letter-spacing:.02em;margin-bottom:6px}
+  .dollar-box .b{font-size:14px;line-height:1.6;color:#e2efe5}
+
+  /* ============ SLIDE 7 · TIERS ============ */
+  .tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+  .tier{border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;background:#fff;position:relative}
+  .tier.gold{border:2px solid var(--accent);background:linear-gradient(180deg,#fff9e8 0%,#fff 60%)}
+  .tier.gold::before{content:"🏆 Recommended";position:absolute;top:-12px;left:24px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+  .tier .name{font-size:18px;font-weight:700;color:var(--green-700)}
+  .tier .price{font-size:36px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;margin:6px 0 14px}
+  .tier .price small{font-size:14px;font-weight:500;color:var(--muted);margin-left:4px}
+  .tier ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .tier li{font-size:13.5px;line-height:1.55;color:var(--ink-2);padding-left:20px;position:relative}
+  .tier li::before{content:"✓";position:absolute;left:0;color:var(--green-700);font-weight:700}
+  .tier li.plus{font-weight:700;color:var(--green-700);padding-left:0}
+  .tier li.plus::before{content:""}
+
+  /* ============ SLIDE 8 · OUTCOMES & ROADMAP ============ */
+  .outcomes-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .outcomes-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .outcome{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:baseline}
+  .outcome .k{font-size:13px;color:var(--ink-2);font-weight:500}
+  .outcome .v{font-size:22px;font-weight:800;color:var(--green-700);letter-spacing:-0.01em}
+  .roadmap{display:flex;flex-direction:column;gap:10px}
+  .road{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;grid-template-columns:28px 1fr auto;gap:12px;align-items:center}
+  .road.active{border:1.5px solid var(--green-700);background:var(--green-50)}
+  .road .flag{font-size:20px}
+  .road .name{font-size:14px;font-weight:700;color:var(--ink)}
+  .road .loc{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .road .date{font-size:13px;color:var(--green-700);font-weight:700}
+  .road.active .date{background:var(--green-700);color:#fff;padding:4px 10px;border-radius:999px}
+
+  /* ============ SLIDE 9 · CTA ============ */
+  .cta{background:linear-gradient(135deg,#14361f 0%,#1f5a33 55%,#2f7a4a 100%);color:#fff;padding:72px 80px;display:flex;flex-direction:column;justify-content:space-between}
+  .cta-head h1{font-size:96px;line-height:1;letter-spacing:-0.03em;font-weight:800}
+  .cta-head h1 span{display:block}
+  .cta-head h1 .accent{color:var(--accent)}
+  .cta-head .sub{margin-top:20px;font-size:20px;color:#e8f2ec;font-weight:500;max-width:840px;line-height:1.5}
+  .cta-mid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .cta-mid .card{background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:16px 18px;font-size:13.5px;line-height:1.55;color:#e8f2ec}
+  .cta-mid .card b{display:block;color:var(--accent);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;font-weight:700}
+  .cta-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+  .cta-contacts{display:flex;flex-direction:column;gap:6px}
+  .cta-contacts .lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#b9d0c0;font-weight:700}
+  .cta-contacts .v{font-size:18px;font-weight:700;color:#fff}
+  .cta-sign{font-size:13px;color:#b9d0c0;text-align:right;line-height:1.6}
+
+  /* Print */
+  @media print{
+    @page{size:1280px 720px;margin:0}
+    body{background:#fff;padding:0}
+    .deck{gap:0}
+    .slide{border-radius:0;box-shadow:none;page-break-after:always;break-after:page}
+    .slide:last-child{page-break-after:auto}
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- ============= SLIDE 1 · COVER ============= -->
+  <section class="slide cover">
+    <div class="cover-top">
+      <div class="cover-tag">Sponsorship Deck · 2026</div>
+      <div class="cover-contact">contact@germinalabs.xyz<br>x.com/germinalabs</div>
+    </div>
+    <div class="cover-mid">
+      <h1>Loops House<span>Shanghai Residency.</span></h1>
+      <p class="tagline">A 3-day in-person residency for AI builders who ship, launch, and earn their first revenue — not just another demo.</p>
+    </div>
+    <div class="cover-bot">
+      <div class="cover-hosts">
+        <div class="label">Hosted by</div>
+        <div class="names">Germina Labs  +  AI 搞什么</div>
+      </div>
+      <div class="cover-meta">
+        <div class="item"><div class="k">Date</div><div class="v">May 13–15, 2026</div></div>
+        <div class="item"><div class="k">City</div><div class="v">Shanghai · The Mu</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 2 · ABOUT LOOPS ============= -->
+  <section class="slide">
+    <div class="band">
+      <h2><em>01</em>About Loops</h2>
+      <p>The AI-native residency where builders ship, launch, and earn their first revenue.</p>
+    </div>
+    <div class="slide-body">
+      <div class="two-col">
+        <div>
+          <p class="hero-p">
+            <b>Loops House</b> is a 3-day in-person residency in Shanghai where AI builders don't just code — they launch. Run by <b>Germina Labs</b>, we've previously hosted two pilots in Delhi and Buenos Aires, attracting <b>491 registrations</b>, <b>62 shortlisted builders</b>, and <b>35 shipped products</b>.
+          </p>
+          <div class="kpi-grid">
+            <div class="kpi"><div class="n">491</div><div class="l">Registrations</div></div>
+            <div class="kpi"><div class="n">62</div><div class="l">Shortlisted</div></div>
+            <div class="kpi"><div class="n">35</div><div class="l">Products shipped</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="pilots-title">Pilots</div>
+          <div class="pilot">
+            <h4>🇮🇳 Loops Delhi · Oct 2025</h4>
+            <div class="line"><b>256 applicants</b> · 32 builders · 18 products shipped · 4 revenue-validated on Demo Day.</div>
+          </div>
+          <div class="pilot">
+            <h4>🇦🇷 Loops Buenos Aires · Feb 2026</h4>
+            <div class="line"><b>235 applicants</b> · 30 builders · 17 products shipped · 6 revenue-validated.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-band">
+      <div>Loops is operated by <b>Germina Labs</b> — building the infrastructure for AI-native product founders.</div>
+      <div class="fb-right">germinalabs.xyz</div>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 3 · MEET AI 搞什么 ============= -->
+  <section class="slide">
+    <div class="band">
+      <h2><em>02</em>Meet AI 搞什么</h2>
+      <p>The community for AI builders who actually ship.</p>
+    </div>
+    <div class="slide-body">
+      <div class="aigsm-hero">
+        <img src="loops-house-logos/aigaoshenme.png" alt="AI 搞什么">
+        <div class="t">
+          <h3>AI 搞什么 · Co-organizer</h3>
+          <p>A practitioner-only community for builders using AI in production.</p>
+        </div>
+      </div>
+      <p class="aigsm-body">
+        AI 搞什么 is a practitioner-only community for builders using AI in production. No hype. No theory. Just real deployments, real lessons, real edges — connecting every builder making things happen with AI.
+      </p>
+      <div>
+        <div class="block-title">Past Collaborators</div>
+        <div class="collab-grid">
+          <div class="collab">
+            <div class="h">Model Labs</div>
+            <div class="names">智谱 AI · 阶跃星辰 · Kimi · 豆包编程</div>
+          </div>
+          <div class="collab">
+            <div class="h">AI Infrastructure</div>
+            <div class="names">ModelScope · Zilliz · OceanBase · RTE 开发者社区</div>
+          </div>
+          <div class="collab">
+            <div class="h">Developer Communities</div>
+            <div class="names">Datawhale · 开源社 · OpenBuild · SegmentFault · VibeFriends · dbaplus</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-band">
+      <div>Co-organized with AI 搞什么 — a curated network of 10,000+ China-based AI practitioners.</div>
+      <div class="fb-right">02 · Meet AI 搞什么</div>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 4 · PARTNERS ============= -->
+  <section class="slide">
+    <div class="band">
+      <h2><em>03</em>Partners</h2>
+      <p>Confirmed sponsors and community partners — more are joining.</p>
+    </div>
+    <div class="slide-body">
+      <div class="partners-block">
+        <div class="h">Confirmed Sponsors</div>
+        <div class="logo-row sponsors">
+          <div class="logo-cell"><img src="loops-house-logos/zhipu.svg" alt="智谱 AI"></div>
+          <div class="logo-cell"><img src="loops-house-logos/aws.png" alt="AWS"></div>
+          <div class="logo-cell"><img src="loops-house-logos/dataforai.png" alt="Data for AI"></div>
+        </div>
+      </div>
+      <div class="partners-block">
+        <div class="h">Community Partners</div>
+        <div class="logo-row">
+          <div class="logo-cell"><img src="loops-house-logos/openbuild.svg" alt="OpenBuild"></div>
+          <div class="logo-cell"><img src="loops-house-logos/segmentfault.svg" alt="SegmentFault"></div>
+          <div class="logo-cell"><img src="loops-house-logos/datawhale.svg" alt="Datawhale"></div>
+          <div class="logo-cell"><img src="loops-house-logos/kaiyuanshe.png" alt="开源社"></div>
+          <div class="logo-cell"><img src="loops-house-logos/rte.png" alt="RTE 开发者社区"></div>
+          <div class="logo-cell"><img src="loops-house-logos/vibefriends.svg" alt="VibeFriends"></div>
+          <div class="logo-cell"><img src="loops-house-logos/startupgrind.svg" alt="StartupGrind"></div>
+          <div class="logo-cell"><img src="loops-house-logos/hackathonweekly.svg" alt="HackathonWeekly 周周黑客松"></div>
+          <div class="more-coming">+ more is coming</div>
+        </div>
+      </div>
+      <div class="partners-block">
+        <div class="h">Organized by</div>
+        <div class="logo-row">
+          <div class="logo-cell"><img src="loops-house-logos/germina.png" alt="Germina Labs"></div>
+          <div class="logo-cell"><img src="loops-house-logos/aigaoshenme.png" alt="AI 搞什么"></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-band">
+      <div>Want to join this page? <b>contact@germinalabs.xyz</b></div>
+      <div class="fb-right">03 · Partners</div>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 5 · THE EVENT ============= -->
+  <section class="slide">
+    <div class="band">
+      <h2><em>04</em>The Event</h2>
+      <p>A 3-day in-person residency for AI builders.</p>
+    </div>
+    <div class="slide-body">
+      <div class="event-hero">
+        <div class="i"><em>📅</em>May 13–15, 2026</div>
+        <div class="i"><em>📍</em>The Mu, Shanghai</div>
+        <div class="i"><em>🎯</em>Theme · AI products that ship, launch, and earn</div>
+      </div>
+      <div class="event-layout">
+        <div>
+          <div class="block-title">Who's in the Room</div>
+          <div class="who-grid">
+            <div class="who-cell"><div class="n">25–30</div><div class="l">Selected builders</div></div>
+            <div class="who-cell"><div class="n">10–12</div><div class="l">Shortlisted teams</div></div>
+            <div class="who-cell"><div class="n">70%</div><div class="l">MVP / POC stage</div></div>
+            <div class="who-cell"><div class="n">30%</div><div class="l">Idea stage</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="block-title">Focus Tracks</div>
+          <div class="tracks">
+            <div class="track"><div class="dot">01</div><div class="txt"><b>Agentic Workflows</b><span>AI agents that automate real operations</span></div></div>
+            <div class="track"><div class="dot">02</div><div class="txt"><b>AI for Commerce</b><span>Tools that drive transactions and revenue</span></div></div>
+            <div class="track"><div class="dot">03</div><div class="txt"><b>Everyday AI</b><span>Assistants for knowledge work and creativity</span></div></div>
+            <div class="track"><div class="dot">04</div><div class="txt"><b>Multi-Agent Systems</b><span>Coordination and orchestration infrastructure</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-band">
+      <div>Selection: clarity of problem · founder conviction · real-world applicability · speed of execution · launch within 30–60 days.</div>
+      <div class="fb-right">04 · The Event</div>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 6 · PROGRAM ============= -->
+  <section class="slide">
+    <div class="band">
+      <h2><em>05</em>Program Structure</h2>
+      <p>Pre-Residency Sprint  +  3-Day Shanghai Residency.</p>
+    </div>
+    <div class="slide-body">
+      <div class="prog-grid">
+        <div>
+          <div class="block-title">Pre-Residency (Virtual)</div>
+          <div class="ptable">
+            <div class="row head"><div class="cell">Phase</div><div class="cell">Timeline</div><div class="cell">Activities</div></div>
+            <div class="row"><div class="cell b">Phase 1<br><small style="font-weight:500;color:var(--muted)">Registration & Ideation</small></div><div class="cell">Mar 16 – Mar 31</div><div class="cell">Applications open · AI agents help refine submissions</div></div>
+            <div class="row"><div class="cell b">Phase 2<br><small style="font-weight:500;color:var(--muted)">Selection & Sprints</small></div><div class="cell">Apr 10 – May 10</div><div class="cell">Online hackathon · team formation · MVP prep</div></div>
+          </div>
+          <div class="dollar-box">
+            <div class="t">🏆 The $1 Challenge</div>
+            <div class="b">Every judge who's convinced becomes the product's first paying customer. Loops matches each $1 with $100, up to $500 per project — teams walk off stage with real revenue.</div>
+          </div>
+        </div>
+        <div>
+          <div class="block-title">Shanghai Residency (In-Person)</div>
+          <div class="ptable">
+            <div class="row head"><div class="cell">Day</div><div class="cell">Focus</div><div class="cell">Key Deliverable</div></div>
+            <div class="row"><div class="cell b">Day 1 · May 13</div><div class="cell">Kickoff · MVP polish · ICP lock-in</div><div class="cell">Problem statement + ICP profile</div></div>
+            <div class="row"><div class="cell b">Day 2 · May 14</div><div class="cell">Launch · storytelling · first users</div><div class="cell">Live landing page + 5+ validations</div></div>
+            <div class="row highlight"><div class="cell b">Day 3 · May 15</div><div class="cell">🏆 <b>Demo Day</b></div><div class="cell">Final pitch · $1 Challenge · real revenue</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-band">
+      <div>Total duration: ~8 weeks pre-residency + 3 days on-site. Every team ships a live product.</div>
+      <div class="fb-right">05 · Program Structure</div>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 7 · SPONSORSHIP TIERS ============= -->
+  <section class="slide">
+    <div class="band">
+      <h2><em>06</em>Sponsorship Tiers</h2>
+      <p>Choose how deep you want to go.</p>
+    </div>
+    <div class="slide-body">
+      <div class="tier-grid">
+        <div class="tier">
+          <div class="name">Basic</div>
+          <div class="price">$3,000</div>
+          <ul>
+            <li>Logo on website, materials, and social</li>
+            <li>1× 30-min workshop or keynote</li>
+            <li>1× judge seat on Demo Day ($1 Challenge)</li>
+            <li>Post-event data report</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <div class="name">Silver</div>
+          <div class="price">$6,000</div>
+          <ul>
+            <li class="plus">All Basic benefits, plus:</li>
+            <li>1× sponsor-defined bounty track with prize</li>
+            <li>1× office hours (1h, direct team access)</li>
+            <li>Opt-in access to builder contact list</li>
+          </ul>
+        </div>
+        <div class="tier gold">
+          <div class="name">Gold</div>
+          <div class="price">$10,000</div>
+          <ul>
+            <li class="plus">All Silver benefits, plus:</li>
+            <li>Full residency pass — co-work with builders</li>
+            <li>Co-host credit on Demo Day</li>
+            <li>1× extra workshop slot</li>
+            <li>Exclusive 1v1 intros (5 teams)</li>
+            <li>Early PRD review with shortlisted teams</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-band">
+      <div>Custom packages available — contact us to discuss.</div>
+      <div class="fb-right">06 · Sponsorship Tiers</div>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 8 · OUTCOMES & ROADMAP ============= -->
+  <section class="slide">
+    <div class="band">
+      <h2><em>07</em>Expected Outcomes & 2026 Roadmap</h2>
+      <p>What sponsors get: access · build · own the launch moment.</p>
+    </div>
+    <div class="slide-body">
+      <div class="outcomes-layout">
+        <div>
+          <div class="block-title">Expected Outcomes (Shanghai)</div>
+          <div class="outcomes-grid">
+            <div class="outcome"><span class="k">Selected builders</span><span class="v">20–30</span></div>
+            <div class="outcome"><span class="k">Product submissions</span><span class="v">30+</span></div>
+            <div class="outcome"><span class="k">MVPs shipped</span><span class="v">10+</span></div>
+            <div class="outcome"><span class="k">Revenue projects</span><span class="v">5+</span></div>
+            <div class="outcome"><span class="k">Investors at Demo Day</span><span class="v">10+</span></div>
+            <div class="outcome"><span class="k">Social reach</span><span class="v">100K+</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="block-title">2026 Loops House Roadmap</div>
+          <div class="roadmap">
+            <div class="road active">
+              <div class="flag">🇨🇳</div>
+              <div><div class="name">Loops Shanghai</div><div class="loc">The Mu, Shanghai</div></div>
+              <div class="date">May 13–15</div>
+            </div>
+            <div class="road">
+              <div class="flag">🇵🇹</div>
+              <div><div class="name">Loops Lisbon</div><div class="loc">Lisbon, Portugal</div></div>
+              <div class="date">July 2026</div>
+            </div>
+            <div class="road">
+              <div class="flag">🇮🇳</div>
+              <div><div class="name">Loops Mumbai</div><div class="loc">Mumbai, India</div></div>
+              <div class="date">November 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-band">
+      <div>2026 Goal across 3 cities: <b>100+</b> projects selected · <b>15+</b> market-validated.</div>
+      <div class="fb-right">07 · Outcomes & Roadmap</div>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 9 · CTA ============= -->
+  <section class="slide cta">
+    <div class="cta-head">
+      <h1>
+        <span>Three days.</span>
+        <span>One product.</span>
+        <span class="accent">Real revenue.</span>
+      </h1>
+      <p class="sub">Sponsor Loops House · Shanghai · May 13–15, 2026 — the residency where AI products don't pitch, they launch.</p>
+    </div>
+    <div class="cta-mid">
+      <div class="card"><b>Access</b>Meet the AI builders shipping production products — before anyone else.</div>
+      <div class="card"><b>Build</b>Teams build with your models, APIs, and cloud during the event.</div>
+      <div class="card"><b>Own</b>Be the first paying customer of tomorrow's AI products on Demo Day.</div>
+      <div class="card"><b>Convert</b>Turn promising builders into long-term builders on your platform.</div>
+    </div>
+    <div class="cta-foot">
+      <div class="cta-contacts">
+        <div class="lbl">Get in touch</div>
+        <div class="v">📧 contact@germinalabs.xyz &nbsp;·&nbsp; 📧 ian@openbuild.xyz</div>
+      </div>
+      <div class="cta-sign">Loops is operated by Germina Labs<br>germinalabs.xyz</div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
