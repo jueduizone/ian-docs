@@ -94,7 +94,9 @@
   .co-card{border:1px solid var(--line);border-radius:12px;padding:28px;background:#fff;display:flex;flex-direction:column;gap:18px}
   .co-head{display:flex;align-items:center;gap:20px}
   .co-logo{background:var(--green-900);border:1px solid var(--green-900);border-radius:10px;padding:14px 20px;height:78px;min-width:140px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .co-logo.light{background:transparent;border:1px solid var(--line)}
   .co-logo img{max-height:48px;max-width:150px;object-fit:contain}
+  .co-collab-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px}
   .co-title h3{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
   .co-title .tag{font-size:13px;color:var(--green-700);font-weight:600;margin-top:4px}
   .co-body{font-size:15px;line-height:1.6;color:var(--ink-2)}
@@ -306,7 +308,7 @@
         <!-- AI 搞什么 -->
         <div class="co-card">
           <div class="co-head">
-            <div class="co-logo"><img src="loops-house-logos/aigaoshenme.png" alt="AI 搞什么"></div>
+            <div class="co-logo light"><img src="loops-house-logos/aigaoshenme.png" alt="AI 搞什么"></div>
             <div class="co-title">
               <h3>AIShipped (AI 搞什么)</h3>
             </div>
@@ -315,6 +317,7 @@
             AI 搞什么 is a practitioner-only community for builders using AI in production. No hype. No theory. Just real deployments, real lessons, real edges — connecting every builder making things happen with AI.
           </p>
           <div class="co-collab">
+            <div class="co-collab-label">Past Collaborators</div>
             <div class="cc-row"><b>LLM Companies</b><span>Zhipu AI · StepFun · Moonshot · Doubao · Zilliz</span></div>
             <div class="cc-row"><b>Dev Communities</b><span>Datawhale · Kaiyuanshe · OpenBuild · SegmentFault · VibeFriends · dbaplus · RTE · ModelScope</span></div>
           </div>
