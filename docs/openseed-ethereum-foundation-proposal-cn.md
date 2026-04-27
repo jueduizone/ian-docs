@@ -339,17 +339,17 @@ Cohort 项目获得：
 
 | 类别 | 金额 | 说明 |
 | --- | ---: | --- |
-| Registry and Ethereum attestations | $7,000 | Pledge Registry、身份绑定、EAS / attestation 集成、数据模型、可审计性；团队主动压缩工程预算，交付范围不降级 |
+| Registry and Ethereum attestations | $7,000 | Pledge Registry、身份绑定、EAS / attestation 集成、数据模型、可审计性 |
 | Dependency Funnel | $10,000 | Package ecosystem 集成、依赖展开、GitHub mapping、scoring methodology、report generation；优先复用现有数据源和社区资源 |
-| SPARK.md tooling | $5,000 | Specification、templates、validator、CLI helper、GitHub Action、文档；以成本价支持基础工具交付 |
-| Public Accountability Dashboard | $6,000 | 公开项目页、报告、pledge states、distribution records、maintainer claim status；团队承担部分产品和工程成本 |
+| SPARK.md tooling | $5,000 | Specification、templates、validator、CLI helper、GitHub Action、文档 |
+| Public Accountability Dashboard | $6,000 | 公开项目页、报告、pledge states、distribution records、maintainer claim status |
 | Cohort operations and maintainer outreach | $7,000 | Cohort onboarding、dependency report review、上游 maintainer outreach、社区协调 |
 | SPARK Seed Pool distribution | $50,000 | 包含在本次 $100,000 grant 内，用于第一轮上游维护者真实资助；最终分配会公开，并基于方法论生成 |
 | License / Addendum institutional outreach and overseas BD | $12,000 | SPARK Pledge Addendum、AI Attribution Clause、compatibility memo、法律 / OSPO 反馈、海外机构沟通、会议布道和合作拓展 |
 | Reporting, translation, and documentation | $3,000 | 公开报告、中英文文档、final write-up、生态传播材料 |
 | **合计** | **$100,000** |  |
 
-Grant 资助的工作会开源和公开。Seed distribution 的 **$50,000** 包含在本次总预算内，是第一阶段最大预算项。技术预算被主动压缩，不是因为交付变少，而是为了把更多 grant 资金直接用于上游维护者资助、maintainer outreach、license / OSPO 沟通、海外机构 BD 和会议布道。OpenSeed 团队会通过复用现有开源组件、社区资源和自有投入承担一部分产品与工程成本，体现对 EF grant 的诚意。后续如果有社区捐赠、生态合作方或 matching funds，可以扩充 Seed Pool，但不会影响本 grant 的交付范围。
+Grant 资助的工作会开源和公开。Seed distribution 的 **$50,000** 包含在本次总预算内，是第一阶段最大预算项。这样的预算结构让 grant 资金优先流向真实上游维护者资助，同时支持必要的 maintainer outreach、license / OSPO 沟通、海外机构 BD 和会议布道。工程交付仍覆盖 Registry、Dependency Funnel、SPARK.md tooling 和 Public Dashboard v0.1。后续如果有社区捐赠、生态合作方或 matching funds，可以扩充 Seed Pool，但不会影响本 grant 的交付范围。
 
 ## 9. 交付物
 

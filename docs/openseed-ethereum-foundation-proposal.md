@@ -339,17 +339,17 @@ This structure is flexible. If the EF prefers a smaller first tranche, the proje
 
 | Category | Amount | Description |
 | --- | ---: | --- |
-| Registry and Ethereum attestations | $7,000 | Pledge Registry, identity binding, EAS / attestation integration, data model, auditability; engineering budget is intentionally reduced without reducing delivery scope |
+| Registry and Ethereum attestations | $7,000 | Pledge Registry, identity binding, EAS / attestation integration, data model, auditability |
 | Dependency Funnel | $10,000 | Package ecosystem integrations, dependency expansion, GitHub mapping, scoring methodology, report generation; prioritizes reuse of existing data sources and community resources |
-| SPARK.md tooling | $5,000 | Specification, templates, validator, CLI helper, GitHub Action, documentation; basic tooling delivered at cost |
-| Public Accountability Dashboard | $6,000 | Public project pages, reports, pledge states, distribution records, maintainer claim status; the team absorbs part of product and engineering cost |
+| SPARK.md tooling | $5,000 | Specification, templates, validator, CLI helper, GitHub Action, documentation |
+| Public Accountability Dashboard | $6,000 | Public project pages, reports, pledge states, distribution records, maintainer claim status |
 | Cohort operations and maintainer outreach | $7,000 | Cohort onboarding, dependency report reviews, upstream maintainer outreach, community coordination |
 | SPARK Seed Pool distribution | $50,000 | Included in this $100,000 grant; used for the first real distribution to upstream maintainers; final allocation to be public and methodology-based |
 | License / Addendum institutional outreach and overseas BD | $12,000 | SPARK Pledge Addendum, AI Attribution Clause, compatibility memo, legal / OSPO feedback, overseas institutional outreach, conference advocacy, partnership development |
 | Reporting, translation, and documentation | $3,000 | Public report, English / Chinese documentation, final write-up, ecosystem communications |
 | **Total** | **$100,000** |  |
 
-The grant-funded work will be open-source and accessible. The **$50,000** seed distribution is included in the total grant budget and is the largest Phase 1 budget item. The technical budget is intentionally reduced not because the delivery scope is smaller, but because OpenSeed wants more grant capital to go directly to upstream maintainer funding, maintainer outreach, license / OSPO engagement, overseas institutional BD, and conference advocacy. The team will absorb part of the product and engineering cost by reusing existing open-source components, community resources, and its own contribution. This is meant to show commitment to the EF grant rather than turn the proposal into a pure software development budget. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they do not affect the scope of this grant.
+The grant-funded work will be open-source and accessible. The **$50,000** seed distribution is included in the total grant budget and is the largest Phase 1 budget item. This budget structure prioritizes direct upstream maintainer funding while still supporting the necessary maintainer outreach, license / OSPO engagement, overseas institutional BD, and conference advocacy. Engineering deliverables still include the Registry, Dependency Funnel, SPARK.md tooling, and Public Dashboard v0.1. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they do not affect the scope of this grant.
 
 ## 9. Deliverables
 
