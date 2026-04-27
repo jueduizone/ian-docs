@@ -339,17 +339,17 @@ This structure is flexible. If the EF prefers a smaller first tranche, the proje
 
 | Category | Amount | Description |
 | --- | ---: | --- |
-| Registry and Ethereum attestations | $7,000 | Pledge Registry, identity binding, EAS / attestation integration, data model, auditability; kept lightweight for Phase 1 |
-| Dependency Funnel | $10,000 | Package ecosystem integrations, dependency expansion, GitHub mapping, scoring methodology, report generation; prioritizes reuse of existing data sources |
-| SPARK.md tooling | $5,000 | Specification, templates, validator, CLI helper, GitHub Action, documentation |
-| Public Accountability Dashboard | $6,000 | Public project pages, reports, pledge states, distribution records, maintainer claim status; usable v0.1 over complex productization |
+| Registry and Ethereum attestations | $7,000 | Pledge Registry, identity binding, EAS / attestation integration, data model, auditability; engineering budget is intentionally reduced without reducing delivery scope |
+| Dependency Funnel | $10,000 | Package ecosystem integrations, dependency expansion, GitHub mapping, scoring methodology, report generation; prioritizes reuse of existing data sources and community resources |
+| SPARK.md tooling | $5,000 | Specification, templates, validator, CLI helper, GitHub Action, documentation; basic tooling delivered at cost |
+| Public Accountability Dashboard | $6,000 | Public project pages, reports, pledge states, distribution records, maintainer claim status; the team absorbs part of product and engineering cost |
 | Cohort operations and maintainer outreach | $7,000 | Cohort onboarding, dependency report reviews, upstream maintainer outreach, community coordination |
 | SPARK Seed Pool distribution | $50,000 | Included in this $100,000 grant; used for the first real distribution to upstream maintainers; final allocation to be public and methodology-based |
 | License / Addendum institutional outreach and overseas BD | $12,000 | SPARK Pledge Addendum, AI Attribution Clause, compatibility memo, legal / OSPO feedback, overseas institutional outreach, conference advocacy, partnership development |
 | Reporting, translation, and documentation | $3,000 | Public report, English / Chinese documentation, final write-up, ecosystem communications |
 | **Total** | **$100,000** |  |
 
-The grant-funded work will be open-source and accessible. The **$50,000** seed distribution is included in the total grant budget and is the largest Phase 1 budget item. Technical work will be kept intentionally lightweight, focused on a usable v0.1 and public methodology; more resources are allocated to real distribution, maintainer outreach, license / OSPO engagement, overseas institutional BD, and conference advocacy. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they do not affect the scope of this grant.
+The grant-funded work will be open-source and accessible. The **$50,000** seed distribution is included in the total grant budget and is the largest Phase 1 budget item. The technical budget is intentionally reduced not because the delivery scope is smaller, but because OpenSeed wants more grant capital to go directly to upstream maintainer funding, maintainer outreach, license / OSPO engagement, overseas institutional BD, and conference advocacy. The team will absorb part of the product and engineering cost by reusing existing open-source components, community resources, and its own contribution. This is meant to show commitment to the EF grant rather than turn the proposal into a pure software development budget. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they do not affect the scope of this grant.
 
 ## 9. Deliverables
 
@@ -431,7 +431,7 @@ The system should be inspectable by the Ethereum community and reusable by other
 | Dependency scoring is perceived as arbitrary | Publish the methodology, expose weighting factors, allow project annotations, and treat the Funnel as a recommendation engine rather than a judge |
 | AI-based attribution is overclaimed | Do not claim complete AI provenance detection; use SPARK.md and manual declarations as the first practical layer |
 | Legal complexity around SPARK License | Keep License as review material in Phase 1; prioritize SPARK.md and Pledge Addendum for practical adoption |
-| Maintainers do not claim funds | Keep first distribution small, use multiple contact methods, support GitHub Sponsors / OpenCollective / Ethereum wallet options |
+| Maintainers do not claim funds | Use staged claims and multiple contact methods, support GitHub Sponsors / OpenCollective / Ethereum wallet, and publicly show unclaimed status |
 | Cohort projects are too diverse | Start with 10–15 projects and a clear report template; prioritize projects with active maintainers and public repos |
 | Funding workflow becomes too complex | Use existing Ethereum tools where possible, such as Safe, EAS, and stablecoin transfers; keep v0.1 simple |
 
