@@ -29,7 +29,7 @@ OpenSeed proposes to build a working reference implementation for that next step
 5. **SPARK Seed Pool Pilot** — a small real funding implementation that distributes seed funds to upstream maintainers through an auditable Ethereum-based workflow.
 6. **SPARK License / Addendum research** — early legal and community review materials for pledge-based and AI attribution clauses.
 
-We are requesting **USD 100,000 over 6 months**, paid across milestones, to build the v0.1 system, onboard a first cohort of 10–15 projects, generate public dependency reports, run a simulated allocation round, complete one small real funding distribution, and publish the methodology as open infrastructure for the Ethereum ecosystem and beyond.
+We are requesting **USD 100,000 over 6 months**, paid across milestones, to build the v0.1 system, onboard a first cohort of 10–15 projects, generate public dependency reports, run a simulated allocation round, complete one **$50,000** real funding distribution, and publish the methodology as open infrastructure for the Ethereum ecosystem and beyond.
 
 ## 2. Why This Fits the Ethereum Foundation Now
 
@@ -231,7 +231,7 @@ The dashboard is intentionally not called a compliance dashboard. OpenSeed creat
 
 ### 4.5 SPARK Seed Pool Pilot
 
-The SPARK Seed Pool is a small seed fund used to run the full workflow end to end. The first real distribution is included in this **USD 100,000** grant request, under the **SPARK Seed Pool distribution: $10,000** budget line. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they are not prerequisites for the scope of this proposal.
+The SPARK Seed Pool is the core budget item for Phase 1, used to run a real dependency funding distribution. The first real distribution is included in this **USD 100,000** grant request, under the **SPARK Seed Pool distribution: $50,000** budget line. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they are not prerequisites for the scope of this proposal.
 
 Process:
 
@@ -241,7 +241,7 @@ Process:
 4. Ask cohort projects to confirm or annotate recommendations
 5. Contact upstream maintainers
 6. Verify claim information
-7. Distribute a small amount of seed funding
+7. Distribute **$50,000** in seed funding
 8. Publish public records and a cohort report
 
 The first round prioritizes running the mechanism end to end, not maximizing funding size.
@@ -249,6 +249,8 @@ The first round prioritizes running the mechanism end to end, not maximizing fun
 ### 4.6 SPARK License / Addendum Research
 
 SPARK License is an important part of OpenSeed, but Phase 1 does not treat license adoption as the primary or mandatory path. Licensing touches open-source definitions, compatibility with existing licenses, enterprise legal review, and community governance. It should not be pushed into broad adoption before the pilot produces practical feedback.
+
+This work is not limited to writing drafts. It also requires ongoing engagement with open-source institutions, foundations, OSPOs, legal advisors, and overseas developer communities. OpenSeed needs to explain the design logic behind SPARK License / Pledge, collect risk feedback from different institutions, and advocate for the model at relevant open-source, Ethereum, AI devtools, and public goods funding events.
 
 Phase 1 will use a three-layer approach:
 
@@ -324,11 +326,11 @@ We propose **USD 100,000** in milestone-based payments across 6 months.
 
 | Milestone | Timeline | Payment | Deliverables |
 | --- | --- | ---: | --- |
-| M1: Specification and architecture | Month 1 | $20,000 | Technical architecture, SPARK.md v0.1 draft, registry schema, cohort selection criteria, public project repo |
-| M2: Registry and SPARK.md tooling | Month 2 | $20,000 | Pledge Registry v0.1, GitHub/domain/wallet identity flow, SPARK.md templates, validator, GitHub Action / CLI prototype |
-| M3: Dependency Funnel and first reports | Months 3–4 | $25,000 | Dependency Funnel v0.1 covering npm, PyPI, Cargo, Go, Maven; 5+ preliminary Dependency Reports; methodology notes |
-| M4: Dashboard and simulation round | Month 5 | $20,000 | Public Accountability Dashboard v0.1, 10+ cohort reports, simulated allocation round, SPARK Pledge Addendum v0.1 |
-| M5: Real distribution and final report | Month 6 | $15,000 | One small real funding distribution, maintainer claim workflow, public cohort report, SPARK.md spec, Dependency Funnel methodology, License compatibility memo |
+| M1: Specification and architecture | Month 1 | $15,000 | Technical architecture, SPARK.md v0.1 draft, registry schema, cohort selection criteria, public project repo |
+| M2: Registry and SPARK.md tooling | Month 2 | $15,000 | Pledge Registry v0.1, GitHub/domain/wallet identity flow, SPARK.md templates, validator, GitHub Action / CLI prototype |
+| M3: Dependency Funnel and first reports | Months 3–4 | $15,000 | Dependency Funnel v0.1 covering npm, PyPI, Cargo, Go, Maven; 5+ preliminary Dependency Reports; methodology notes |
+| M4: Dashboard, license outreach and simulation round | Month 5 | $20,000 | Public Accountability Dashboard v0.1, 10+ cohort reports, simulated allocation round, SPARK Pledge Addendum v0.1, initial institutional / OSPO feedback |
+| M5: Real distribution and final report | Month 6 | $35,000 | First real funding distribution, maintainer claim workflow, public cohort report, SPARK.md spec, Dependency Funnel methodology, License compatibility memo, overseas BD / conference advocacy summary |
 | **Total** | **6 months** | **$100,000** |  |
 
 This structure is flexible. If the EF prefers a smaller first tranche, the project can start with a scoped Phase 1 grant focused on M1–M2 and expand after review.
@@ -337,17 +339,17 @@ This structure is flexible. If the EF prefers a smaller first tranche, the proje
 
 | Category | Amount | Description |
 | --- | ---: | --- |
-| Registry and Ethereum attestations | $18,000 | Pledge Registry, identity binding, EAS / attestation integration, data model, auditability |
-| Dependency Funnel | $22,000 | Package ecosystem integrations, dependency expansion, GitHub mapping, scoring methodology, report generation |
-| SPARK.md tooling | $12,000 | Specification, templates, validator, CLI helper, GitHub Action, documentation |
-| Public Accountability Dashboard | $15,000 | Public project pages, reports, pledge states, distribution records, maintainer claim status |
-| Cohort pilot and maintainer outreach | $13,000 | Cohort onboarding, dependency report reviews, upstream maintainer outreach, community coordination |
-| SPARK Seed Pool distribution | $10,000 | Included in this $100,000 grant; used for the first small real distribution to upstream maintainers; final allocation to be public and methodology-based |
-| License / Addendum research | $6,000 | SPARK Pledge Addendum, AI Attribution Clause, compatibility memo, legal / OSPO feedback coordination |
-| Reporting, translation, and documentation | $4,000 | Public report, English / Chinese documentation, final write-up, ecosystem communications |
+| Registry and Ethereum attestations | $7,000 | Pledge Registry, identity binding, EAS / attestation integration, data model, auditability; kept lightweight for Phase 1 |
+| Dependency Funnel | $10,000 | Package ecosystem integrations, dependency expansion, GitHub mapping, scoring methodology, report generation; prioritizes reuse of existing data sources |
+| SPARK.md tooling | $5,000 | Specification, templates, validator, CLI helper, GitHub Action, documentation |
+| Public Accountability Dashboard | $6,000 | Public project pages, reports, pledge states, distribution records, maintainer claim status; usable v0.1 over complex productization |
+| Cohort operations and maintainer outreach | $7,000 | Cohort onboarding, dependency report reviews, upstream maintainer outreach, community coordination |
+| SPARK Seed Pool distribution | $50,000 | Included in this $100,000 grant; used for the first real distribution to upstream maintainers; final allocation to be public and methodology-based |
+| License / Addendum institutional outreach and overseas BD | $12,000 | SPARK Pledge Addendum, AI Attribution Clause, compatibility memo, legal / OSPO feedback, overseas institutional outreach, conference advocacy, partnership development |
+| Reporting, translation, and documentation | $3,000 | Public report, English / Chinese documentation, final write-up, ecosystem communications |
 | **Total** | **$100,000** |  |
 
-The grant-funded work will be open-source and accessible. The **$10,000** seed distribution is included in the total grant budget and is intentionally modest because the main goal is to validate the workflow. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they do not affect the scope of this grant.
+The grant-funded work will be open-source and accessible. The **$50,000** seed distribution is included in the total grant budget and is the largest Phase 1 budget item. Technical work will be kept intentionally lightweight, focused on a usable v0.1 and public methodology; more resources are allocated to real distribution, maintainer outreach, license / OSPO engagement, overseas institutional BD, and conference advocacy. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they do not affect the scope of this grant.
 
 ## 9. Deliverables
 
@@ -367,7 +369,9 @@ By the end of 6 months, OpenSeed will deliver:
 12. SPARK AI Attribution Clause v0.1
 13. License compatibility memo
 14. Maintainer / OSPO FAQ
-15. Documentation for other ecosystems to fork or replicate the workflow
+15. License / Pledge institutional feedback notes
+16. Overseas BD and conference advocacy summary
+17. Documentation for other ecosystems to fork or replicate the workflow
 
 ## 10. Success Metrics
 
@@ -379,12 +383,14 @@ By the end of 6 months, OpenSeed will deliver:
 | Package ecosystems covered | 5 |
 | Upstream dependencies mapped | 100+ |
 | Simulated allocation rounds completed | 10+ |
-| Real funding distribution completed | 1 |
+| Real funding distribution completed | 1 round, totaling $50,000 |
 | Maintainers contacted | 30+ |
-| Maintainers successfully claimed funding | 5+ |
+| Maintainers successfully claimed funding | 10+ |
 | Projects trying SPARK Pledge Addendum | 3–5 |
 | Projects testing SPARK License Draft | 1–2 |
 | Communities / organizations giving public review or feedback | 2+ |
+| OSPO / legal / foundation interviews or feedback sessions | 8+ |
+| Overseas conference, side event, or public online sharing sessions | 2+ |
 | Public Dashboard | Live |
 | Final methodology report | Published |
 
