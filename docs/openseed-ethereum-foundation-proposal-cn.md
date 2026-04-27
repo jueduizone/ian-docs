@@ -231,7 +231,7 @@ Dashboard 展示内容：
 
 ### 4.5 SPARK Seed Pool Pilot
 
-SPARK Seed Pool 是一个小规模种子资金池，用来跑通完整流程。
+SPARK Seed Pool 是一个小规模种子资金池，用来跑通完整流程。第一轮真实分发资金包含在本次 **USD 100,000** 申请预算内，对应预算表中的 **SPARK Seed Pool distribution：$10,000**。如果后续有社区捐赠或合作方 matching funds，可以作为额外资金进入 Seed Pool，但不作为本 proposal 的前置条件。
 
 流程：
 
@@ -248,7 +248,15 @@ SPARK Seed Pool 是一个小规模种子资金池，用来跑通完整流程。
 
 ### 4.6 SPARK License / Addendum Research
 
-Grant 还会产出早期法律和治理材料：
+SPARK License 是 OpenSeed 的重要组成部分，但第一阶段不把它作为强制采用的主路径。原因是 license 牵涉开源定义、许可证兼容性、企业法务接受度和社区治理，不适合在没有试点数据前直接推动大规模采用。
+
+第一阶段会采用三层推进方式：
+
+1. **SPARK.md**：最低摩擦的声明层。项目保留现有 license，只新增一份机器可读的 attribution / funding declaration。
+2. **SPARK Pledge Addendum**：轻量承诺层。项目保留原许可证，同时通过 addendum 声明未来商业化后如何回流公共物品和上游依赖。
+3. **SPARK License Draft**：许可证研究层。产出 v0.1 草案，用于社区、基金会、OSPO 和法律顾问评审，不在第一阶段要求成熟项目迁移 license。
+
+Grant 会产出以下法律和治理材料：
 
 1. `SPARK License Draft v0.1`
 2. `SPARK Pledge Addendum v0.1`
@@ -256,7 +264,15 @@ Grant 还会产出早期法律和治理材料：
 4. `License compatibility memo`
 5. Maintainer 和 OSPO FAQ
 
-这个阶段的目标是评审，不是大规模 license adoption。成熟项目可以先采用 `SPARK.md` 和 Pledge Addendum。License Draft 用于收集 maintainer、社区、OSPO、基金会和法律顾问反馈。
+这个阶段的目标是形成可讨论、可评审、可迭代的 license 路径，不是追求大规模 license adoption，也不声称第一版会获得 OSI / SPDX 认可。成熟项目可以先采用 `SPARK.md` 和 Pledge Addendum；新项目、AI devtools、agent framework 和明确支持 recursive funding 的项目，可以自愿试用 `SPARK License Draft v0.1`。
+
+License compatibility memo 会重点回答：
+
+1. SPARK License 与 MIT、Apache-2.0、GPL 等主流许可证的关系
+2. SPARK Pledge Addendum 是否可以和现有 license 并存
+3. AI reference、agent fork、代码生成和 attribution clause 的边界
+4. 企业 OSPO / legal team 可能关心的采用风险
+5. 后续进入 SPDX / OSI 讨论前需要满足的条件
 
 ## 5. 为什么基于 Ethereum 构建
 
@@ -326,12 +342,12 @@ Cohort 项目获得：
 | SPARK.md tooling | $12,000 | Specification、templates、validator、CLI helper、GitHub Action、文档 |
 | Public Accountability Dashboard | $15,000 | 公开项目页、报告、pledge states、distribution records、maintainer claim status |
 | Cohort pilot and maintainer outreach | $13,000 | Cohort onboarding、dependency report review、上游 maintainer outreach、社区协调 |
-| SPARK Seed Pool distribution | $10,000 | 小规模第一轮上游维护者资助；最终分配会公开，并基于方法论生成 |
+| SPARK Seed Pool distribution | $10,000 | 包含在本次 $100,000 grant 内，用于小规模第一轮上游维护者真实资助；最终分配会公开，并基于方法论生成 |
 | License / Addendum research | $6,000 | SPARK Pledge Addendum、AI Attribution Clause、compatibility memo、法律 / OSPO 反馈协调 |
 | Reporting, translation, and documentation | $4,000 | 公开报告、中英文文档、final write-up、生态传播材料 |
 | **合计** | **$100,000** |  |
 
-Grant 资助的工作会开源和公开。Seed distribution 占比刻意较小，因为第一阶段重点是跑通流程。
+Grant 资助的工作会开源和公开。Seed distribution 的 **$10,000** 包含在本次总预算内，占比刻意较小，因为第一阶段重点是跑通流程。后续如果有社区捐赠、生态合作方或 matching funds，可以扩充 Seed Pool，但不会影响本 grant 的交付范围。
 
 ## 9. 交付物
 

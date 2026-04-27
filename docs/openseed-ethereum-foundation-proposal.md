@@ -231,7 +231,7 @@ The dashboard is intentionally not called a compliance dashboard. OpenSeed creat
 
 ### 4.5 SPARK Seed Pool Pilot
 
-The SPARK Seed Pool is a small seed fund used to run the full workflow end to end.
+The SPARK Seed Pool is a small seed fund used to run the full workflow end to end. The first real distribution is included in this **USD 100,000** grant request, under the **SPARK Seed Pool distribution: $10,000** budget line. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they are not prerequisites for the scope of this proposal.
 
 Process:
 
@@ -248,7 +248,15 @@ The first round prioritizes running the mechanism end to end, not maximizing fun
 
 ### 4.6 SPARK License / Addendum Research
 
-The grant will also produce early legal and governance materials:
+SPARK License is an important part of OpenSeed, but Phase 1 does not treat license adoption as the primary or mandatory path. Licensing touches open-source definitions, compatibility with existing licenses, enterprise legal review, and community governance. It should not be pushed into broad adoption before the pilot produces practical feedback.
+
+Phase 1 will use a three-layer approach:
+
+1. **SPARK.md** — the lowest-friction declaration layer. Projects keep their existing license and add a machine-readable attribution / funding declaration.
+2. **SPARK Pledge Addendum** — a lightweight commitment layer. Projects keep their existing license and add an addendum describing how future commercial value may flow back to public goods and upstream dependencies.
+3. **SPARK License Draft** — the license research layer. The v0.1 draft is for review by maintainers, communities, foundations, OSPOs, and legal advisors. Phase 1 does not require mature projects to migrate licenses.
+
+The grant will produce the following legal and governance materials:
 
 1. `SPARK License Draft v0.1`
 2. `SPARK Pledge Addendum v0.1`
@@ -256,7 +264,15 @@ The grant will also produce early legal and governance materials:
 4. `License compatibility memo`
 5. Maintainer and OSPO FAQ
 
-The goal in this phase is review, not broad license adoption. Mature projects can start with `SPARK.md` and the Pledge Addendum. The License Draft is for feedback from maintainers, communities, OSPOs, foundations, and legal advisors.
+The goal in this phase is to create a reviewable and iterative license path, not broad license adoption. We also do not claim that v0.1 will be OSI- or SPDX-recognized. Mature projects can start with `SPARK.md` and the Pledge Addendum; new projects, AI devtools, agent frameworks, and communities aligned with recursive funding may voluntarily test `SPARK License Draft v0.1`.
+
+The License compatibility memo will address:
+
+1. How SPARK License relates to MIT, Apache-2.0, GPL, and other mainstream licenses
+2. Whether SPARK Pledge Addendum can coexist with existing licenses
+3. The boundaries of AI reference, agent forks, code generation, and attribution clauses
+4. Adoption risks for enterprise OSPO / legal teams
+5. Conditions that should be met before any SPDX / OSI discussions
 
 ## 5. Why Build on Ethereum
 
@@ -326,12 +342,12 @@ This structure is flexible. If the EF prefers a smaller first tranche, the proje
 | SPARK.md tooling | $12,000 | Specification, templates, validator, CLI helper, GitHub Action, documentation |
 | Public Accountability Dashboard | $15,000 | Public project pages, reports, pledge states, distribution records, maintainer claim status |
 | Cohort pilot and maintainer outreach | $13,000 | Cohort onboarding, dependency report reviews, upstream maintainer outreach, community coordination |
-| SPARK Seed Pool distribution | $10,000 | Small first distribution to upstream maintainers; final allocation to be public and methodology-based |
+| SPARK Seed Pool distribution | $10,000 | Included in this $100,000 grant; used for the first small real distribution to upstream maintainers; final allocation to be public and methodology-based |
 | License / Addendum research | $6,000 | SPARK Pledge Addendum, AI Attribution Clause, compatibility memo, legal / OSPO feedback coordination |
 | Reporting, translation, and documentation | $4,000 | Public report, English / Chinese documentation, final write-up, ecosystem communications |
 | **Total** | **$100,000** |  |
 
-The grant-funded work will be open-source and accessible. The seed distribution portion is intentionally modest because the main goal is to validate the workflow.
+The grant-funded work will be open-source and accessible. The **$10,000** seed distribution is included in the total grant budget and is intentionally modest because the main goal is to validate the workflow. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they do not affect the scope of this grant.
 
 ## 9. Deliverables
 
