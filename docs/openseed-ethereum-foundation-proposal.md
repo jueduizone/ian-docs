@@ -10,15 +10,15 @@ hidden: true
 **Proposed duration:** 6 months  
 **Funding structure:** milestone-based payments  
 **Applicant:** OpenSeed  
-**Primary outputs:** open-source software, open specifications, public reports, and an Ethereum-based pilot for dependency funding
+**Primary outputs:** open-source software, open specifications, public reports, and an Ethereum-based reference implementation for dependency funding
 
 ## 1. Executive Summary
 
-OpenSeed is an open-source attribution and funding infrastructure project for the AI era, starting with an Ethereum-based pilot.
+OpenSeed is an open-source attribution and funding infrastructure project for the AI era. In its first phase, OpenSeed will build its funding and accountability backend on Ethereum and complete the first dependency funding implementation within the Ethereum ecosystem.
 
 The core problem is simple: AI is changing how open-source work is reused. Developers can reference, fork, rewrite, or regenerate open-source code through AI tools without leaving the traditional traces that current dependency graphs rely on: package manifests, imports, fork histories, or direct repository links.
 
-Ethereum has spent years building the strongest public-goods and open-source funding culture in crypto. The next step is to make funding flows more dependency-aware, transparent, and reproducible.
+Ethereum has spent years developing an active public-goods and open-source funding culture. The next step is to make funding flows more dependency-aware, transparent, and reproducible.
 
 OpenSeed proposes to build a working reference implementation for that next step:
 
@@ -26,7 +26,7 @@ OpenSeed proposes to build a working reference implementation for that next step
 2. **Dependency Funnel** — an explainable dependency analysis and allocation recommendation engine.
 3. **SPARK.md** — a lightweight repository-level attribution and funding declaration file.
 4. **Public Accountability Dashboard** — a public interface showing pledges, dependency reports, funding recommendations, distributions, and claim status.
-5. **SPARK Seed Pool Pilot** — a small real funding pilot that distributes seed funds to upstream maintainers through an auditable Ethereum-based workflow.
+5. **SPARK Seed Pool Pilot** — a small real funding implementation that distributes seed funds to upstream maintainers through an auditable Ethereum-based workflow.
 6. **SPARK License / Addendum research** — early legal and community review materials for pledge-based and AI attribution clauses.
 
 We are requesting **USD 100,000 over 6 months**, paid across milestones, to build the v0.1 system, onboard a first cohort of 10–15 projects, generate public dependency reports, run a simulated allocation round, complete one small real funding distribution, and publish the methodology as open infrastructure for the Ethereum ecosystem and beyond.
@@ -231,7 +231,7 @@ The dashboard is intentionally not called a compliance dashboard. OpenSeed creat
 
 ### 4.5 SPARK Seed Pool Pilot
 
-The SPARK Seed Pool is a small pilot fund used to test the full workflow.
+The SPARK Seed Pool is a small seed fund used to run the full workflow end to end.
 
 Process:
 
@@ -244,7 +244,7 @@ Process:
 7. Distribute a small amount of seed funding
 8. Publish public records and a cohort report
 
-The first pilot prioritizes proving the mechanism, not maximizing funding size.
+The first round prioritizes running the mechanism end to end, not maximizing funding size.
 
 ### 4.6 SPARK License / Addendum Research
 
@@ -258,17 +258,17 @@ The grant will also produce early legal and governance materials:
 
 The goal in this phase is review, not broad license adoption. Mature projects can start with `SPARK.md` and the Pledge Addendum. The License Draft is for feedback from maintainers, communities, OSPOs, foundations, and legal advisors.
 
-## 5. Why Start With Ethereum
+## 5. Why Build on Ethereum
 
-Ethereum is the right first funding and accountability backend for OpenSeed.
+Ethereum is the priority implementation environment for OpenSeed’s first funding and accountability backend.
 
 1. **Public-goods culture:** Ethereum has a long history of grants, retroactive funding, quadratic funding, and open-source support.
 2. **Real dependency surface:** Ethereum projects rely heavily on open-source software and shared infrastructure.
 3. **Transparent records:** Ethereum is suitable for public commitments, attestations, multisig distributions, and verifiable funding records.
-4. **Programmable funding:** Stablecoins, smart contracts, attestations, and existing tools such as Safe and EAS make funding workflows testable without inventing a new financial stack.
+4. **Programmable funding:** Stablecoins, smart contracts, attestations, and existing tools such as Safe and EAS make funding workflows directly deployable without inventing a new financial stack.
 5. **Ecosystem relevance:** Dependency funding is directly relevant to developer tooling, security infrastructure, research libraries, community resources, and long-term ecosystem resilience.
 
-OpenSeed does not make Ethereum the only possible implementation. Ethereum is the first pilot because it has the strongest combination of values, tooling, and real need.
+OpenSeed does not make Ethereum the only possible implementation. Ethereum is the priority implementation environment for Phase 1 because it combines aligned values, existing tools, and real ecosystem need.
 
 ## 6. Cohort Design
 
@@ -400,7 +400,7 @@ The system should be inspectable by the Ethereum community and reusable by other
 
 **Cynthia Xin** — Co-founder, OpenSeed. Lead organizer of the PyChina community.
 
-**Community base:** OpenBuild, KAIYUANSHE, PyChina, and RustCC provide access to Chinese-speaking Web3, open-source, Python, and Rust developer communities. These communities can help identify pilot projects, gather maintainer feedback, and distribute the final methodology.
+**Community base:** OpenBuild, KAIYUANSHE, PyChina, and RustCC provide access to Chinese-speaking Web3, open-source, Python, and Rust developer communities. These communities can help identify the first cohort projects, gather maintainer feedback, and distribute the final methodology.
 
 ## 13. Risk Management
 
@@ -441,6 +441,6 @@ This proposal is informed by the following Ethereum ecosystem materials:
 
 OpenSeed starts from a practical belief: open-source funding should be easier to trace, easier to explain, and harder to game.
 
-Ethereum is the right place to test this. It has the culture, tooling, and real dependency surface. The AI era makes the problem more urgent because open-source influence is becoming less visible just as more software is being generated from prior work.
+Ethereum is the priority environment for implementing this mechanism. It has the culture, tooling, and real dependency surface. The AI era makes the problem more urgent because open-source influence is becoming less visible just as more software is being generated from prior work.
 
-With a USD 100,000 milestone-based grant, OpenSeed can deliver a working v0.1 system, onboard a first cohort, publish dependency reports, run a real funding pilot, and release the methodology as open infrastructure for Ethereum and the broader open-source ecosystem.
+With a USD 100,000 milestone-based grant, OpenSeed can deliver a working v0.1 system, onboard a first cohort, publish dependency reports, run a real funding round, and release the methodology as open infrastructure for Ethereum and the broader open-source ecosystem.
