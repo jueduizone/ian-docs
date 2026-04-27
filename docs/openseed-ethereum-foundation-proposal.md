@@ -250,7 +250,7 @@ The first round prioritizes running the mechanism end to end, not maximizing fun
 
 SPARK License is an important part of OpenSeed, but Phase 1 does not treat license adoption as the primary or mandatory path. Licensing touches open-source definitions, compatibility with existing licenses, enterprise legal review, and community governance. It should not be pushed into broad adoption before the pilot produces practical feedback.
 
-This work is not limited to writing drafts. It also requires ongoing engagement with open-source institutions, foundations, OSPOs, legal advisors, and overseas developer communities. OpenSeed needs to explain the design logic behind SPARK License / Pledge, collect risk feedback from different institutions, and advocate for the model at relevant open-source, Ethereum, AI devtools, and public goods funding events.
+This work is not limited to writing drafts. It also requires ecosystem education, standards alignment, and developer mindshare building across open-source institutions, foundations, OSPOs, legal advisors, and global developer communities. OpenSeed needs to explain the design logic behind SPARK License / Pledge, collect risk feedback from different institutions, and continuously communicate the methodology of dependency-aware funding across open-source, Ethereum, AI devtools, and public goods funding venues.
 
 Phase 1 will use a three-layer approach:
 
@@ -330,7 +330,7 @@ We propose **USD 100,000** in milestone-based payments across 6 months.
 | M2: Registry and SPARK.md tooling | Month 2 | $15,000 | Pledge Registry v0.1, GitHub/domain/wallet identity flow, SPARK.md templates, validator, GitHub Action / CLI prototype |
 | M3: Dependency Funnel and first reports | Months 3–4 | $15,000 | Dependency Funnel v0.1 covering npm, PyPI, Cargo, Go, Maven; 5+ preliminary Dependency Reports; methodology notes |
 | M4: Dashboard, license outreach and simulation round | Month 5 | $20,000 | Public Accountability Dashboard v0.1, 10+ cohort reports, simulated allocation round, SPARK Pledge Addendum v0.1, initial institutional / OSPO feedback |
-| M5: Real distribution and final report | Month 6 | $35,000 | First real funding distribution, maintainer claim workflow, public cohort report, SPARK.md spec, Dependency Funnel methodology, License compatibility memo, overseas BD / conference advocacy summary |
+| M5: Real distribution and final report | Month 6 | $35,000 | First real funding distribution, maintainer claim workflow, public cohort report, SPARK.md spec, Dependency Funnel methodology, License compatibility memo, global ecosystem education and developer adoption summary |
 | **Total** | **6 months** | **$100,000** |  |
 
 This structure is flexible. If the EF prefers a smaller first tranche, the project can start with a scoped Phase 1 grant focused on M1–M2 and expand after review.
@@ -345,11 +345,11 @@ This structure is flexible. If the EF prefers a smaller first tranche, the proje
 | Public Accountability Dashboard | $6,000 | Public project pages, reports, pledge states, distribution records, maintainer claim status |
 | Cohort operations and maintainer outreach | $7,000 | Cohort onboarding, dependency report reviews, upstream maintainer outreach, community coordination |
 | SPARK Seed Pool distribution | $50,000 | Included in this $100,000 grant; used for the first real distribution to upstream maintainers; final allocation to be public and methodology-based |
-| License / Addendum institutional outreach and overseas BD | $12,000 | SPARK Pledge Addendum, AI Attribution Clause, compatibility memo, legal / OSPO feedback, overseas institutional outreach, conference advocacy, partnership development |
+| License / Addendum ecosystem education and standards outreach | $12,000 | SPARK Pledge Addendum, AI Attribution Clause, compatibility memo, legal / OSPO feedback, global ecosystem education, standards alignment, developer mindshare building, and adoption-path communication |
 | Reporting, translation, and documentation | $3,000 | Public report, English / Chinese documentation, final write-up, ecosystem communications |
 | **Total** | **$100,000** |  |
 
-The grant-funded work will be open-source and accessible. The **$50,000** seed distribution is included in the total grant budget and is the largest Phase 1 budget item. This budget structure prioritizes direct upstream maintainer funding while still supporting the necessary maintainer outreach, license / OSPO engagement, overseas institutional BD, and conference advocacy. Engineering deliverables still include the Registry, Dependency Funnel, SPARK.md tooling, and Public Dashboard v0.1. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they do not affect the scope of this grant.
+The grant-funded work will be open-source and accessible. The **$50,000** seed distribution is included in the total grant budget and is the largest Phase 1 budget item. This budget structure prioritizes direct upstream maintainer funding while still supporting the necessary maintainer outreach, license / OSPO engagement, global ecosystem education, standards alignment, and developer adoption work. Engineering deliverables still include the Registry, Dependency Funnel, SPARK.md tooling, and Public Dashboard v0.1. Future community donations, ecosystem partners, or matching funds may expand the Seed Pool, but they do not affect the scope of this grant.
 
 ## 9. Deliverables
 
@@ -370,7 +370,7 @@ By the end of 6 months, OpenSeed will deliver:
 13. License compatibility memo
 14. Maintainer / OSPO FAQ
 15. License / Pledge institutional feedback notes
-16. Overseas BD and conference advocacy summary
+16. Global ecosystem education and developer adoption summary
 17. Documentation for other ecosystems to fork or replicate the workflow
 
 ## 10. Success Metrics
@@ -390,7 +390,7 @@ By the end of 6 months, OpenSeed will deliver:
 | Projects testing SPARK License Draft | 1–2 |
 | Communities / organizations giving public review or feedback | 2+ |
 | OSPO / legal / foundation interviews or feedback sessions | 8+ |
-| Overseas conference, side event, or public online sharing sessions | 2+ |
+| Ecosystem education, developer adoption, or standards communication activities | 2+ |
 | Public Dashboard | Live |
 | Final methodology report | Published |
 
