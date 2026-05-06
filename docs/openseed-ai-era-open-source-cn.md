@@ -4,6 +4,8 @@ hidden: true
 ---
 # OpenSeed：面向 AI 时代的开源归因与资助基础设施
 
+**本文亦提供英文版：** [English version](https://ian-docs.vercel.app/docs/openseed-ai-era-open-source)
+
 ## 1. 执行摘要
 
 OpenSeed 从 Ethereum 生态开始试点，建立一套面向 AI 时代的开源归因与资助基础设施。
@@ -395,21 +397,9 @@ OpenSeed 第一阶段构建的基础设施全部开源。
 
 其他生态可以 fork 工具链，部署自己的 OpenSeed / SPARK 实施。
 
-## 12. 预算与时间表
+## 12. 时间表
 
-### 12.1 预算
-
-| 类别 | 金额 | 说明 |
-| --- | --- | --- |
-| Registry 与链上存证 | $20,000 | Pledge Registry、EAS / attestation、身份绑定 |
-| Dependency Funnel | $20,000 | deps.dev 集成、依赖扫描、分配建议算法 |
-| Dashboard 与接入工具 | $15,000 | Public Dashboard、项目接入流程、GitHub Action / CLI |
-| SPARK.md 与 License | $15,000 | 规范、草案、法律评审、FAQ |
-| Cohort 试点与资金池 | $20,000 | 项目支持、首轮真实资助、维护者 outreach |
-| 运营与文档 | $10,000 | 社区协调、报告、翻译、公开材料 |
-| **合计** | **$100,000** | 6 个月 |
-
-### 12.2 时间表
+### 12.1 时间表
 
 | 时间 | 交付 |
 | --- | --- |
